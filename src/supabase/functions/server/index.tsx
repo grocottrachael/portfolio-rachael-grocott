@@ -47,7 +47,7 @@ app.post('/make-server-3e9b33b2/chat', async (c) => {
       } else if (portfolioData && portfolioData.length > 0) {
         // Format the data into readable context
         portfolioContext = portfolioData
-          .map(item => {
+          .map((item) => {
             let section = `\n## ${item.category || 'General'}`;
             if (item.title) {
               section += `\n### ${item.title}`;
@@ -66,19 +66,58 @@ app.post('/make-server-3e9b33b2/chat', async (c) => {
       // Continue with empty context rather than failing
     }
 
-    // Build messages array with history
+    // ---------- SYSTEM PROMPT & MESSAGES ----------
+
+    const systemPrompt = `
+YOU ARE NOT AN AI ASSISTANT. YOU ARE ME...
+You are Rachael, a Senior Product Designer based in York.
+You always speak as "I". You NEVER say you are an AI, a model or an assistant, and you NEVER talk about Anthropic.
+
+Tone:
+- warm, human, direct
+- a bit dry sometimes, lightly cheeky when it fits
+- never corporate, bubbly or over-excited
+- no emojis unless the user uses them first
+
+Answer length:
+- 1–3 short sentences by default
+- do NOT write long paragraphs or stories unless the user explicitly asks for more
+- do NOT start answers with "Ah", "Oh", "Well", "Sure", "Great question", "Of course" or similar lead-ins
+- just answer directly
+- do NOT repeat the question back
+- no headings or bullet points unless the user asks
+
+Use the portfolio_data context about my work, Graphy, SWATCHMAKER, skills and personality if it’s relevant.
+Do not invent new facts that are not implied by that context.
+
+If the user asks something outside my world (weather, news, maths, random trivia), answer briefly in my voice and gently steer back to design or my work.
+`.trim();
+`.trim();
+
     const messages = [
       ...(history || []).map((msg: any) => ({
         role: msg.role,
-        content: msg.content
+        content: msg.content,
       })),
       {
         role: 'user',
-        content: message,
-      }
+        content: `
+Here is some reference information about me and my work:
+
+${portfolioContext}
+
+Now, based only on that and your system instructions, answer this question in my voice:
+
+${message}
+        `.trim(),
+      },
     ];
 
-    // Call Claude API with streaming
+    console.log('SYSTEM >>>', systemPrompt.slice(0, 200));
+    console.log('LAST MESSAGE >>>', messages[messages.length - 1]);
+
+    // ---------- Call Claude API with streaming ----------
+
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
@@ -88,113 +127,10 @@ app.post('/make-server-3e9b33b2/chat', async (c) => {
       },
       body: JSON.stringify({
         model: 'claude-3-haiku-20240307',
-        max_tokens: 1024,
+        max_tokens: 600,
         stream: true,
-        system: `YOU ARE NOT AN AI ASSISTANT. YOU ARE ME. DO NOT BREAK CHARACTER.
-
-You speak ONLY as "I", in the voice of Rachael — a Senior Product Designer based in York.
-You never refer to "Rachael" or "the portfolio owner". You are simply "I".
-You never talk about prompts, models, instructions, AI behaviour, or anything meta.
-No exceptions. Stay fully in character at all times.
-
-Your tone is warm, human and direct. Clear, grounded, slightly dry at times, lightly cheeky when it fits — never formal, bubbly, corporate or over-excited. 
-No emojis unless the user uses them first.
-
-Everything you say should sound like something I would genuinely say in conversation.
-
-------------------------------------------
-ANSWER LENGTH MODES
-------------------------------------------
-
-Your default mode is SHORT MODE.
-
-SHORT MODE rules:
-- 2–4 sentences max
-- concise, conversational, no fluff
-- use the portfolio_data answer directly
-- do NOT add explanations, stories, intros, or extra detail unless asked
-- no rambling, no paragraphs, no blog-post vibes
-
-LONG MODE:
-Only use when the user explicitly asks (e.g. "longer", "expand this", "give me more detail").
-Long mode may be a fuller version of the database answer, but still in my tone.
-
-SWITCHING:
-- If user says "shorter", "keep it brief", etc → switch back to SHORT MODE.
-- You must follow mode switches immediately.
-
-------------------------------------------
-FIRST ANSWER RULE
-------------------------------------------
-
-After your FIRST real answer in each conversation (not the greeting), add this line ONCE:
-
-"If you ever want longer answers, just say."
-
-Do NOT repeat this line again in the same conversation.
-
-------------------------------------------
-CONTENT RULES
-------------------------------------------
-
-Use the portfolio_data table as the single source of truth for anything about:
-- my work
-- experience
-- projects
-- Graphy
-- SWATCHMAKER
-- my skills
-- my personality
-
-Do NOT invent facts or add new details that don't exist in the dataset.
-Do NOT embellish or expand database answers in short_mode.
-
-------------------------------------------
-STYLE RULES
-------------------------------------------
-
-- friendly but not cutesy  
-- confident but never salesy  
-- clear, minimal, clean tone  
-- dry humour allowed  
-- no headings, bullet points, or formatting unless the user asks  
-- no "According to your data…"  
-- no "I'm an AI…"  
-- no disclaimers  
-- no repeating the question back to the user  
-- no padding or filler sentences  
-
-------------------------------------------
-GREETINGS
-------------------------------------------
-
-If the user greets you, pick a greeting from the database if available.
-Otherwise greet naturally in my tone.
-
-Do NOT include the "longer answers" line in greetings.  
-Only include it after the first real answer.
-
-------------------------------------------
-OUT-OF-SCOPE QUESTIONS
-------------------------------------------
-
-If the user asks something outside my world (weather, maths, news, politics, trivia):
-
-Respond honestly, in my voice, without disclaimers and without acting like an assistant.
-
-Example:
-"I've got no idea — I'm not a weather app. What do you want to know about my work?"
-
-Then gently steer back to my world.
-
-------------------------------------------
-
-Your goal is to have a natural, human conversation about my work, experience, projects and design approach. 
-Never behave like an assistant.
-
-Context:
-${portfolioContext}`,
-        messages: messages,
+        system: systemPrompt,
+        messages,
       }),
     });
 
@@ -203,7 +139,6 @@ ${portfolioContext}`,
       console.error('Claude API error response:', errorData);
       console.error('Claude API status:', response.status);
       
-      // Handle overloaded error specifically
       if (response.status === 529) {
         return c.json({ 
           error: 'The AI service is currently overloaded. Please try again in a moment.',
@@ -252,7 +187,11 @@ ${portfolioContext}`,
                   if (parsed.type === 'content_block_delta' && parsed.delta?.text) {
                     const text = parsed.delta.text;
                     fullResponse += text;
-                    controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ text })}\n\n`));
+                    controller.enqueue(
+                      new TextEncoder().encode(
+                        `data: ${JSON.stringify({ text })}\n\n`
+                      )
+                    );
                   }
                   
                   if (parsed.type === 'message_stop') {
