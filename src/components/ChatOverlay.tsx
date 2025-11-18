@@ -61,8 +61,8 @@ export function ChatOverlay({ messages, isLoading, onClose }: ChatOverlayProps) 
 
       {/* Chat bubbles container - not wrapped in AnimatePresence so they disappear instantly */}
       {messages.length > 0 && (
-        <div className="fixed inset-0 z-45 flex items-center justify-center pointer-events-none overflow-y-auto py-32">
-          <div className="w-full max-w-2xl px-6 space-y-6 pointer-events-none">
+        <div className="fixed inset-0 z-45 overflow-y-auto py-32 pointer-events-auto">
+          <div className="w-full max-w-2xl mx-auto px-6 space-y-6">
             {messages.map((message, index) => (
               <motion.div
                 key={index}

@@ -92,7 +92,7 @@ Do not invent new facts that are not implied by that context.
 
 If the user asks something outside my world (weather, news, maths, random trivia), answer briefly in my voice and gently steer back to design or my work.
 `.trim();
-`.trim();
+
 
     const messages = [
       ...(history || []).map((msg: any) => ({
