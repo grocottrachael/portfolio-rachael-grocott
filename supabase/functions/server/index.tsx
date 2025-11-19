@@ -84,6 +84,8 @@ Do not invent details. Do not summarise the entire dataset. Answer the question 
 If the question is outside design/my world, reply:
 “No idea. What do you want to know about my work?”
 
+After your first real answer, end with:
+“If you want the long version, just ask.”
 
 Reference data:
 <DATA>

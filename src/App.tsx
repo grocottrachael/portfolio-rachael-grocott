@@ -1,13 +1,26 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Hero } from './components/Hero';
 import { ChatInput } from './components/ChatInput';
 import { ChatOverlay, Message } from './components/ChatOverlay';
 import { projectId, publicAnonKey } from './utils/supabase/info';
+import faviconImage from './assets/480c09d663e40bc21ee2dec2f07edf81d50784b4.png';
+
 
 export default function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  // Set favicon on mount using the existing asset
+  useEffect(() => {
+    let favicon = document.querySelector("link[rel~='icon']") as HTMLLinkElement | null;
+    if (!favicon) {
+      favicon = document.createElement('link');
+      favicon.rel = 'icon';
+      document.head.appendChild(favicon);
+    }
+    favicon.href = faviconImage as unknown as string;
+  }, []);
 
   const handleSubmit = async () => {
     if (!input.trim() || isLoading) return;
