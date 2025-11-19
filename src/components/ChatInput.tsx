@@ -13,11 +13,19 @@ interface ChatInputProps {
 export function ChatInput({ value, onChange, onSubmit, isLoading, hasMessages }: ChatInputProps) {
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Always focus the input on mount
   useEffect(() => {
-    if (hasMessages && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [hasMessages]);
+    inputRef.current?.focus();
+  }, []);
+
+  // Also refocus whenever the window regains focus
+  useEffect(() => {
+    const handleWindowFocus = () => {
+      inputRef.current?.focus();
+    };
+    window.addEventListener('focus', handleWindowFocus);
+    return () => window.removeEventListener('focus', handleWindowFocus);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

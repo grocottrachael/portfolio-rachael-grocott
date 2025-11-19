@@ -132,7 +132,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white">
       {/* Main Content - Everything above the fold */}
-      <div className="min-h-screen flex flex-col md:justify-center px-6 md:px-12 lg:px-20 py-4">
+      <div className="min-h-screen flex flex-col md:justify-center px-6 md:px-12 lg:px-20 2xl:px-32 py-4">
         <Hero />
       </div>
 

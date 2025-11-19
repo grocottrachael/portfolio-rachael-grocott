@@ -78,7 +78,7 @@ export function BentoGrid() {
             <p className="text-xs tracking-tight mb-1 text-[14px] text-[rgb(195,195,195)]">An AI-powered tool for turning data into clear, beautiful stories.</p>
             <div className="flex items-center gap-1.5">
               <div className="w-1 h-1 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-[12px] text-neutral-300">Currently working here</span>
+              <span className="text-[12px] text-neutral-300">Currently working here on DX</span>
             </div>
           </div>
           <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
