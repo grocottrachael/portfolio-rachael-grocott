@@ -61,7 +61,7 @@ export function BentoGrid() {
           <div>
             <h4 className="text-xs tracking-tight mb-1.5 font-medium text-[15px]">Skills</h4>
             <div className="text-[10px] text-neutral-500 space-y-0.5">
-              <div className="text-[14px] text-[rgb(82,82,82)]">Clear IA • Intuitive UX • DX • Visual Polish • Fast AI Prototyping • Design Systems • Interaction Design • Research & Testing • Product Thinking • Cross-team Collaboration • Clear Communication</div>
+              <div className="text-[14px] text-[rgb(82,82,82)]">Clear IA • Intuitive UX • DX • Visual Polish • Fast AI Prototyping • Design Systems • Interaction Design • Research & Testing • Product Thinking • Cross-team Collaboration • Clear Communication • Coaching • Public speaking</div>
             </div>
           </div>
         </div>
