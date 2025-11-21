@@ -1,5 +1,6 @@
 import { Github, Linkedin, Dribbble, Mail, ArrowUpRight } from 'lucide-react';
 import swatchmakerImage from 'figma:asset/097568e367fac9cdd907192892156aefc3964ebd.png';
+import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function BentoGrid() {
   return (
@@ -28,9 +29,9 @@ export function BentoGrid() {
               </p>
             </div>
 
-            <img 
-              src={swatchmakerImage} 
-              alt="SWATCHMAKER interface" 
+            <ImageWithFallback
+              src={swatchmakerImage}
+              alt="SWATCHMAKER interface"
               className="w-full mt-3 rounded-lg"
             />
 
