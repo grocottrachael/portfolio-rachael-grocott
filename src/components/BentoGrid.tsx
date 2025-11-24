@@ -1,5 +1,6 @@
+import React from 'react';
 import { Github, Linkedin, Dribbble, Mail, ArrowUpRight } from 'lucide-react';
-import swatchmakerImage from 'figma:asset/097568e367fac9cdd907192892156aefc3964ebd.png';
+const swatchmakerImage = '/build/assets/swatchmaker.png';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function BentoGrid() {
