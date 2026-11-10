@@ -21,7 +21,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] md:flex">
       {/* Who I am: pinned on the left while the blocks scroll on the right */}
-      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen md:overflow-y-auto px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-8 md:gap-10">
+      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen md:overflow-y-auto px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-8 md:gap-10 md:justify-center">
         <div>
         <img
           src={profileImage}
@@ -34,7 +34,7 @@ export default function App() {
           <span className="block font-bold text-[16px] md:text-[clamp(14px,1.1vw,20px)] tracking-tight mb-2">
             Hiya! I&rsquo;m
           </span>
-          <span className="block font-black text-[12vw] md:text-[clamp(32px,3.4vw,60px)] tracking-[-0.02em]">
+          <span className="block font-black text-[14vw] md:text-[clamp(40px,4.5vw,84px)] tracking-[-0.02em]">
             Rachael
             <br />
             Grocott
@@ -43,7 +43,7 @@ export default function App() {
         </div>
 
         <div>
-          <p className="font-bold text-[28px] md:text-[clamp(22px,1.9vw,34px)] leading-[1.32] tracking-[-0.015em]">
+          <p className="font-bold text-[24px] md:text-[clamp(19px,1.55vw,28px)] leading-[1.32] tracking-[-0.015em]">
             I&rsquo;m a Senior Product Designer at <Pill bg={C.blue}>Graphy</Pill>. I make complex things simple, then
             polish them till they&rsquo;re <Pill bg={C.pink}>genuinely beautiful</Pill>.
           </p>
