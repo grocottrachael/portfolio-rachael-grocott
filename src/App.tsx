@@ -21,6 +21,7 @@ import profileImage from './assets/rachael-avatar.webp';
 import { usePath } from './router';
 import { caseStudies } from './content/caseStudies';
 import { CaseStudy } from './pages/CaseStudy';
+import { CaseStudyV2 } from './pages/CaseStudyV2';
 
 function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
   return (
@@ -101,5 +102,6 @@ function Home() {
 export default function App() {
   const path = usePath();
   const study = caseStudies.find((c) => path === `/work/${c.id}`);
-  return study ? <CaseStudy study={study} /> : <Home />;
+  if (study) return study.v2 ? <CaseStudyV2 study={study} /> : <CaseStudy study={study} />;
+  return <Home />;
 }

@@ -7,17 +7,27 @@ import { C } from '../components/Shapes';
  * so pictures can sit next to the part of the story they belong to.
  */
 
-type Img = { src: string; alt: string; w: number; h: number };
+export type Img = { src: string; alt: string; w: number; h: number };
 
 export type Block =
-  | { type: 'text'; eyebrow: string; heading: string; body: React.ReactNode }
+  | { type: 'text'; eyebrow?: string; heading?: string; body: React.ReactNode }
+  /* v2: a numbered chapter opener */
+  | { type: 'chapter'; label: string; heading: string; body?: React.ReactNode }
+  /* v2: "How might we…" statements */
+  | { type: 'hmw'; items: string[] }
+  /* v2: what we first thought, and what we learned */
+  | {
+      type: 'pivot';
+      before: { label: string; title: string; body: React.ReactNode };
+      after: { label: string; title: string; body: React.ReactNode };
+    }
   | { type: 'figure'; images: Img[]; caption?: string; /** screenshots: set on a mat in the project colour, with a stroke */ frame?: boolean }
   | { type: 'quote'; text: string }
   | { type: 'stats'; items: { value: string; label: string }[] }
   | { type: 'liveCharts'; caption?: string }
   | { type: 'shows'; items: { title: string; body: string }[] }
   | { type: 'decisions'; eyebrow: string; heading: string; items: { title: string; body: React.ReactNode }[] }
-  | { type: 'gallery'; eyebrow: string; heading: string; body?: React.ReactNode; images: Img[] };
+  | { type: 'gallery'; eyebrow?: string; heading?: string; body?: React.ReactNode; images: Img[] };
 
 export type CaseStudy = {
   id: string;
@@ -28,6 +38,10 @@ export type CaseStudy = {
   facts: { label: string; value: string }[];
   link?: { href: string; label: string };
   blocks: Block[];
+  /* v2 template */
+  v2?: boolean;
+  hero?: Img[];
+  tldr?: { points: { label: string; body: React.ReactNode }[]; stats?: { value: string; label: string }[] };
 };
 
 const knotSizes: Record<string, [number, number]> = {"tap-a-row": [918, 922], "the-key": [918, 914], "plain-words": [1600, 636], "diagrams": [1600, 809], "your-place": [918, 646], "your-size": [1392, 694], "your-hook": [918, 798], "yarns": [920, 830], "01-tagline": [720, 900], "05-uk-us": [720, 900], "03-key": [720, 900], "12-why": [720, 900]};
@@ -385,38 +399,54 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: 'knot-a-problem',
+    v2: true,
     title: 'Knot a Problem',
     madeFor: 'For crocheters',
     bg: C.yellow,
     intro:
-      'A crochet pattern reader with no AI inside. It explains any row in plain words and draws it as a diagram, using only what the pattern itself says. Your pattern stays yours.',
+      'A crochet pattern reader with no AI inside. Tap any row and it explains it in plain words or draws it as a diagram, using only what the pattern itself says. Your pattern stays yours.',
     facts: [
-      { label: 'Role', value: 'Design and build, solo' },
+      { label: 'My role', value: 'Design and build, solo' },
+      { label: 'Timeline', value: '2 months, Jul to Sep 2026' },
       { label: 'AI in the app', value: 'None, on purpose' },
       { label: 'Built with', value: 'Claude Code, as my pair' },
       { label: 'First tester', value: 'My granny, 81' },
     ],
     link: { href: 'https://knotaproblem.app/', label: 'Visit knotaproblem.app' },
+    hero: [
+      k('tap-a-row', 'Tap a row for the help you need: a pattern row with Save my place, Diagram and Explain'),
+      k('the-key', 'The Key: every stitch this pattern uses, explained in UK terms'),
+    ],
+    tldr: {
+      points: [
+        {
+          label: 'The problem',
+          body: 'There’s no standard for a crochet pattern. Every designer writes their own way, so even my granny, after sixty years, got stuck.',
+        },
+        {
+          label: 'What I did',
+          body: 'Designed and built a reader where you tap the row that lost you and get it back in plain words, or as a diagram. No AI inside: every answer comes from rules, so it never guesses.',
+        },
+        {
+          label: 'What I learned',
+          body: 'My first idea, highlighting the confusing words, was the hardest gesture there is for the people I was designing for. Tapping a whole row became the heart of the app.',
+        },
+        {
+          label: 'The result',
+          body: 'Live at knotaproblem.app, built in two months: over 600 commits and 88 test files behind every answer.',
+        },
+      ],
+      stats: [
+        { value: '600+', label: 'commits' },
+        { value: '88', label: 'test files' },
+        { value: '4', label: 'kinds of real pattern studied' },
+        { value: '2', label: 'months, first commit to live' },
+      ],
+    },
     blocks: [
       {
-        type: 'shows',
-        items: [
-          { title: 'Very clear UX', body: 'Tap the row that has lost you. Get it back in plain words.' },
-          { title: 'Small delights', body: 'Your place kept, only your size shown, the why behind a stitch.' },
-          { title: 'No AI inside', body: 'It never guesses, and your pattern never leaves your library.' },
-          { title: 'Built with AI', body: 'Paired with Claude Code to write hundreds of exact rules.' },
-        ],
-      },
-      {
-        type: 'figure',
-        images: [
-          k('tap-a-row', 'Tap a row for the help you need: a pattern row with Save my place, Diagram and Explain'),
-          k('the-key', 'The Key: every stitch this pattern uses, explained in UK terms'),
-        ],
-      },
-      {
-        type: 'text',
-        eyebrow: 'The problem',
+        type: 'chapter',
+        label: 'The problem',
         heading: 'There is no standard for a crochet pattern',
         body: (
           <>
@@ -436,12 +466,50 @@ export const caseStudies: CaseStudy[] = [
       {
         type: 'figure',
         images: [k('plain-words', 'A confusing row of pattern text, and the same row explained in plain English')],
-        caption:
-          'Tap the bit that has lost you. It doesn’t just read the shorthand out, it says what the stitches do.',
+        caption: 'The kind of row that loses people, and the answer the app gives. It says what the stitches do, not just what the letters stand for.',
+      },
+      {
+        type: 'chapter',
+        label: 'How might we',
+        heading: 'Turning the problem into questions',
+        body: (
+          <p>
+            I designed for my granny first, which means for people nobody else serves: arthritis, low vision,
+            dyslexia, tremor, brain fog. That shaped every question.
+          </p>
+        ),
+      },
+      {
+        type: 'hmw',
+        items: [
+          'help someone understand any row of any pattern, whoever wrote it?',
+          'explain a pattern without ever guessing at it?',
+          'make it work for hands that shake and eyes that tire?',
+          'keep a designer’s pattern private, and theirs?',
+        ],
       },
       {
         type: 'text',
-        eyebrow: 'Clear UX',
+        heading: 'Why no AI inside',
+        body: (
+          <>
+            <p>
+              Crocheters have been burned by AI: fake patterns, and photos of things that were never made. A chatbot
+              gives a confident answer that sounds right and costs you an evening of unpicking. So the app never
+              guesses. Every explanation, diagram and stitch count is ordinary code following the rules of crochet,
+              reading the pattern&rsquo;s own words and numbers. Where they don&rsquo;t add up, it says so.
+            </p>
+            <p>
+              And designers sell their PDFs for a living. A pattern you add is never published, shared or sold. It has
+              no public address, it&rsquo;s checked as yours every time it opens, and nothing is sent to an AI.
+            </p>
+          </>
+        ),
+      },
+      { type: 'quote', text: 'A wrong answer is worse than no answer.' },
+      {
+        type: 'chapter',
+        label: 'The work',
         heading: 'One tap, one answer',
         body: (
           <>
@@ -450,35 +518,28 @@ export const caseStudies: CaseStudy[] = [
               nothing else: save my place, see a diagram, or explain it.
             </p>
             <p>
-              And because no two patterns are written alike, Easy-read lays every one out the same way: the
-              designer&rsquo;s own words, set bigger and calmer, with only your size. Whoever wrote
-              it, it reads the same.
-            </p>
-            <p>
-              I designed it for my granny first, which means for people nobody else serves: arthritis, low vision,
-              dyslexia, tremor, brain fog. Big tap targets. The designer&rsquo;s own PDF shown faithfully at 1:1, never
-              re-flowed into something she doesn&rsquo;t recognise. Text you can make bigger. Every explanation in
-              plain words. Accessibility is the spec, not a nice-to-have.
+              Big tap targets. The designer&rsquo;s own PDF shown faithfully at 1:1, never re-flowed into something
+              you don&rsquo;t recognise. And because no two patterns are written alike, Easy-read lays every one out
+              the same way: the designer&rsquo;s own words, set bigger and calmer, with only your size.
             </p>
           </>
         ),
       },
       {
+        type: 'figure',
+        images: [k('diagrams', 'Three stitch diagrams drawn from pattern text: a star, a granny square and flat rows')],
+        caption: 'Some things are easier to see than to read. Every diagram is drawn from the pattern’s words alone.',
+      },
+      {
         type: 'text',
-        eyebrow: 'Delight',
         heading: 'The small things that make it feel looked after',
         body: (
-          <>
-            <p>
-              Put it down mid-row and it opens right where you were, on your phone or your laptop. Tell it your size
-              once and every line of a six-size pattern shows only your number. Tell it your hook and it works out how
-              much yarn you&rsquo;ll really need, then suggests yarns that will work.
-            </p>
-            <p>
-              None of these are big features. They&rsquo;re the moments where something remembers for you, so you can
-              get on with crocheting.
-            </p>
-          </>
+          <p>
+            Put it down mid-row and it opens right where you were, on your phone or your laptop. Tell it your size once
+            and every line of a six-size pattern shows only your number. Tell it your hook and it works out how much yarn
+            you&rsquo;ll really need, then suggests yarns that will work. None of these are big features. They&rsquo;re
+            the moments where something remembers for you.
+          </p>
         ),
       },
       {
@@ -494,55 +555,71 @@ export const caseStudies: CaseStudy[] = [
           k('your-hook', 'Your hook, not the label’s: a 4.5 mm hook needs 860 m of yarn, not 765 m'),
           k('yarns', 'Yarns that will work, with how many balls of each you need'),
         ],
+        caption: 'Your place, kept. Only your size, shown. Your hook, not the label’s, and yarns that will actually work.',
       },
       {
-        type: 'text',
-        eyebrow: 'Principles',
-        heading: 'No AI inside, and your pattern stays yours',
+        type: 'chapter',
+        label: 'Iterating',
+        heading: 'What I got wrong, and changed',
         body: (
-          <>
-            <p>
-              Crocheters have been burned by AI: fake patterns, and photos of things that were never made. A chatbot
-              will give you a confident answer that sounds right and costs you an evening of unpicking. So the app
-              never guesses. Every explanation, diagram and stitch count is ordinary code following the rules of
-              crochet, reading the pattern&rsquo;s own words and numbers. Where they don&rsquo;t add up, it says so.
-            </p>
-            <p>
-              And designers sell their PDFs for a living. A pattern you add is never published, shared or sold. It has
-              no public address, it&rsquo;s checked as yours every time it opens, and removing it deletes the file.
-              No adverts, no trackers, and nothing is sent to an AI.
-            </p>
-          </>
+          <p>
+            The biggest change came from watching who I was designing for. My first pitch was built on highlighting:
+            drag across the words that confuse you.
+          </p>
         ),
       },
-      { type: 'quote', text: 'A wrong answer is worse than no answer.' },
       {
-        type: 'figure',
-        images: [k('diagrams', 'Three stitch diagrams drawn from pattern text: a star, a granny square and flat rows')],
-        caption: 'Every diagram is drawn from the pattern’s words alone.',
+        type: 'pivot',
+        before: {
+          label: 'First idea',
+          title: 'Highlight the words that lose you',
+          body: 'Precise drag-selection across small text is the hardest gesture there is for shaky hands, it’s worse on touch, and it was fragile on a PDF.',
+        },
+        after: {
+          label: 'What I changed',
+          title: 'Tap the row. Drag only if you want to.',
+          body: 'A plain tap takes the whole row. Dragging still works for just a fragment. The gesture you can manage decides the scope.',
+        },
       },
       {
         type: 'text',
-        eyebrow: 'Perfectionism',
+        heading: 'Everything has to answer',
+        body: (
+          <p>
+            Testing the prototype, 6 of the 58 bits of text I tried returned nothing: all of them the front matter,
+            like tension, notes and measurements. That&rsquo;s exactly what a nervous crocheter reads first. So I made
+            every part of a pattern lead somewhere.
+          </p>
+        ),
+      },
+      {
+        type: 'text',
         heading: 'Render, look, fix, again',
         body: (
           <>
             <p>
-              Teaching code to draw a pattern with no model to fill the gaps meant writing the rules of crochet down
-              one at a time. I studied how real designers write, not one tidy example: a filet blanket that invents its
-              own abbreviations, a vest in six sizes where every number is six numbers, a mosaic chart, a chart made
-              in Excel. Two shoulders that both have a &ldquo;Row 6&rdquo;. Row counts that depend on your own
-              tension.
+              Teaching code to draw a pattern with no model to fill the gaps meant writing the rules of crochet down,
+              one at a time. I studied how real designers write: a filet blanket with its own abbreviations, a vest in
+              six sizes, a mosaic chart, a chart made in Excel.
             </p>
             <p>
-              The loop was always the same: render a real pattern, look hard at the drawing, find what was wrong,
-              write the rule, render it again. After catching the chart wrong three times in one sitting, I added a
-              checklist: every finished chart is now cross-examined against the pattern&rsquo;s own words, like its
-              stitch counts and its &ldquo;repeat rows 2&ndash;5&rdquo;. And before it lights up your row on a
-              designer&rsquo;s own chart, five separate checks have to agree, or it shows nothing rather than the
-              wrong stitches.
+              The loop was always the same: render a real pattern, look hard at the drawing, find what was wrong, write
+              the rule, render it again. After catching a chart wrong three times in one sitting, I added a checklist:
+              every finished chart is now cross-examined against the pattern&rsquo;s own words, like its stitch counts
+              and its &ldquo;repeat rows 2&ndash;5&rdquo;.
             </p>
           </>
+        ),
+      },
+      {
+        type: 'chapter',
+        label: 'The outcome',
+        heading: 'Live, and built to be trusted',
+        body: (
+          <p>
+            Knot a Problem is live at knotaproblem.app. Behind every answer it gives is a rule, and behind every rule is
+            a test.
+          </p>
         ),
       },
       {
@@ -551,38 +628,42 @@ export const caseStudies: CaseStudy[] = [
           { value: '600+', label: 'commits' },
           { value: '88', label: 'test files' },
           { value: '4', label: 'kinds of real pattern studied' },
-          { value: '2', label: 'months, from first commit to live' },
+          { value: '2', label: 'months, first commit to live' },
         ],
       },
       {
-        type: 'text',
-        eyebrow: 'Built with AI',
-        heading: 'I used AI to build something that doesn’t need it',
-        body: (
-          <>
-            <p>
-              I designed and built it myself, pairing with Claude Code the whole way. Doing it without guessing meant
-              hundreds of exact rules and a test for every one, which is exactly the kind of work AI is brilliant at
-              helping with.
-            </p>
-            <p>
-              AI did a lot of the typing. I did the looking: rendering real patterns, spotting what was off, deciding
-              what the rule should be, and saying when it was good enough.
-            </p>
-          </>
-        ),
-      },
-      {
         type: 'gallery',
-        eyebrow: 'Telling people about it',
-        heading: 'One point per post',
-        body: <>A set of posts for Instagram, each making one point a crocheter would recognise.</>,
+        heading: 'Telling people about it',
+        body: 'A set of posts for Instagram, each making one point a crocheter would recognise.',
         images: [
           k('01-tagline', 'Never get stuck reading a crochet pattern again'),
           k('05-uk-us', 'Your pattern says dc: the same word in UK and US terms'),
           k('03-key', 'The key: every stitch this pattern uses, in its own terms'),
           k('12-why', 'Why I built it: it started with (2sc, inc) x5'),
         ],
+      },
+      {
+        type: 'chapter',
+        label: 'What I learned',
+        heading: 'Design for the hardest hands first',
+        body: (
+          <>
+            <p>
+              <strong>Accessibility made it better for everyone.</strong> Designing for arthritis and tremor gave me the
+              tap-a-row gesture, and that turned out to be the simplest way in for anyone.
+            </p>
+            <p>
+              <strong>Saying no to AI in the product made AI in my process more useful.</strong> Doing it without
+              guessing meant hundreds of exact rules and a test for each, which is exactly the work AI is brilliant at
+              helping with. AI did a lot of the typing. I did the looking: spotting what was off, deciding the rule, and
+              saying when it was good enough.
+            </p>
+            <p>
+              <strong>What I&rsquo;d do next:</strong> test with more crocheters beyond my family, take the diagrams out
+              of their testing phase, and let Easy-read switch a pattern between UK and US terms.
+            </p>
+          </>
+        ),
       },
     ],
   },
