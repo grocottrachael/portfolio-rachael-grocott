@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, LayoutGroup } from 'motion/react';
+import { motion, LayoutGroup, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, Plus, X } from 'lucide-react';
 import { C, Eyes } from './Shapes';
 
@@ -155,97 +155,131 @@ const projects: Project[] = [
   },
 ];
 
-function ProjectTile({ p, open, onToggle }: { p: Project; open: boolean; onToggle: () => void }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!open) return;
-    const t = setTimeout(() => ref.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 350);
-    return () => clearTimeout(t);
-  }, [open]);
-
-  const text = p.dark ? 'text-white' : 'text-[var(--ink)]';
+function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
   const soft = p.dark ? 'text-white/70' : 'text-[var(--ink-soft)]';
-
   return (
-    <motion.article
-      ref={ref}
+    <article
       id={p.id}
-      layout
-      transition={spring}
-      onClick={(e) => {
-        if ((e.target as HTMLElement).closest('a')) return;
-        onToggle();
-      }}
-      className={`group relative cursor-pointer overflow-hidden p-5 md:p-7 flex flex-col ${text} ${
-        open ? 'col-span-2 md:col-span-3' : p.span
-      }`}
+      onClick={onOpen}
+      className={`group relative cursor-pointer overflow-hidden p-5 md:p-7 flex flex-col ${
+        p.dark ? 'text-white' : 'text-[var(--ink)]'
+      } ${p.span}`}
       style={{ background: p.bg }}
     >
-      <motion.div layout="position" transition={spring}>
-        <div className="pr-12">
-          <For dark={p.dark}>{p.madeFor}</For>
-        </div>
-        <button
-          type="button"
-          aria-expanded={open}
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggle();
-          }}
-          className="mt-4 block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
-        >
-          <span className="block font-black uppercase leading-[0.9] tracking-[-0.01em] text-[34px] md:text-[clamp(26px,2.3vw,42px)]">
-            {p.title}
-          </span>
-          <span className={`mt-3 block text-[16px] leading-snug max-w-[36ch] ${soft}`}>{p.summary}</span>
-        </button>
-      </motion.div>
+      <div className="pr-12">
+        <For dark={p.dark}>{p.madeFor}</For>
+      </div>
+      <button
+        type="button"
+        aria-haspopup="dialog"
+        onClick={(e) => {
+          e.stopPropagation();
+          onOpen();
+        }}
+        className="mt-4 block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
+      >
+        <span className="block font-black uppercase leading-[0.9] tracking-[-0.01em] text-[34px] md:text-[clamp(26px,2.3vw,42px)]">
+          {p.title}
+        </span>
+        <span className={`mt-3 block text-[16px] leading-snug max-w-[36ch] ${soft}`}>{p.summary}</span>
+      </button>
 
-      {!open && p.image && (
-        <motion.div layout="position" transition={spring} className="mt-5 flex-1 flex items-end">
+      {p.image && (
+        <div className="mt-5 flex-1 flex items-end">
           <img
             src={p.image.src}
             alt={p.image.alt}
             loading="lazy"
-            className={`w-full transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-1 motion-safe:group-hover:rotate-[-1deg] ${
+            className={`w-full transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-1 ${
               p.image.className ?? ''
             }`}
           />
-        </motion.div>
+        </div>
       )}
 
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25, delay: 0.12 }}
-          className="mt-6 grid md:grid-cols-2 gap-8 items-start"
-        >
-          <div className="space-y-6">
-            <p className={`text-[19px] leading-relaxed ${soft}`}>{p.story}</p>
-            {p.link && <Visit dark={p.dark} href={p.link.href} label={p.link.label} />}
-          </div>
-          {p.image && <img src={p.image.src} alt={p.image.alt} className="w-full md:max-w-md md:justify-self-end" />}
-        </motion.div>
-      )}
-
-      <motion.span
-        layout="position"
-        transition={spring}
+      <span
         aria-hidden
-        className={`absolute top-5 right-5 w-9 h-9 rounded-full flex items-center justify-center transition-transform group-hover:rotate-90 ${
-          p.dark ? 'bg-white text-[var(--ink)]' : 'bg-white/75 text-[var(--ink)]'
-        }`}
+        className="absolute top-5 right-5 w-9 h-9 rounded-full flex items-center justify-center bg-white/75 text-[var(--ink)] transition-transform duration-300 group-hover:rotate-90"
       >
-        {open ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-      </motion.span>
-    </motion.article>
+        <Plus className="w-4 h-4" />
+      </span>
+    </article>
+  );
+}
+
+/*
+ * The detail panel. The grid stays exactly where it is; the panel fades and
+ * rises in over a soft backdrop. Escape, the close button or a click outside
+ * closes it.
+ */
+function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    closeRef.current?.focus();
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, []);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-50 flex items-end md:items-center justify-center p-0 md:p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+    >
+      <div className="absolute inset-0 bg-[var(--ink)]/25 backdrop-blur-[2px]" onClick={onClose} aria-hidden />
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`${p.id}-title`}
+        className="relative w-full md:max-w-4xl max-h-[90vh] overflow-y-auto p-6 md:p-10 text-[var(--ink)] shadow-[0_24px_80px_rgba(43,35,64,0.25)]"
+        style={{ background: p.bg }}
+        initial={{ y: 24, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 16, opacity: 0 }}
+        transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <button
+          ref={closeRef}
+          type="button"
+          onClick={onClose}
+          aria-label="Close"
+          className="absolute top-5 right-5 w-10 h-10 rounded-full flex items-center justify-center bg-white/75 transition-transform duration-300 hover:rotate-90 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--ink)]"
+        >
+          <X className="w-4 h-4" />
+        </button>
+        <For>{p.madeFor}</For>
+        <h3
+          id={`${p.id}-title`}
+          className="mt-4 pr-12 font-black uppercase leading-[0.9] tracking-[-0.01em] text-[36px] md:text-[48px]"
+        >
+          {p.title}
+        </h3>
+        <div className="mt-6 grid md:grid-cols-2 gap-8 items-start">
+          <div className="space-y-6">
+            <p className="text-[18px] leading-relaxed text-[var(--ink-soft)]">{p.story}</p>
+            {p.link && <Visit href={p.link.href} label={p.link.label} />}
+          </div>
+          {p.image && (
+            <img
+              src={p.image.src}
+              alt={p.image.alt}
+              className={`w-full md:max-w-sm md:justify-self-end ${p.image.className ?? ''}`}
+            />
+          )}
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
 function ShapeTile({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <motion.div layout transition={spring} className={`relative aspect-square md:aspect-auto ${className}`} aria-hidden>
+    <motion.div className={`relative aspect-square md:aspect-auto ${className}`} aria-hidden>
       {children}
     </motion.div>
   );
@@ -282,7 +316,7 @@ function InfoTile({
   );
   const cls = `group relative block p-5 md:p-7 ${dark ? 'text-white' : ''}`;
   return (
-    <motion.div layout transition={spring} className={className.split(/\s+/).filter((c) => /(^|:)(col|row)-/.test(c)).join(' ')}>
+    <motion.div className={className.split(/\s+/).filter((c) => /(^|:)(col|row)-/.test(c)).join(' ')}>
       {href ? (
         <External href={href} className={`${cls} h-full`} style={{ background: bg }}>
           {inner}
@@ -321,8 +355,9 @@ export function Work() {
 
   const tile = (id: string) => {
     const p = projects.find((x) => x.id === id)!;
-    return <ProjectTile key={id} p={p} open={openId === id} onToggle={() => setOpenId(openId === id ? null : id)} />;
+    return <ProjectTile key={id} p={p} onOpen={() => setOpenId(id)} />;
   };
+  const openProject = projects.find((x) => x.id === openId);
 
   return (
     <LayoutGroup>
@@ -355,6 +390,9 @@ export function Work() {
           I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
         </InfoTile>
       </section>
+      <AnimatePresence>
+        {openProject && <ProjectPanel key={openProject.id} p={openProject} onClose={() => setOpenId(null)} />}
+      </AnimatePresence>
     </LayoutGroup>
   );
 }
