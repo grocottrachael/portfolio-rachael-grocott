@@ -200,8 +200,10 @@ export function HoverCta({ label, icon }: { label: string; icon: React.ReactNode
 
 function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: { label: string; icon: React.ReactNode } }) {
   const soft = p.dark ? 'text-white/70' : 'text-[var(--ink-soft)]';
+  const cardRef = useRef<HTMLElement>(null);
   return (
     <article
+      ref={cardRef}
       id={p.id}
       onClick={onOpen}
       className={`group relative cursor-pointer overflow-hidden p-5 md:p-7 flex flex-col transition-[filter] hover:brightness-[1.03] ${
@@ -213,7 +215,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
       {p.logo && p.logoRight && (
         <div
           aria-hidden
-          className="hidden md:block absolute right-[20%] top-1/2 -translate-y-1/2 w-[clamp(88px,8vw,130px)] [&_img]:w-full [&_img]:h-auto [&_img]:rounded-[22%]"
+          className="hidden md:block absolute right-7 bottom-7 w-[clamp(80px,6.5vw,112px)] [&_img]:w-full [&_img]:h-auto [&_img]:rounded-[22%]"
         >
           {p.logo}
         </div>
@@ -262,7 +264,22 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
 
       <HoverCta {...cta} />
       {p.logo && p.logoBelow && <div className="mt-auto pt-6">{p.logo}</div>}
-      {!p.image && p.sticker && <div className="mt-auto pt-6 self-start">{p.sticker}</div>}
+      {/* A sticker you can pick up and move around the card. It lifts when you hover or grab it */}
+      {!p.image && p.sticker && (
+        <motion.div
+          drag
+          dragConstraints={cardRef}
+          dragElastic={0.15}
+          dragMomentum={false}
+          whileHover={{ scale: 1.04, rotate: -2 }}
+          whileDrag={{ scale: 1.08, rotate: 3, filter: 'drop-shadow(0 10px 8px rgba(43,35,64,0.25))' }}
+          onClick={(e) => e.stopPropagation()}
+          className="relative z-20 mt-auto pt-6 self-start cursor-grab active:cursor-grabbing touch-none"
+          title="Pick me up"
+        >
+          {p.sticker}
+        </motion.div>
+      )}
 
       {p.image && (
         <div className={`relative mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>
@@ -443,7 +460,7 @@ export function Work() {
     <LayoutGroup>
       <section
         aria-label="Things I've made"
-        className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:auto-rows-[minmax(13vw,auto)] gap-2.5 p-2.5 md:gap-3 md:p-3 md:pl-0"
+        className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:auto-rows-[minmax(10vw,auto)] gap-2.5 p-2.5 md:gap-3 md:p-3 md:pl-0"
       >
         {tile('swatchmaker')}
         {/* Experience: where hiring managers look first */}

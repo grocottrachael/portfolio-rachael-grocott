@@ -45,18 +45,23 @@ export default function RoleCycle() {
             transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1] }}
             className="flex items-center gap-3"
           >
-            {/* Each logo as it comes, no frame. Graphy's mark is see-through, so it gets a white tile */}
-            {logos[r.company] ? (
-              <img
-                src={logos[r.company]}
-                alt=""
-                className={`shrink-0 w-12 h-12 object-contain ${r.company === 'Graphy' ? 'bg-white rounded-xl p-2' : ''}`}
-              />
-            ) : (
-              <span className="shrink-0 grid place-items-center w-12 h-12 rounded-full bg-[var(--ink)] text-white font-display text-[20px]">
-                {r.company[0]}
-              </span>
-            )}
+                        {/* Logos sit in a little rounded square with the ink stroke, like the rest of the site */}
+            <span className="shrink-0 grid place-items-center w-12 h-12 rounded-xl border-2 border-[var(--ink)] bg-white overflow-hidden">
+              {logos[r.company] ? (
+                <img
+                  src={logos[r.company]}
+                  alt=""
+                  className={
+                    r.company === 'Graphy'
+                      ? 'w-full h-full object-contain p-2'
+                      : /* Trint's logo is a circle, so it's zoomed until it fills the square */
+                        `w-full h-full object-cover ${r.company === 'Trint' ? 'scale-[1.42]' : ''}`
+                  }
+                />
+              ) : (
+                <span className="font-display text-[20px]">{r.company[0]}</span>
+              )}
+            </span>
             <span className="min-w-0">
               <span className="block font-display text-[20px] leading-[1.2]">
                 {r.company}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 /* Colours from the original rachaelgrocott.com, and its eyes, redrawn as SVG */
 
@@ -232,6 +232,7 @@ export function Sparkle({ color, className = '' }: { color: string; className?: 
  */
 export function WordSticker({ lines, color, className = '' }: { lines: string[]; color: string; className?: string }) {
   const ref = useRef<SVGTextElement>(null);
+  const fid = `fat-${useId().replace(/:/g, '')}`;
   const [box, setBox] = useState({ x: 0, y: -40, w: 300, h: 90 });
   const size = 40;
   const lead = 36;
@@ -267,9 +268,25 @@ export function WordSticker({ lines, color, className = '' }: { lines: string[];
       role="img"
       aria-label={lines.join(' ')}
     >
+      {/*
+        Browsers leave little gaps in thick outlines inside small holes (the o, e and g),
+        so under the outline there's a solid ink shape grown out from the letters with a
+        blur, which fills those holes and stays round.
+      */}
+      <defs>
+        <filter id={fid} x="-10%" y="-30%" width="120%" height="160%" colorInterpolationFilters="sRGB">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" />
+          <feComponentTransfer result="grown">
+            <feFuncA type="linear" slope="40" intercept="-1" />
+          </feComponentTransfer>
+          <feFlood floodColor="#2B2340" />
+          <feComposite in2="grown" operator="in" />
+        </filter>
+      </defs>
       {/* soft shadow, white sticker edge, ink outline, fill */}
       {text({ fill: 'rgba(43,35,64,0.18)', stroke: 'rgba(43,35,64,0.18)', strokeWidth: 26, transform: 'translate(0 4)' })}
       {text({ fill: '#fff', stroke: '#fff', strokeWidth: 26 })}
+      {text({ fill: 'var(--ink)', filter: `url(#${fid})` })}
       {text({ fill: color, stroke: 'var(--ink)', strokeWidth: 9, paintOrder: 'stroke fill' }, true)}
     </svg>
   );
