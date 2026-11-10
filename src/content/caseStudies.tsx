@@ -172,19 +172,24 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         type: 'text',
-        eyebrow: 'Getting it out there',
-        heading: 'From a launch to a daily habit',
+        eyebrow: 'AI in my day-to-day',
+        heading: 'Claude runs the marketing. I just say yes.',
         body: (
           <>
             <p>
-              I launched it on Product Hunt. Then a designer in my community asked if his wife&rsquo;s wallpaper
-              company, Living Quarters, could link to it, so their customers could find paints to go with their
-              wallpaper. That link is where most of my traffic comes from today.
+              Posting every day is a job in itself, so I gave it to Claude. I connected it to the Instagram API and
+              built it the tools to do the work properly: it renders each post from the live app, so a palette on
+              Instagram always matches the site; writes the caption and tags every paint brand; and keeps a log so a
+              pairing never repeats. Each day it brings me the post, and my whole job is a yes or a no.
             </p>
             <p>
-              I&rsquo;ve since connected Claude to the Instagram API. Every day it picks a palette, renders the post
-              from the app itself so it always matches the site, and asks me a yes or no before it goes out. I&rsquo;ve
-              started on TikTok too: my second post, on day two, got 230 views.
+              The same setup makes reels, recording the real app on a phone, taps and all. That&rsquo;s taken
+              SWATCHMAKER onto TikTok, where my second post got 230 views on day two.
+            </p>
+            <p>
+              The best channel so far is still a person, though. After the Product Hunt launch, a designer in my
+              community asked to link to SWATCHMAKER from his wife&rsquo;s wallpaper company, Living Quarters, so
+              customers can find paints to go with their wallpaper. That link sends most of my traffic.
             </p>
           </>
         ),
