@@ -476,8 +476,8 @@ export const caseStudies: CaseStudy[] = [
         heading: 'Turning the problem into questions',
         body: (
           <p>
-            I designed for my granny first, which means for people nobody else serves: arthritis, low vision,
-            dyslexia, tremor, brain fog. That shaped every question.
+            I designed for my granny first. She doesn&rsquo;t need hand-holding, she needs it super easy to use and
+            super easy to read. If it works for her, it works for anyone. That shaped every question.
           </p>
         ),
       },
@@ -486,7 +486,7 @@ export const caseStudies: CaseStudy[] = [
         items: [
           'help someone understand any row of any pattern, whoever wrote it?',
           'explain a pattern without ever guessing at it?',
-          'make it work for hands that shake and eyes that tire?',
+          'make it super easy to use, and super easy to read?',
           'keep a designer’s pattern private, and theirs?',
         ],
       },
@@ -583,7 +583,7 @@ export const caseStudies: CaseStudy[] = [
         before: {
           label: 'First idea',
           title: 'Highlight the words that lose you',
-          body: 'Precise drag-selection across small text is the hardest gesture there is for shaky hands, it’s worse on touch, and it was fragile on a PDF.',
+          body: 'Dragging precisely across small text is fiddly for anyone, worse on a phone, and it was fragile on a PDF. It wasn’t easy enough.',
         },
         after: {
           label: 'What I changed',
@@ -644,11 +644,11 @@ export const caseStudies: CaseStudy[] = [
       {
         type: 'chapter',
         label: 'What I learned',
-        heading: 'Design for the hardest hands first',
+        heading: 'If it’s easy for my granny, it’s easy for everyone',
         body: (
           <>
             <p>
-              <strong>Accessibility made it better for everyone.</strong> Designing for arthritis and tremor gave me the
+              <strong>Easy for one person made it easy for everyone.</strong> Designing for my granny gave me the
               tap-a-row gesture, and that turned out to be the simplest way in for anyone.
             </p>
             <p>
