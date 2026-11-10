@@ -34,7 +34,7 @@ export function Experience() {
             </Link>
             <div>
               <h1 className=" font-display leading-[1.02] text-[40px] md:text-[60px]">Experience</h1>
-              <p className="mt-4 max-w-[34ch] text-[18px] md:text-[20px] leading-[1.5] font-medium">
+              <p className="mt-4 max-w-[52ch] text-[18px] md:text-[20px] leading-[1.5] font-medium">
                 Thirteen years designing complex products, from trading platforms for banks to an SDK for AI agents.
               </p>
             </div>

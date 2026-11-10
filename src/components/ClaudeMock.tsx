@@ -1,57 +1,67 @@
 import { LiveArrow } from './LiveCharts';
 
 /*
- * A mock-up of how I work: a chat in Claude on the left, and the artefact it made on the right,
- * which is a real chart drawn live by the Graphy SDK. Drawn in this site's style, not a screenshot.
+ * A mock-up of how I work: the Claude Code app, with a session editing a real chart through the
+ * Graphy SDK, and a preview panel on the right that is the real chart, drawn live.
+ * Drawn in this site's colours, not a screenshot.
  */
+const recents = ['Difference arrow', 'Annotating edge cases', 'Long label wrapping', 'Empty data states', 'Legend placement'];
+
 export default function ClaudeMock() {
   return (
-    <div className="border-[3px] border-[var(--ink)] bg-white shadow-[0_4px_0_var(--ink)] overflow-hidden">
-      {/* Window bar */}
-      <div className="flex items-center gap-2 px-4 h-10 border-b-2 border-[var(--ink)] bg-[var(--c-grey)]">
-        <span className="w-3 h-3 rounded-full border-2 border-[var(--ink)] bg-[var(--c-pink)]" />
-        <span className="w-3 h-3 rounded-full border-2 border-[var(--ink)] bg-[var(--c-yellow)]" />
-        <span className="w-3 h-3 rounded-full border-2 border-[var(--ink)] bg-[var(--c-green)]" />
-        <span className="ml-3 text-[13px] font-bold">Claude</span>
-      </div>
+    <div className="border-[3px] border-[var(--ink)] bg-[#1F1A2E] text-[#EDE8F7] shadow-[0_4px_0_var(--ink)] overflow-hidden text-[12px] leading-[1.5]">
+      <div className="grid md:grid-cols-[150px_minmax(0,1fr)_minmax(0,1.15fr)] min-h-[440px]">
+        {/* Sidebar */}
+        <aside className="hidden md:flex flex-col gap-1 border-r border-white/10 bg-[#19152A] p-3">
+          <div className="flex items-center gap-2 mb-3">
+            <span className="flex gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-[var(--c-pink)]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[var(--c-yellow)]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[var(--c-green)]" />
+            </span>
+          </div>
+          <span className="font-display text-[17px] mb-2">Code</span>
+          <span className="flex items-center gap-2 py-1 text-white/80">
+            <span className="text-[14px] leading-none">+</span> New
+          </span>
+          <span className="py-1 text-white/80">Search</span>
+          <span className="mt-3 mb-1 text-[11px] text-white/45">Recents</span>
+          {recents.map((r, i) => (
+            <span key={r} className={`truncate rounded-md px-2 py-1 -mx-2 ${i === 0 ? 'bg-white/10 text-white' : 'text-white/65'}`}>
+              {r}
+            </span>
+          ))}
+        </aside>
 
-      <div className="grid md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
-        {/* The chat */}
-        <div className="flex flex-col gap-4 p-4 md:p-5 bg-[#FBF8F3] md:border-r-2 border-[var(--ink)] text-[14px] leading-[1.5]">
-          <div className="self-end max-w-[90%] rounded-2xl rounded-br-md bg-[var(--c-grey)] px-4 py-3">
-            Using the Graphy SDK, put a difference arrow on our weekly downloads, from 25 Oct to 1 Nov.
-          </div>
-          <div className="max-w-[95%] text-[var(--ink-soft)]">
-            <p>
-              Here&rsquo;s the real chart with the arrow on it. The SDK works the change out itself: up 67% on the week before.
+        {/* The session */}
+        <div className="flex flex-col min-w-0 border-r border-white/10">
+          <div className="flex items-center h-10 px-4 border-b border-white/10 font-bold truncate">Difference arrow</div>
+          <div className="flex-1 flex flex-col gap-3 p-4">
+            <div className="self-end max-w-[92%] rounded-xl bg-white/10 px-3 py-2">
+              Add a difference arrow to the downloads chart, from 25 Oct to 1 Nov, showing the percentage change
+            </div>
+            <p className="text-white/50">Read DownloadsChart.tsx ›</p>
+            <p className="text-white/50">
+              Edited DownloadsChart.tsx <span className="text-[#9BD3A2]">+5</span> ›
             </p>
+            <p>
+              Done. I used the SDK&rsquo;s difference arrow, so it works the change out itself: it reads{' '}
+              <span className="text-[var(--c-yellow)]">+67.15%</span>. It&rsquo;s live in the preview.
+            </p>
+            <p>Want me to check it with long labels and an empty week too?</p>
           </div>
-          <div className="flex items-center gap-3 rounded-xl border-2 border-[var(--ink)] bg-white px-3 py-2.5">
-            <span className="grid place-items-center w-8 h-8 rounded-lg bg-[var(--c-accent)] border-2 border-[var(--ink)]" aria-hidden>
-              <svg viewBox="0 0 16 16" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <path d="M3 13V8M8 13V3M13 13V6" />
-              </svg>
-            </span>
-            <span>
-              <span className="block font-bold">Weekly downloads</span>
-              <span className="block text-[12px] text-[var(--ink-soft)]">Artefact · React</span>
-            </span>
-          </div>
-          <div className="mt-auto rounded-xl border-2 border-[var(--ink)]/25 bg-white px-4 py-3 text-[var(--ink-soft)]/70">
-            Reply to Claude&hellip;
+          <div className="m-3 mt-auto rounded-xl border border-white/20 bg-white/5 px-3 py-2.5 text-white/40">
+            Reply&hellip;
           </div>
         </div>
 
-        {/* The artefact: a real, live chart */}
-        <div className="flex flex-col">
-          <div className="flex items-center justify-between px-4 h-11 border-y-2 md:border-t-0 border-[var(--ink)] text-[13px]">
-            <span className="font-bold truncate">Weekly downloads</span>
-            <span className="flex rounded-full border-2 border-[var(--ink)] overflow-hidden text-[12px] font-bold">
-              <span className="px-3 py-0.5 bg-[var(--c-accent)]">Preview</span>
-              <span className="px-3 py-0.5">Code</span>
-            </span>
+        {/* Preview panel: a real, live chart */}
+        <div className="flex flex-col min-w-0">
+          <div className="flex items-center justify-between h-10 px-4 border-b border-white/10">
+            <span className="font-bold">Preview</span>
+            <span className="text-white/45">localhost:5173</span>
           </div>
-          <div className="flex-1 min-h-[380px] p-3 md:p-4 [&>div]:border-0 [&>div]:h-full">
+          <div className="flex-1 min-h-[360px] p-2 [&>div]:border-0 [&>div]:h-full">
             <LiveArrow />
           </div>
         </div>

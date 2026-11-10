@@ -184,7 +184,7 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         type: 'claudeMock',
-        caption: 'A mock-up of how I work: the Graphy SDK in Claude, so what I design is the real chart. The chart on the right is live.',
+        caption: 'A mock-up of how I work: a Claude Code session changing the real chart with the Graphy SDK. The preview is live.',
       },
       {
         type: 'chapter',
