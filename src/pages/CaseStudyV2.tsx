@@ -51,21 +51,12 @@ type Chapter = { n: number; id: string; label: string };
 function ChapterOpener({ ch, heading, body, bg }: { ch: Chapter; heading: string; body?: React.ReactNode; bg: string }) {
   return (
     <section id={ch.id} className="scroll-mt-8">
-      <div className={`${wide} flex items-center gap-4 md:gap-6`}>
-        <span
-          aria-hidden
-          className="font-display leading-none text-[72px] md:text-[104px] tabular-nums"
-          style={{ color: 'transparent', WebkitTextStroke: '1.5px var(--ink)' }}
-        >
-          {String(ch.n).padStart(2, '0')}
-        </span>
-        <span className="chunky-tag shrink-0" style={{ background: bg }}>
-          <span className="sr-only">Chapter {ch.n}: </span>
+      <div className={text}>
+        <span className="chunky-tag" style={{ background: bg }}>
           {ch.label}
         </span>
-        <span aria-hidden className="h-[2px] flex-1 bg-[var(--ink)]/15" />
       </div>
-      <div className={`${text} mt-6 md:mt-8`}>
+      <div className={`${text} mt-4`}>
         <h2 className="font-display text-[30px] md:text-[42px] leading-[1.08] text-balance">{heading}</h2>
         {body && <div className={`${prose} mt-6`}>{body}</div>}
       </div>
