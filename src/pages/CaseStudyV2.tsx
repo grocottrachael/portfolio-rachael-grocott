@@ -39,7 +39,7 @@ function Blocks({ block, bg, id }: { block: Block; bg: string; id?: string }) {
   switch (block.type) {
     case 'chapter':
       return (
-        <section id={id} className={`${measure} scroll-mt-10 pt-6 md:pt-10`}>
+        <section id={id} className={`${measure} scroll-mt-10 pt-12 md:pt-20 first:pt-0`}>
           <span className="chunky-tag" style={{ background: bg }}>{block.label}</span>
           <h2 className="mt-4 font-display text-[30px] md:text-[40px] leading-[1.08] text-balance">{block.heading}</h2>
           {block.body && <div className={`${prose} mt-5`}>{block.body}</div>}
@@ -47,7 +47,7 @@ function Blocks({ block, bg, id }: { block: Block; bg: string; id?: string }) {
       );
     case 'text':
       return (
-        <section className={measure}>
+        <section className={`${measure} ${block.heading ? 'pt-4 md:pt-6' : ''}`}>
           {block.heading && (
             <h3 className="font-display text-[23px] md:text-[26px] leading-[1.15] text-balance mb-3">{block.heading}</h3>
           )}
@@ -190,7 +190,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
       </header>
 
       <main className="px-5 py-12 md:py-20">
-        <div className="mx-auto max-w-[720px] space-y-14 md:space-y-20">
+        <div className="mx-auto max-w-[720px] space-y-8 md:space-y-10">
           {tldr && study.tldr ? (
             <>
               <dl className={`${measure} space-y-8`}>
