@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, Plus, X } from 'lucide-react';
+import { ArrowUpRight, Plus, X, ExternalLink } from 'lucide-react';
 import { C, Eyes } from './Shapes';
 import { navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
@@ -49,6 +49,8 @@ type Project = {
   logoRight?: boolean;
   /** show the logo big at the foot of the block, so titles line up with their neighbours */
   logoBelow?: boolean;
+  /** no detail panel yet: the block goes straight to the project's own site */
+  linksOut?: boolean;
   /** the logo spells out the name, so the big title is for screen readers only */
   wordmark?: boolean;
   story: React.ReactNode;
@@ -122,7 +124,8 @@ const projects: Project[] = [
         the size, spacing and contrast, pick your colours, then export a PNG or SVG.
       </>
     ),
-    link: { href: 'https://dotties.app/', label: 'Visit dotties.app' },
+    link: { href: 'https://www.dotties.app/', label: 'Visit dotties.app' },
+    linksOut: true,
   },
   {
     id: 'knot-a-problem',
@@ -173,6 +176,7 @@ const projects: Project[] = [
     summary: 'I founded and ran a 2,000+ member community, for years.',
     story: <>I founded Triangirls and ran it for years, growing it into a community of more than 2,000 women in tech.</>,
     link: { href: 'https://x.com/triangirlsocial', label: 'Triangirls on X' },
+    linksOut: true,
   },
 ];
 
@@ -199,15 +203,35 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
           {p.logo}
         </div>
       )}
-      <button
-        type="button"
-        aria-haspopup="dialog"
-        onClick={(e) => {
-          e.stopPropagation();
-          onOpen();
-        }}
-        className="mt-4 block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
-      >
+      {p.linksOut && p.link ? (
+        <a
+          href={p.link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="mt-4 block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
+        >
+        <span
+          className={
+            p.wordmark
+              ? 'sr-only'
+              : 'block font-display leading-[1.05] text-[28px] md:text-[clamp(22px,1.8vw,32px)]'
+          }
+        >
+          {p.title}
+        </span>
+        <span className={`${p.wordmark ? 'mt-1' : 'mt-3'} block text-[16px] leading-snug max-w-[36ch] ${soft}`}>{p.summary}</span>
+      </a>
+      ) : (
+        <button
+          type="button"
+          aria-haspopup="dialog"
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpen();
+          }}
+          className="mt-4 block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
+        >
         <span
           className={
             p.wordmark
@@ -219,6 +243,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
         </span>
         <span className={`${p.wordmark ? 'mt-1' : 'mt-3'} block text-[16px] leading-snug max-w-[36ch] ${soft}`}>{p.summary}</span>
       </button>
+      )}
 
       {p.logo && p.logoBelow && <div className="mt-auto pt-6">{p.logo}</div>}
 
@@ -239,7 +264,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
         aria-hidden
         className="chunky-icon absolute top-5 right-5"
       >
-        <Plus className="w-4 h-4" />
+        {p.linksOut ? <ExternalLink className="w-4 h-4" aria-hidden /> : <Plus className="w-4 h-4" />}
       </span>
     </article>
   );
@@ -349,7 +374,7 @@ function InfoTile({
       <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
       {href && (
         <span className="chunky-icon absolute top-5 right-5">
-          <ArrowUpRight className="w-4 h-4" aria-hidden />
+          <ExternalLink className="w-4 h-4" aria-hidden />
         </span>
       )}
     </>
@@ -396,7 +421,12 @@ export function Work() {
   const tile = (id: string) => {
     const p = projects.find((x) => x.id === id)!;
     const hasStudy = caseStudies.some((c) => c.id === id);
-    return <ProjectTile key={id} p={p} onOpen={() => (hasStudy ? navigate(`/work/${id}`) : setOpenId(id))} />;
+    const onOpen = () => {
+      if (p.linksOut && p.link) window.open(p.link.href, '_blank', 'noopener,noreferrer');
+      else if (hasStudy) navigate(`/work/${id}`);
+      else setOpenId(id);
+    };
+    return <ProjectTile key={id} p={p} onOpen={onOpen} />;
   };
   const openProject = projects.find((x) => x.id === openId);
 
