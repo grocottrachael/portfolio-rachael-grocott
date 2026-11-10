@@ -75,26 +75,26 @@ export const caseStudies: CaseStudy[] = [
     madeFor: 'Currently working here',
     bg: C.accent,
     intro:
-      'Editable, AI-native charts that developers and their AI agents put into their own products. I’ve been at Graphy since 2021, through every pivot to get here. I design the SDK’s developer experience, and I own the design of graphy.dev.',
+      'Editable, AI-native charts that developers and their AI agents put into their own products. I joined Graphy in 2021 and I’ve helped steer it through every pivot since: bringing in user testing, starting small, and now an SDK. I design its developer experience and own the design of graphy.dev.',
     facts: [
       { label: 'Role', value: 'Senior Product Designer' },
       { label: 'At Graphy', value: 'Since April 2021' },
-      { label: 'I design', value: 'The SDK’s DX, and graphy.dev' },
+      { label: 'The team', value: 'Seven of us: two founders, three engineers, a marketer and me' },
       { label: 'I work in', value: 'Claude, on the real SDK' },
     ],
     link: { href: 'https://graphy.dev/', label: 'Visit graphy.dev' },
     tldr: {
       points: [
-        { label: 'The context', body: 'Nearly six years at Graphy, through every pivot. AI changed the landscape, and an SDK became the right fit: charts for developers and their AI agents.' },
-        { label: 'What I did', body: 'I design the SDK’s developer experience and own graphy.dev. Most proud of point and edit: click any part of a chart and change that thing.' },
-        { label: 'How I work', body: 'I design on the real SDK in Claude, and hand over pull requests or a spec with every edge case, pairing with engineers all the way.' },
-        { label: 'The result', body: 'The React SDK hit 9.8k npm downloads in one week, up 67% on the week before.' },
+        { label: 'The context', body: 'I joined a team building something big behind closed doors. I brought in user testing, we started small, and we followed what we learned all the way to an SDK for developers and their AI agents.' },
+        { label: 'What I did', body: 'Point and edit: click any part of a chart and change it right there. I prototyped it off my own back, and it won over a big customer who’d built everything around side panels.' },
+        { label: 'How I work', body: 'Close to customers, shipping fast and then improving. I design on the real SDK in Claude, and hand over pull requests or a spec with every edge case.' },
+        { label: 'The result', body: 'Point and edit became one of our strongest sales demos, and the React SDK hit 9.8k npm downloads in one week, up 67%.' },
       ],
       stats: [
         { value: '9.8k', label: 'npm downloads in one week' },
         { value: '+67%', label: 'on the week before' },
         { value: '58.8k', label: 'downloads, 16 Aug to 1 Nov' },
-        { value: '2021', label: 'at Graphy since' },
+        { value: '7', label: 'people on the whole team' },
       ],
     },
     blocks: [
@@ -105,13 +105,29 @@ export const caseStudies: CaseStudy[] = [
         body: (
           <>
             <p>
-              I’ve been at Graphy since 2021, and I’ve been through all sorts of pivots with them on the way to product-market fit. I designed our web app, then AI changed everything and an SDK became the right fit: charts that developers, and the AI agents they build, can drop into their own products.
+              When I joined Graphy in 2021, the team was building something big behind closed doors, without testing any of it with the people it was for. I&rsquo;d seen how much you learn from watching people use things, so I made the case for user testing and getting out into people&rsquo;s actual work, and we quickly started testing with real people, early and often.
             </p>
             <p>
-              That meant designing for a whole new audience on a new platform. The people choosing Graphy now read code and docs first, so the developer experience basically is the product, from the API and docs to the defaults and the editing their own users get for free.
+              What we learned was that the project was too big. So we started small instead, with a tool that made a single chart, really easy to use and full of little delights. That naturally grew into a full product, and while we searched for product-market fit, AI changed the landscape. An SDK became the right fit: charts that developers, and the AI agents they build, can drop into their own products.
+            </p>
+            <p>
+              We&rsquo;re a team of seven: two founders, three engineers, a marketer and me. So designing for developers meant owning the whole experience, from the API and the docs to the defaults and the editing their own users get for free.
             </p>
           </>
         ),
+      },
+      {
+        type: 'pivot',
+        before: {
+          label: 'When I joined',
+          title: 'Building behind closed doors',
+          body: 'One big project, built without showing it to the people it was for.',
+        },
+        after: {
+          label: 'What I changed',
+          title: 'Testing with real people, early and often',
+          body: 'User testing and time in people’s real work, so every pivot since has been led by what we learned, not by guesses.',
+        },
       },
       {
         type: 'chapter',
@@ -120,13 +136,23 @@ export const caseStudies: CaseStudy[] = [
         body: (
           <>
             <p>
-              Editing a chart used to mean digging through side panels, and everything was really hard to find. You had to know where a setting lived before you could change it.
+              Editing a chart used to mean digging through side panels, where everything was really hard to find. You had to know where a setting lived before you could change it.
             </p>
             <p>
-              Now you can click on any part of a chart, like a bar, an axis or the legend, and change that thing right where it is. Working with AI let us move fast enough to make a change that big.
+              Everything was on the table. One of our biggest customers, Gamma, had built their whole product around side panels, so a better panel was the safe answer, and we felt pretty trapped by it. Prompting was the other obvious one, but typing out what you want takes far too long for a quick change. We wanted it to feel fast, natural and easy, and a bit delightful too.
+            </p>
+            <p>
+              So I took inspiration from the design tools people already know, like Canva and Google Slides: you click the thing you want to change, and its controls appear right there. Nobody has to learn it.
             </p>
           </>
         ),
+      },
+      {
+        type: 'hmw',
+        items: [
+          'make changing a chart as quick as pointing at it?',
+          'let people edit without knowing where a setting lives?',
+        ],
       },
       {
         type: 'pivot',
@@ -138,7 +164,7 @@ export const caseStudies: CaseStudy[] = [
         after: {
           label: 'Point and edit',
           title: 'Click the thing, change the thing',
-          body: 'Click a bar, an axis or the legend and its controls open right there. Working with AI let us move fast enough to make it.',
+          body: 'Click a bar, an axis or the legend and its controls open right there, just like the design tools people already use.',
         },
       },
       {
@@ -148,14 +174,32 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         type: 'chapter',
+        label: 'Getting buy-in',
+        heading: 'A prototype instead of a debate',
+        body: (
+          <>
+            <p>
+              I was really passionate about it, so I built a working prototype off my own back rather than arguing for it. We decided to show it to Gamma to inspire them, and they loved it so much they&rsquo;re building it into their product.
+            </p>
+            <p>
+              The team love it because it&rsquo;s so intuitive, and it&rsquo;s become one of our strongest sales demos, landing with some very big names.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'chapter',
         label: 'Just shipped',
         heading: 'Annotating, made freeform',
         body: (
           <>
             <p>
               Annotations are how a chart tells its story: the arrow that says &ldquo;up 67% on last week&rdquo;, the
-              note pinned to a spike. I&rsquo;ve just redesigned annotating to be freeform, so they sit wherever the
-              story needs them.
+              note pinned to a spike. They worked, but they&rsquo;d come over from our old app and were looking dated.
+              As we moved more features into the SDK, the team agreed it was time for a refresh.
+            </p>
+            <p>
+              I&rsquo;ve just redesigned annotating to be freeform, so annotations sit wherever the story needs them.
             </p>
           </>
         ),
@@ -178,6 +222,9 @@ export const caseStudies: CaseStudy[] = [
             </p>
             <p>
               Figma could never cope with all the edge cases a chart has: long labels, empty data, a hundred categories, negative values. Now I design on real charts with real data, and honestly, I can make anything. And I’m always pairing with engineers along the way.
+            </p>
+            <p>
+              Across the team I&rsquo;ve pushed us to stay close to customers and to ship fast, then improve. Getting something real in front of people beats perfecting it in private, which is the lesson from my very first weeks here.
             </p>
           </>
         ),
