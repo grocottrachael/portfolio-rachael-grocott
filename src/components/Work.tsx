@@ -178,14 +178,11 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
     <article
       id={p.id}
       onClick={onOpen}
-      className={`group relative cursor-pointer overflow-hidden p-5 md:p-7 flex flex-col ${
+      className={`group relative cursor-pointer overflow-hidden p-5 md:p-7 flex flex-col transition-[filter] hover:brightness-[1.03] ${
         p.dark ? 'text-white' : 'text-[var(--ink)]'
       } ${p.span}`}
       style={{ background: p.bg }}
     >
-      <div className="pr-12">
-        <For dark={p.dark} live={p.live}>{p.madeFor}</For>
-      </div>
       {p.logo && !p.logoBelow && <div className={`mt-6 ${p.logoRight ? 'md:hidden' : ''}`}>{p.logo}</div>}
       {p.logo && p.logoRight && (
         <div
@@ -201,7 +198,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="mt-4 block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
+          className="block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
         >
         <span
           className={
@@ -252,12 +249,6 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
         </div>
       )}
 
-      <span
-        aria-hidden
-        className="chunky-icon absolute top-5 right-5"
-      >
-        {p.linksOut ? <ExternalLink className="w-4 h-4" aria-hidden /> : <Plus className="w-4 h-4" />}
-      </span>
     </article>
   );
 }
@@ -354,14 +345,8 @@ function InfoTile({
 }) {
   const inner = (
     <>
-      <For dark={dark}>{madeFor}</For>
-      <h3 className="mt-4 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
+      <h3 className="font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
       <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
-      {href && (
-        <span className="chunky-icon absolute top-5 right-5">
-          <ExternalLink className="w-4 h-4" aria-hidden />
-        </span>
-      )}
     </>
   );
   const cls = `group relative block p-5 md:p-7 ${dark ? 'text-white' : ''}`;
@@ -428,15 +413,11 @@ export function Work() {
           className="group relative overflow-hidden p-5 md:p-7 flex flex-col text-[var(--ink)] col-span-2 md:col-span-1 min-h-[220px]"
           style={{ background: C.green }}
         >
-          <span className="chunky-tag self-start">For anyone interested</span>
-          <span className="mt-4 block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
+          <span className="block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
             Experience
           </span>
           <span className="mt-3 block text-[16px] leading-snug max-w-[24ch] text-[var(--ink-soft)]">
             Graphy, Trint, Geckoboard and more. Plus skills and talks.
-          </span>
-          <span className="chunky-icon absolute top-5 right-5 transition-transform group-hover:translate-x-0.5" aria-hidden>
-            <ArrowRight className="w-4 h-4" />
           </span>
         </Link>
         {tile('graphy')}

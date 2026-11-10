@@ -180,8 +180,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
               <ArrowLeft className="w-4 h-4" aria-hidden /> Rachael Grocott
             </Link>
             <div>
-              <Label>{study.madeFor}</Label>
-              <h1 className="mt-4 font-display leading-[1.02] text-[40px] md:text-[60px]">{study.title}</h1>
+              <h1 className=" font-display leading-[1.02] text-[40px] md:text-[60px]">{study.title}</h1>
               <p className="mt-4 text-[18px] md:text-[20px] leading-[1.5] font-medium">{study.intro}</p>
             </div>
             <dl className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-4 border-t-[2px] border-[var(--ink)] pt-4">
