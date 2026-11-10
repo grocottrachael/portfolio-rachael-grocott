@@ -94,7 +94,7 @@ const projects: Project[] = [
   },
   {
     sticker: (
-      <WordSticker color={C.yellow} className="text-[26px] md:text-[clamp(24px,2vw,32px)] -rotate-[5deg] origin-bottom-left">
+      <WordSticker color={C.yellow} className="text-[30px] md:text-[clamp(28px,2.4vw,38px)] -rotate-[5deg] origin-bottom-left">
         Currently
         <br />
         working here!
@@ -196,7 +196,7 @@ export function HoverCta({ label, icon }: { label: string; icon: React.ReactNode
     <span
       title={label}
       aria-hidden
-      className="pointer-events-none absolute top-4 right-4 md:top-5 md:right-5 z-10 grid place-items-center w-9 h-9 rounded-full border-2 border-[var(--ink)] bg-white text-[var(--ink)] shadow-[0_2px_0_var(--ink)] transition-all duration-200 ease-in-out [&_svg]:w-4 [&_svg]:h-4 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:scale-75 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:scale-100 [@media(hover:hover)]:group-focus-within:opacity-100 [@media(hover:hover)]:group-focus-within:scale-100"
+      className="hover-cta pointer-events-none absolute right-4 md:right-5 z-10 grid place-items-center w-9 h-9 rounded-full border-2 border-[var(--ink)] bg-white text-[var(--ink)] shadow-[0_2px_0_var(--ink)] transition-all duration-200 ease-in-out [&_svg]:w-4 [&_svg]:h-4 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:scale-75 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:scale-100 [@media(hover:hover)]:group-focus-within:opacity-100 [@media(hover:hover)]:group-focus-within:scale-100"
     >
       {icon}
     </span>
