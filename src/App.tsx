@@ -1,150 +1,115 @@
-import { useState, useRef, useEffect } from 'react';
-import { Hero } from './components/Hero';
-import { ChatInput } from './components/ChatInput';
-import { ChatOverlay, Message } from './components/ChatOverlay';
-import { projectId, publicAnonKey } from './utils/supabase/info';
-import faviconImage from './assets/480c09d663e40bc21ee2dec2f07edf81d50784b4.png';
+import { ArrowUpRight } from 'lucide-react';
 
-
-export default function App() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-
-  // Set favicon on mount using the existing asset
-  useEffect(() => {
-    let favicon = document.querySelector("link[rel~='icon']") as HTMLLinkElement | null;
-    if (!favicon) {
-      favicon = document.createElement('link');
-      favicon.rel = 'icon';
-      document.head.appendChild(favicon);
-    }
-    favicon.href = faviconImage as unknown as string;
-  }, []);
-
-  const handleSubmit = async () => {
-    if (!input.trim() || isLoading) return;
-
-    const userMessage = input.trim();
-    setInput('');
-    
-    // Add user message
-    const newMessages = [...messages, { role: 'user' as const, content: userMessage }];
-    setMessages(newMessages);
-    setIsLoading(true);
-
-    try {
-      console.log('Sending message to chat endpoint with streaming...');
-      const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-3e9b33b2/chat`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${publicAnonKey}`,
-          },
-          body: JSON.stringify({ 
-            message: userMessage,
-            history: newMessages.slice(0, -1) // Send all messages except the one we just added
-          }),
-        }
-      );
-
-      console.log('Response status:', response.status);
-
-      if (!response.ok) {
-        const data = await response.json();
-        console.error('Server error response:', data);
-        throw new Error(data.error || 'Failed to get response');
-      }
-
-      // Handle streaming response
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let accumulatedText = '';
-      let firstChunk = true;
-
-      if (!reader) {
-        throw new Error('No reader available');
-      }
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n');
-
-        for (const line of lines) {
-          if (line.startsWith('data: ')) {
-            const data = line.slice(6);
-            try {
-              const parsed = JSON.parse(data);
-              if (parsed.text) {
-                accumulatedText += parsed.text;
-                
-                if (firstChunk) {
-                  // First chunk - add assistant message and stop loading
-                  firstChunk = false;
-                  setIsLoading(false);
-                  setMessages([...newMessages, { role: 'assistant', content: accumulatedText }]);
-                } else {
-                  // Update the last message
-                  setMessages((prev) => {
-                    const updated = [...prev];
-                    updated[updated.length - 1] = { role: 'assistant', content: accumulatedText };
-                    return updated;
-                  });
-                }
-              }
-            } catch (e) {
-              // Skip invalid JSON
-            }
-          }
-        }
-      }
-
-      setIsLoading(false);
-      // Focus input after completion
-      setTimeout(() => {
-        document.querySelector<HTMLInputElement>('input[type="text"]')?.focus();
-      }, 50);
-
-    } catch (error) {
-      console.error('Chat error:', error);
-      console.error('Error details:', error instanceof Error ? error.message : error);
-      
-      setMessages([
-        ...newMessages,
-        {
-          role: 'assistant',
-          content: "I'm sorry, I encountered an error. Please try again."
-        }
-      ]);
-      
-      setIsLoading(false);
-      setTimeout(() => {
-        document.querySelector<HTMLInputElement>('input[type="text"]')?.focus();
-      }, 50);
-    }
-  };
-
+/* Solid brand marks (Simple Icons), rather than outline icons */
+function LinkedinMark() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Main Content - Everything above the fold */}
-      <div className="min-h-screen flex flex-col md:justify-center px-6 md:px-12 lg:px-20 2xl:px-32 py-4">
-        <Hero />
-      </div>
+    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" aria-hidden>
+      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+    </svg>
+  );
+}
+function GithubMark() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" aria-hidden>
+      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+    </svg>
+  );
+}
+import { Work } from './components/Work';
+import { C, Flower } from './components/Shapes';
+import profileImage from './assets/rachael-avatar.webp';
+import { usePath } from './router';
+import { caseStudies } from './content/caseStudies';
+import { CaseStudy } from './pages/CaseStudy';
+import { CaseStudyV2 } from './pages/CaseStudyV2';
+import { Experience } from './pages/Experience';
 
-      {/* Chat Interface */}
-      <ChatOverlay messages={messages} isLoading={isLoading} onClose={() => setMessages([])} />
-      <ChatInput 
-        value={input}
-        onChange={setInput}
-        onSubmit={handleSubmit}
-        isLoading={isLoading}
-        hasMessages={messages.length > 0}
-      />
+function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
+  return (
+    <span
+      className="whitespace-nowrap px-[0.12em] -mx-[0.06em]"
+      style={{ background: bg }}
+    >
+      {children}
+    </span>
+  );
+}
+
+const button =
+  'chunky';
+
+function Home() {
+  return (
+    <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] md:flex">
+      {/* Who I am: pinned on the left while the blocks scroll on the right */}
+      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen p-2.5 pb-0 md:p-3">
+        {/* A block of its own, so the white gutters run round it like the grid */}
+        <div className="relative overflow-hidden h-full md:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-6 md:gap-7 md:justify-center">
+        <div>
+        {/* My photo in the middle of a flower */}
+        <div className="relative mb-4 -ml-2 w-24 h-24 md:w-28 md:h-28">
+          <Flower color={C.pink} className="absolute inset-0 w-full h-full" />
+          <img
+          src={profileImage}
+          alt="Rachael"
+          width={64}
+          height={64}
+          className="absolute left-[19%] top-[24%] w-[62%] h-[62%] rounded-full object-cover border-2 border-[var(--ink)]"
+        />
+        </div>
+        <h1 className="whitespace-nowrap font-display leading-none text-[9vw] md:text-[clamp(26px,2.5vw,46px)]">
+          Hiya, I&rsquo;m Rachael!
+        </h1>
+        </div>
+
+        <div>
+          <p className="font-bold text-[24px] md:text-[clamp(19px,1.55vw,28px)] leading-[1.32] tracking-[-0.015em]">
+            I&rsquo;m a Senior Product Designer at <Pill bg={C.accent}>Graphy</Pill>. I make complex things simple, then
+            polish them till they&rsquo;re <Pill bg={C.yellow}>genuinely beautiful</Pill>.
+          </p>
+          <p className="mt-5 text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
+            Part designer, part engineer. I prototype and ship in code with AI, from the Graphy SDK to my own apps. I
+            founded Triangirls, I speak at events, and I love rallying a team around a good idea.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-2.5">
+          <a href="mailto:rachaelgrocott@gmail.com" className={button}>
+            Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/rachaelgrocott/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={button}
+          >
+            <LinkedinMark /> LinkedIn
+          </a>
+          <a
+            href="https://github.com/grocottrachael"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={button}
+          >
+            <GithubMark /> GitHub
+          </a>
+        </div>
+        {/* A flower with lashes, peeking in from the corner */}
+        <Flower color={C.blue} eyes className="pointer-events-none absolute -right-8 -bottom-10 w-36 h-36 md:w-44 md:h-44 -rotate-[14deg]" />
+        </div>
+      </aside>
+
+      <main className="md:flex-1 min-w-0">
+        <Work />
+      </main>
     </div>
   );
+}
+
+export default function App() {
+  const path = usePath();
+  const study = caseStudies.find((c) => path === `/work/${c.id}`);
+  if (path === '/experience') return <Experience />;
+  if (study) return study.v2 ? <CaseStudyV2 study={study} /> : <CaseStudy study={study} />;
+  return <Home />;
 }

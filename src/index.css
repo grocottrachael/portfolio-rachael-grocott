@@ -1,9 +1,121 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,800,100,1&display=swap");
 @import "tailwindcss";
 
-/* any of your own extra styles can go here */
-/* If you want Google fonts, keep them renamed here: */
-@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap");
+/* Silka, from the original rachaelgrocott.com */
+@font-face {
+  font-family: "Silka";
+  src: url("/fonts/silka-medium-webfont.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Silka";
+  src: url("/fonts/silka-bold-webfont.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Silka";
+  src: url("/fonts/silka-black-webfont.woff2") format("woff2");
+  font-weight: 900;
+  font-display: swap;
+}
 
 :root {
-  font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+  font-family: "Silka", system-ui, sans-serif;
+  font-weight: 500;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--c-yellow);
+}
+
+/* Palette: the original rachaelgrocott.com colours, softened, with aubergine instead of black */
+:root {
+  --c-pink: #E8C1CA;
+  --c-blue: #8FA8EC;
+  --c-yellow: #F0D27F;
+  --c-green: #9BD3A2;
+  --c-grey: #ECE6E0;
+  --c-accent: #C3B3EE;
+  --ink: #2B2340;
+  --ink-soft: rgb(43 35 64 / 0.78);
+  --paper: #FFFDF9;
+}
+
+/*
+ * Chunky controls, like knotaproblem.app: square corners, a 2px ink border
+ * and a hard offset shadow. They press down when clicked.
+ */
+.chunky {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #fff;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  padding: 0.7rem 1.15rem;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.chunky:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.chunky:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.chunky:focus-visible {
+  outline: 3px solid var(--c-blue);
+  outline-offset: 3px;
+}
+
+/* Small labels ("For crocheters"): same border, smaller shadow, not clickable */
+.chunky-tag {
+  /* A plain label: small, bold, no box */
+  display: inline-block;
+  white-space: nowrap;
+  background: none !important;
+  padding: 0;
+  color: var(--ink);
+  opacity: 0.7;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Square icon button (the + and x on cards) */
+.chunky-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  background: #fff;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+.group:hover .chunky-icon,
+.chunky-icon:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+/* Headings: Fraunces, at its softest and with the wonky letters on */
+.font-display {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 800;
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  letter-spacing: -0.01em;
 }
