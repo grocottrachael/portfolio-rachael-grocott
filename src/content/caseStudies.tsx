@@ -160,35 +160,9 @@ export const caseStudies: CaseStudy[] = [
         ),
       },
       {
-        /* Drawn live by the SDK, in the same style as the editable chart above */
+        /* The real editor in annotate mode, in the same style as the editable chart above */
         type: 'liveArrow',
-        caption: 'A difference arrow works out the change between two bars for you.',
-      },
-      {
-        type: 'chapter',
-        label: 'Going beyond a colour scheme',
-        heading: 'Themes',
-        body: (
-          <>
-            <p>
-              A theme in Graphy isn’t just a palette. It decides the whole look, from the paper, type and colours to the actual shapes the bars are drawn in, like leaf blades in Botanical, chalk on a board or a blueprint’s hatching. The chart itself doesn’t name a theme, so the same chart can be drawn in any of them.
-            </p>
-            <p>I designed and built the themes myself as pull requests, and handed them to engineering ready to go.</p>
-          </>
-        ),
-      },
-      {
-        type: 'figure',
-        images: [
-          g('theme-botanical', 'The downloads chart in the Botanical theme: bars drawn as leaf blades on grained paper'),
-          g('theme-chalkboard', 'The same chart on a chalkboard, drawn in chalk'),
-          g('theme-blueprint', 'The same chart as a blueprint, with hatched bars on a blue drafting grid'),
-
-          g('theme-watercolor', 'The same chart in watercolour washes'),
-          g('theme-neo-brutalist', 'The same chart in Neo Brutalist: loud pink blocks with a hard black shadow'),
-          g('theme-comic', 'The same chart as a comic panel, with halftone dots and black outlines'),
-        ],
-        caption: 'One chart, six themes. Nothing changed but the theme.',
+        caption: 'The real annotating, running right here. Click the arrow to change its label, colour or size, or drag its ends to other bars.',
       },
       {
         type: 'chapter',

@@ -4,7 +4,6 @@ import { Link } from '../router';
 /* The Graphy SDK only loads on the page that uses it */
 const LiveCharts = lazy(() => import('../components/LiveCharts'));
 const LiveEdit = lazy(() => import('../components/LiveEdit'));
-const LiveArrow = lazy(() => import('../components/LiveCharts').then((m) => ({ default: m.LiveArrow })));
 import { caseStudies, type Block, type CaseStudy as Study, type Img } from '../content/caseStudies';
 
 /*
@@ -139,7 +138,7 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
         <figure>
           <div className="p-5 md:p-8" style={{ background: bg }}>
             <Suspense fallback={<div className="h-[460px]" />}>
-              <LiveArrow />
+              <LiveEdit mode="annotate" />
             </Suspense>
           </div>
           {block.caption && <Caption>{block.caption}</Caption>}

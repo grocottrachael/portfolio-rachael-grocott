@@ -30,7 +30,10 @@ const house = styles({
     style.headline.item.number({ fontFamily: 'Fraunces, Georgia, serif', fontWeight: 800, textColor: ink }),
     style.geom.bar({ fill: '#C3B3EE', stroke: ink, strokeWidth: 2, cornerRadius: 0 }),
     style.geom.area({ fill: '#C3B3EE', stroke: ink, strokeWidth: 2.5 }),
-    style.gridLine({ stroke: '#E4DED6' }),
+    style.gridLine({ stroke: '#E4DED6', dashArray: [] }),
+    style.panelBorder({ strokeWidth: 0 }),
+    style.tickLabel({ fontFamily: 'Silka, system-ui, sans-serif', fontWeight: 500, textColor: 'rgba(43, 35, 64, 0.7)', textOutlineWidth: 0 }),
+    style.axisLabel({ fontFamily: 'Silka, system-ui, sans-serif', fontWeight: 500, textColor: '#2B2340' }),
   ],
 });
 
@@ -95,7 +98,10 @@ const arrowSpec = pipe(
       style.graph({ fill: '#FFFDF9', textColor: ink, fontFamily: 'Silka, system-ui, sans-serif', cornerRadius: 0 }),
       style.heading({ fontFamily: 'Fraunces, Georgia, serif', fontWeight: 800, textColor: ink }),
       style.geom.bar({ fill: '#C3B3EE', stroke: ink, strokeWidth: 2, cornerRadius: 0 }),
-      style.gridLine({ stroke: '#E4DED6' }),
+      style.gridLine({ stroke: '#E4DED6', dashArray: [] }),
+    style.panelBorder({ strokeWidth: 0 }),
+    style.tickLabel({ fontFamily: 'Silka, system-ui, sans-serif', fontWeight: 500, textColor: 'rgba(43, 35, 64, 0.7)', textOutlineWidth: 0 }),
+    style.axisLabel({ fontFamily: 'Silka, system-ui, sans-serif', fontWeight: 500, textColor: '#2B2340' }),
       style.annotation.differenceArrow({ stroke: ink, strokeWidth: 2 }),
     ],
   })
