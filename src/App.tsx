@@ -90,8 +90,8 @@ function Home() {
 
         <div>
           <p className="text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
-            I&rsquo;m a Senior Product Designer at <Pill bg={C.accent}>Graphy</Pill>. I make <Pill bg={C.yellow}>complex things simple</Pill>,
-            then polish them till they&rsquo;re genuinely beautiful.
+            I&rsquo;m a Senior Product Designer at Graphy. I make <Pill bg={C.accent}>complex things simple</Pill>,
+            then polish them till they&rsquo;re <Pill bg={C.yellow}>genuinely beautiful</Pill>.
           </p>
           <p className="mt-5 text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
             Part designer, part engineer. I prototype and ship in code with AI, from the Graphy SDK to my own apps. I
