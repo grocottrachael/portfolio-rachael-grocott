@@ -93,8 +93,9 @@ function BlockView({ block }: { block: Block }) {
       );
     case 'shows':
       return (
-        <section className={wide}>
-          <ul className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 border-y border-[var(--ink)]/10 py-6">
+        /* Same column as the facts above it, so the two rows line up */
+        <section className={text}>
+          <ul className="grid grid-cols-2 gap-x-8 gap-y-6 border-y border-[var(--ink)]/10 py-6">
             {block.items.map((it) => (
               <li key={it.title}>
                 <span className="block text-[15px] font-black uppercase tracking-[0.02em]">{it.title}</span>
