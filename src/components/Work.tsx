@@ -79,10 +79,10 @@ const projects: Project[] = [
     span: 'col-span-2 md:col-span-4 md:row-span-2',
     summary: 'See paint colours from every brand side by side.',
     image: {
-      src: '/swatchmaker-tile-crop.webp',
+      src: '/swatchmaker-tile-sq.webp',
       alt: 'SwatchMaker matching paints to the Rivers wallpaper by Living Quarters: Lick Green 03, Dulux Bracken Salts 5 and Valspar Ode to Joy',
-      /* Cropped at the edge of a colour column, so nothing's cut mid-word and it fits the card's shape */
-      className: 'aspect-[14/15] md:aspect-auto border-[3px] border-[var(--ink)]',
+      /* A square screenshot of the real app (all three colours), so it fits the card without cropping */
+      className: 'aspect-square md:aspect-auto border-[3px] border-[var(--ink)]',
       fill: true,
     },
     story: (
@@ -302,7 +302,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
             src={p.image.src}
             alt={p.image.alt}
             loading="lazy"
-            className={`w-full ${p.image.fill ? 'h-full object-cover object-left-top' : ''} ${
+            className={`w-full ${p.image.fill ? 'h-full object-cover object-top' : ''} ${
               p.image.className ?? ''
             }`}
           />
