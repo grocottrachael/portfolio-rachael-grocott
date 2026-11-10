@@ -102,7 +102,7 @@ const projects: Project[] = [
     title: 'Graphy SDK',
     madeFor: 'For developers',
     bg: C.accent,
-    span: 'col-span-2',
+    span: 'col-span-2 md:col-span-1',
     badge: 'Current role',
     logo: <img src="/graphy-logo.png" alt="" width={160} height={47} className="h-10 w-auto" />,
     wordmark: true,
@@ -139,7 +139,11 @@ const projects: Project[] = [
     title: 'Knot a Problem',
     madeFor: 'For crocheters',
     bg: C.yellow,
-    span: 'col-span-2 md:col-span-1',
+    span: 'col-span-2 md:col-span-1 md:row-span-2',
+    image: {
+      src: '/knot-a-problem.webp',
+      alt: 'Knot a Problem social post: Put it down. Pick it up. Still on round 3.',
+    },
     summary: 'Never get stuck reading a crochet pattern again. It started with my granny.',
     story: (
       <>
@@ -156,7 +160,7 @@ const projects: Project[] = [
     title: 'Crumbs',
     madeFor: 'Just for us',
     bg: C.green,
-    span: 'col-span-2 md:col-span-1',
+    span: 'col-span-2',
     logo: <img src="/crumbs-icon.svg" alt="" width={44} height={44} className="h-11 w-11 rounded-[10px]" />,
     summary: 'A no-faff calorie diary for our household. Snap your plate and it works it out.',
     story: (
@@ -172,10 +176,8 @@ const projects: Project[] = [
     id: 'triangirls',
     title: 'Triangirls',
     madeFor: 'For women in tech',
-    bg: C.green,
+    bg: C.blue,
     span: 'col-span-2 md:col-span-1',
-    logo: <img src="/triangirls-logo.png" alt="" width={190} height={37} className="h-9 w-auto" />,
-    wordmark: true,
     summary: 'I founded and ran a 2,000+ member community, for years.',
     story: <>I founded Triangirls and ran it for years, growing it into a community of more than 2,000 women in tech.</>,
     link: { href: 'https://x.com/triangirlsocial', label: 'Triangirls on X' },
@@ -406,30 +408,30 @@ export function Work() {
         aria-label="Things I've made"
         className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:auto-rows-[minmax(13vw,auto)] gap-2.5 p-2.5 md:gap-3 md:p-3 md:pl-0"
       >
-        {tile('graphy')}
+        {tile('swatchmaker')}
         <ShapeTile>
           <Eyes />
         </ShapeTile>
-        {tile('swatchmaker')}
-        {tile('knot-a-problem')}
-        {tile('crumbs')}
-        {tile('dotties')}
-        {tile('triangirls')}
-        <InfoTile bg={C.yellow} madeFor="For teams" title="Talks & workshops" className="col-span-2 md:col-span-1">
-          I&rsquo;ve spoken at loads of events, and I run sessions like <em>How to give and receive feedback</em>.
-        </InfoTile>
-        <InfoTile bg={C.pink} madeFor="In the press" title="VICE & Samsung" className="col-span-2 md:col-span-1">
-          Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
-        </InfoTile>
         <InfoTile
           bg={C.accent}
           madeFor="For anyone curious"
           title="My latest work"
           href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
-          className="col-span-2"
+          className="col-span-2 md:col-span-1"
         >
           I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
         </InfoTile>
+        {tile('knot-a-problem')}
+        {tile('crumbs')}
+        {tile('dotties')}
+        {tile('triangirls')}
+        <InfoTile bg={C.grey} madeFor="For teams" title="Talks & workshops" className="col-span-2 md:col-span-1">
+          I&rsquo;ve spoken at loads of events, and I run sessions like <em>How to give and receive feedback</em>.
+        </InfoTile>
+        <InfoTile bg={C.pink} madeFor="In the press" title="VICE & Samsung" className="col-span-2 md:col-span-1">
+          Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
+        </InfoTile>
+        {tile('graphy')}
       </section>
       <AnimatePresence>
         {openProject && <ProjectPanel key={openProject.id} p={openProject} onClose={() => setOpenId(null)} />}
