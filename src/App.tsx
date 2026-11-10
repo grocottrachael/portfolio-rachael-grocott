@@ -42,7 +42,7 @@ function Home() {
       {/* Who I am: pinned on the left while the blocks scroll on the right */}
       <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen p-2.5 pb-0 md:p-3">
         {/* A block of its own, so the white gutters run round it like the grid */}
-        <div className="h-full md:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-8 md:gap-10 md:justify-center">
+        <div className="h-full md:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-6 md:gap-7 md:justify-center">
         <div>
         <img
           src={profileImage}
