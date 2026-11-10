@@ -52,6 +52,8 @@ type Project = {
   image?: { src: string; alt: string; className?: string; fill?: boolean };
   /* A kitsch sticker stuck on the corner of the picture */
   sticker?: React.ReactNode;
+  /* Where the sticker sits, if not bottom left */
+  stickerClass?: string;
   /** shown above the title */
   logo?: React.ReactNode;
   /** on a wide block, show the logo big on the right instead of above the title */
@@ -156,7 +158,19 @@ const projects: Project[] = [
     madeFor: 'Just for me',
     bg: C.green,
     span: 'col-span-2',
-    logo: <img src="/crumbs-icon.svg" alt="" width={44} height={44} className="h-11 w-11 rounded-[10px]" />,
+    /* The app icon as a sticker you can move about, like the Graphy one */
+    sticker: (
+      <img
+        src="/crumbs-icon.svg"
+        alt=""
+        width={112}
+        height={112}
+        draggable={false}
+        className="sticker w-[clamp(72px,6.5vw,104px)] h-auto rounded-[22%] rotate-[6deg]"
+      />
+    ),
+    stickerClass: 'self-end md:absolute md:right-7 md:bottom-7 md:mt-0 md:pt-0',
+    /* keeps the text narrow so it clears the sticker */
     logoRight: true,
     summary: 'A no-faff calorie diary for our household. Snap your plate and it works it out.',
     story: (
@@ -274,7 +288,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
           whileHover={{ scale: 1.04, rotate: -2 }}
           whileDrag={{ scale: 1.08, rotate: 3, filter: 'drop-shadow(0 10px 8px rgba(43,35,64,0.25))' }}
           onClick={(e) => e.stopPropagation()}
-          className="relative z-20 mt-auto pt-6 self-start cursor-grab active:cursor-grabbing touch-none"
+          className={`relative z-20 mt-auto pt-6 cursor-grab active:cursor-grabbing touch-none ${p.stickerClass ?? 'self-start'}`}
           title="Pick me up"
         >
           {p.sticker}
