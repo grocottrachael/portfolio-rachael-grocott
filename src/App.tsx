@@ -55,7 +55,7 @@ function Home() {
           <span className="block font-bold text-[16px] md:text-[clamp(14px,1.1vw,20px)] tracking-tight mb-2">
             Hiya! I&rsquo;m
           </span>
-          <span className="block font-black text-[14vw] md:text-[clamp(40px,4.5vw,84px)] tracking-[-0.02em]">
+          <span className="block font-black text-[12vw] md:text-[clamp(34px,3.6vw,68px)] tracking-[-0.02em]">
             Rachael
             <br />
             Grocott
