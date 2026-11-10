@@ -169,7 +169,7 @@ const projects: Project[] = [
         width={112}
         height={112}
         draggable={false}
-        className="sticker w-[clamp(72px,6.5vw,104px)] h-auto rounded-[22%] rotate-[6deg]"
+        className="sticker w-[clamp(60px,5vw,84px)] h-auto rounded-[22%] rotate-[6deg]"
       />
     ),
     stickerClass: 'self-end md:absolute md:right-7 md:bottom-7 md:mt-0 md:pt-0',
