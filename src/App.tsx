@@ -48,7 +48,7 @@ function Home() {
         <div>
         {/* My photo in the middle of a flower */}
         <div className="relative mb-4 -ml-2 w-24 h-24 md:w-28 md:h-28">
-          <Flower color={C.yellow} className="absolute inset-0 w-full h-full" />
+          <Flower color={C.pink} className="absolute inset-0 w-full h-full" />
           <img
           src={profileImage}
           alt="Rachael"
@@ -94,8 +94,6 @@ function Home() {
             <GithubMark /> GitHub
           </a>
         </div>
-        {/* A flower tucked into the corner */}
-        <Flower color={C.pink} className="pointer-events-none absolute -right-10 -bottom-10 w-36 h-36 md:w-44 md:h-44" />
         </div>
       </aside>
 
