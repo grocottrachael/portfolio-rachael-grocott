@@ -33,23 +33,6 @@ function Tag({ children, dark }: { children: React.ReactNode; dark?: boolean }) 
   );
 }
 
-/* A row of images you can scroll sideways */
-function Gallery({ images }: { images: { src: string; alt: string }[] }) {
-  return (
-    <div className="-mx-4 px-4 flex gap-3 overflow-x-auto snap-x pb-2 [scrollbar-width:thin]">
-      {images.map((img) => (
-        <img
-          key={img.src}
-          src={img.src}
-          alt={img.alt}
-          loading="lazy"
-          className="h-64 md:h-72 w-auto flex-none snap-start rounded-md shadow-sm"
-        />
-      ))}
-    </div>
-  );
-}
-
 function VisitLink({ href, label, dark }: { href: string; label: string; dark?: boolean }) {
   return (
     <External
@@ -163,28 +146,6 @@ function Tile({ id, openId, setOpenId, className, dark, title, tag, summary, pre
   );
 }
 
-const swatchPreview = [
-  ['006', 'Sulking Room Pink and Duck Green'],
-  ['008', "Charlotte's Locks and Hague Blue"],
-  ['019', 'Joanna, Ochre Glow and Preference Red'],
-];
-const swatchMore = [
-  ['001', 'Thames Mud, The Tobacconist and Purple Brown'],
-  ['005', 'Bone, India Yellow and Stone Blue'],
-  ['010', 'Salvia and Sang de Boeuf'],
-  ['013', 'Pale Wedgwood, Mchanga and Bancha'],
-  ['016', 'Setting Plaster and Brinjal'],
-  ['018', 'Slaked Lime Mid and Green Smoke'],
-];
-const knotMore = [
-  ['01-tagline', 'Never get stuck reading a crochet pattern again'],
-  ['12-why', 'Why I built it: it started with (2sc, inc) x5'],
-  ['02-corner', 'What does this pattern line actually mean? Explained in plain words'],
-  ['05-uk-us', 'Your pattern says dc: UK and US terms explained'],
-  ['07-sizing', 'Stop counting brackets to find your size'],
-  ['08-yarn-sub', 'Substituting yarn: both of these are DK'],
-];
-
 function readHash() {
   const h = window.location.hash.slice(1);
   return h || null;
@@ -235,21 +196,22 @@ export function BentoGrid() {
               />
             }
             details={
-              <>
-                <p className="max-w-[60ch]">
-                  Picking paint means juggling tester pots from a dozen brands. SWATCHMAKER puts colours from Farrow
-                  &amp; Ball, Little Greene, COAT, Lick, Paint &amp; Paper Library, Dulux and more side by side, so
-                  you can build a palette before you buy a thing. I designed and built it, and the palette posts for
-                  its socials are made by code too.
-                </p>
-                <Gallery
-                  images={[...swatchPreview, ...swatchMore].map(([n, colours]) => ({
-                    src: swatchMore.some(([m]) => m === n) ? `/more/swatchmaker-${n}.webp` : `/swatchmaker-${n}.webp`,
-                    alt: `SWATCHMAKER palette: ${colours}`,
-                  }))}
+              <div className="grid md:grid-cols-2 gap-6 items-start">
+                <div className="space-y-4">
+                  <p className="max-w-[60ch]">
+                    Picking paint means juggling tester pots from a dozen brands. SWATCHMAKER puts colours from Farrow
+                    &amp; Ball, Little Greene, COAT, Lick, Paint &amp; Paper Library, Dulux and more side by side, so
+                    you can build a palette before you buy a thing. I designed and built it, and the palette posts for
+                    its socials are made by code too.
+                  </p>
+                  <VisitLink href="https://swatchmaker.uk/" label="Visit swatchmaker.uk" />
+                </div>
+                <img
+                  src="/swatchmaker.webp"
+                  alt="SWATCHMAKER: a bathroom photo next to the paint colours La Torre, Follingsby and Pale Taupe"
+                  className="w-full rounded-lg shadow-sm"
                 />
-                <VisitLink href="https://swatchmaker.uk/" label="Visit swatchmaker.uk" />
-              </>
+              </div>
             }
           />
 
@@ -334,21 +296,22 @@ export function BentoGrid() {
               />
             }
             details={
-              <>
-                <p className="max-w-[60ch]">
-                  It started with my granny, who has crocheted for sixty years and couldn&rsquo;t remember what a
-                  pattern meant. Open the PDF the designer sent you, tap the row that has lost you, and get it back in
-                  plain words or drawn as a diagram. It keeps your place, knows UK from US terms, and does the sums
-                  when you change size or yarn. Accessibility is the spec, not a nice-to-have.
-                </p>
-                <Gallery
-                  images={[
-                    { src: '/knot-a-problem.webp', alt: 'Put it down. Pick it up. Still on round 3.' },
-                    ...knotMore.map(([n, alt]) => ({ src: `/more/knot-${n}.webp`, alt })),
-                  ]}
+              <div className="grid md:grid-cols-2 gap-6 items-start">
+                <div className="space-y-4">
+                  <p className="max-w-[60ch]">
+                    It started with my granny, who has crocheted for sixty years and couldn&rsquo;t remember what a
+                    pattern meant. Open the PDF the designer sent you, tap the row that has lost you, and get it back in
+                    plain words or drawn as a diagram. It keeps your place, knows UK from US terms, and does the sums
+                    when you change size or yarn. Accessibility is the spec, not a nice-to-have.
+                  </p>
+                  <VisitLink href="https://knotaproblem.app/" label="Visit knotaproblem.app" />
+                </div>
+                <img
+                  src="/knot-a-problem.webp"
+                  alt="Knot a Problem social post: Put it down. Pick it up. Still on round 3."
+                  className="w-full max-w-sm md:justify-self-end rounded-md"
                 />
-                <VisitLink href="https://knotaproblem.app/" label="Visit knotaproblem.app" />
-              </>
+              </div>
             }
           />
 
