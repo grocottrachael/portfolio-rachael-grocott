@@ -418,6 +418,29 @@ export function Work() {
         >
           I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
         </InfoTile>
+        <InfoTile bg={C.yellow} madeFor="What I bring" title="Skills" className="col-span-2 md:col-span-3">
+          <ul className="mt-1 flex flex-wrap gap-2">
+            {[
+              'Clear IA',
+              'Intuitive UX',
+              'DX',
+              'Visual polish',
+              'Fast AI prototyping',
+              'Design systems',
+              'Interaction design',
+              'Research & testing',
+              'Product thinking',
+              'Cross-team collaboration',
+              'Clear communication',
+              'Coaching',
+              'Public speaking',
+            ].map((skill) => (
+              <li key={skill} className="bg-white/60 px-3 py-1.5 text-[15px] font-bold text-[var(--ink)]">
+                {skill}
+              </li>
+            ))}
+          </ul>
+        </InfoTile>
       </section>
       <AnimatePresence>
         {openProject && <ProjectPanel key={openProject.id} p={openProject} onClose={() => setOpenId(null)} />}
