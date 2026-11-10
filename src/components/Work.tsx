@@ -93,7 +93,6 @@ const projects: Project[] = [
     link: { href: 'https://swatchmaker.uk/', label: 'Visit swatchmaker.uk' },
   },
   {
-    sticker: <Sparkle color={C.green} className="sticker absolute -bottom-4 -left-3 w-9 h-9 md:w-10 md:h-10 -rotate-[8deg]" />,
     id: 'graphy',
     title: 'Graphy SDK',
     madeFor: 'Currently working here',
@@ -101,11 +100,6 @@ const projects: Project[] = [
     bg: C.accent,
     span: 'col-span-2 md:col-span-1',
     summary: 'Editable charts for developers and their AI agents. I design the developer experience, and own the design of graphy.dev.',
-    image: {
-      src: '/work/graphy/theme-botanical.webp',
-      alt: 'A chart drawn with the Graphy SDK in its Botanical theme: bars as leaf blades on grained paper',
-      className: 'border-[3px] border-[var(--ink)]',
-    },
     story: (
       <>
         Graphy turns data into clear, beautiful stories. I&rsquo;m a Senior Product Designer on the SDK, which lets
