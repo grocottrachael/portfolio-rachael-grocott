@@ -34,7 +34,7 @@ export default function RoleCycle() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative h-[84px] overflow-hidden pt-1">
+      <div className="relative h-[64px] overflow-hidden pt-1">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={r.company}
@@ -57,12 +57,11 @@ export default function RoleCycle() {
               </span>
             )}
             <span className="min-w-0">
-              <span className="flex items-center gap-2 font-display text-[20px] leading-tight">
+              <span className="block font-display text-[20px] leading-[1.2]">
                 {r.company}
-                {r.current && <span className="w-2.5 h-2.5 rounded-full bg-[#2BB24C] border-[1.5px] border-[var(--ink)]" aria-label="Currently working here" />}
               </span>
-              <span className="block text-[14px] leading-snug text-[var(--ink-soft)] line-clamp-2">
-                {years(r.dates)} · {r.what}
+              <span className="block mt-0.5 text-[15px] leading-[1.3] text-[var(--ink-soft)]">
+                {years(r.dates)}
               </span>
             </span>
           </motion.div>

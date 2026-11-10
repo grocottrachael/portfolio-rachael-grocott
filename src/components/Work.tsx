@@ -191,13 +191,13 @@ const projects: Project[] = [
  * which have no hover): read the case study, open a site, or find out more.
  */
 export function HoverCta({ label, icon }: { label: string; icon: React.ReactNode }) {
+  /* Just a round button with the icon: arrow for a case study, + for more, a corner arrow for a new tab */
   return (
     <span
+      title={label}
       aria-hidden
-      className="pointer-events-none absolute top-4 right-4 md:top-5 md:right-5 z-10 inline-flex items-center gap-1.5 rounded-full border-2 border-[var(--ink)] bg-white px-2 [@media(hover:hover)]:px-3 py-1.5 text-[13px] font-bold text-[var(--ink)] shadow-[0_2px_0_var(--ink)] transition-all duration-200 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:translate-y-1 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-focus-within:opacity-100 [@media(hover:hover)]:group-focus-within:translate-y-0"
+      className="pointer-events-none absolute top-4 right-4 md:top-5 md:right-5 z-10 grid place-items-center w-9 h-9 rounded-full border-2 border-[var(--ink)] bg-white text-[var(--ink)] shadow-[0_2px_0_var(--ink)] transition-all duration-200 ease-in-out [&_svg]:w-4 [&_svg]:h-4 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:scale-75 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:scale-100 [@media(hover:hover)]:group-focus-within:opacity-100 [@media(hover:hover)]:group-focus-within:scale-100"
     >
-      {/* On touch screens there's no room for words next to the title, so just the icon */}
-      <span className="hidden [@media(hover:hover)]:inline">{label}</span>
       {icon}
     </span>
   );
@@ -461,7 +461,7 @@ export function Work() {
           <span className="block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
             Experience
           </span>
-          <span className="mt-3 block text-[16px] leading-snug text-[var(--ink-soft)]">Plus skills, talks and press.</span>
+          <span className="mt-3 block text-[16px] leading-snug text-[var(--ink-soft)]">13 years of product design, from agency to AI.</span>
           {/* A mini CV that flips through the roles, with their logos */}
           <RoleCycle />
         </Link>
