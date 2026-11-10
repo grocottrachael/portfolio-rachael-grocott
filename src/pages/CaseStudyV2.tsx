@@ -24,7 +24,7 @@ function Picture({ img, bg }: { img: Img; bg: string }) {
   if (img.bg)
     return <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" className="w-full h-auto block" />;
   return (
-    <div className="p-4 md:p-6 h-full flex items-center" style={{ background: bg }}>
+    <div className="p-2.5 sm:p-4 md:p-6 h-full flex items-center" style={{ background: bg }}>
       <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" className="w-full h-auto border-[3px] border-[var(--ink)]" />
     </div>
   );
@@ -63,7 +63,14 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
         <figure className={tight ? '!mt-4' : ''}>
           {/* One or two pictures: columns sized so a pair comes out the same height. More: a two-up grid, so none get tiny */}
           <div
-            className={`grid gap-2.5 md:gap-3 ${block.images.length > 3 ? 'grid-cols-2' : 'md:[grid-template-columns:var(--cols)]'}`}
+            className={`grid gap-2.5 md:gap-3 ${
+              block.images.length > 3
+                ? 'grid-cols-2'
+                : block.images.every((i) => i.h > i.w)
+                  ? /* tall phone screens stay side by side on phones too, so they don't fill the screen */
+                    '[grid-template-columns:var(--cols)]'
+                  : 'md:[grid-template-columns:var(--cols)]'
+            }`}
             style={{ '--cols': block.images.map((i) => `${i.w / i.h}fr`).join(' ') } as React.CSSProperties}
           >
             {block.images.map((img) => (
@@ -108,7 +115,7 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
         </blockquote>
       );
     case 'stats':
-      return <Stats items={block.items} />;
+      return <Stats items={block.items} bg={bg} />;
     case 'liveEdit':
       return (
         <figure>
@@ -136,15 +143,16 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
   }
 }
 
-function Stats({ items }: { items: { value: string; label: string }[] }) {
+/* Stats as a 2x2 of flat blocks in the project colour, so big numbers always have room */
+function Stats({ items, bg }: { items: { value: string; label: string }[]; bg: string }) {
   return (
-    <dl className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 border-t-[2px] border-[var(--ink)] pt-6">
+    <dl className="grid grid-cols-2 gap-2.5 md:gap-3">
       {items.map((st) => (
-        <div key={st.label}>
+        <div key={st.label} className="p-5 md:p-7" style={{ background: bg }}>
           <dt className="sr-only">{st.label}</dt>
           <dd>
-            <span className="block font-display text-[48px] md:text-[56px] leading-none tabular-nums">{st.value}</span>
-            <span className="mt-2 block text-[15px] font-bold leading-snug">{st.label}</span>
+            <span className="block font-display text-[34px] sm:text-[40px] md:text-[52px] leading-none tabular-nums">{st.value}</span>
+            <span className="mt-2 block text-[15px] md:text-[16px] font-medium leading-snug">{st.label}</span>
           </dd>
         </div>
       ))}
@@ -227,7 +235,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
                   </div>
                 ))}
               </dl>
-              {study.tldr.stats && <Stats items={study.tldr.stats} />}
+              {study.tldr.stats && <Stats items={study.tldr.stats} bg={study.bg} />}
               <button type="button" className="chunky" onClick={() => { setTldr(false); window.scrollTo({ top: 0 }); }}>
                 Read the full story <ArrowRight className="w-4 h-4" aria-hidden />
               </button>
