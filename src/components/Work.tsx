@@ -79,9 +79,9 @@ const projects: Project[] = [
     span: 'col-span-2 md:row-span-2',
     summary: 'See paint colours from every brand side by side.',
     image: {
-      src: '/swatchmaker.webp',
-      alt: 'SWATCHMAKER: a bathroom photo next to the paint colours La Torre, Follingsby and Pale Taupe',
-      className: 'aspect-[4/3] object-cover object-left-top border-2 border-[var(--ink)]',
+      src: '/swatchmaker-tile.webp',
+      alt: 'SWATCHMAKER: a bathroom photo next to the paint it matched, COAT La Torre',
+      className: 'aspect-[4/3] object-cover border-2 border-[var(--ink)]',
     },
     story: (
       <>

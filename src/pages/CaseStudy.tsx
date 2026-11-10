@@ -98,13 +98,13 @@ function BlockView({ block, bg }: { block: Block; bg: string }) {
       );
     case 'shows':
       return (
-        /* Same column as the facts above it, so the two rows line up */
+        /* Same column as the facts above, but as tinted blocks so the two don't read as one table */
         <section className={text}>
-          <ul className="grid grid-cols-2 gap-x-8 gap-y-6 border-y border-[var(--ink)]/10 py-6">
+          <ul className="grid sm:grid-cols-2 gap-2.5">
             {block.items.map((it) => (
-              <li key={it.title}>
+              <li key={it.title} className="p-5" style={{ background: `color-mix(in srgb, ${bg} 45%, white)` }}>
                 <span className="block text-[15px] font-black uppercase tracking-[0.02em]">{it.title}</span>
-                <span className="mt-1 block text-[15px] leading-snug text-[var(--ink-soft)]">{it.body}</span>
+                <span className="mt-1.5 block text-[16px] leading-snug text-[var(--ink)]/75">{it.body}</span>
               </li>
             ))}
           </ul>
