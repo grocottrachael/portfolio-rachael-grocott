@@ -44,7 +44,7 @@ export type CaseStudy = {
   tldr?: { points: { label: string; body: React.ReactNode }[]; stats?: { value: string; label: string }[] };
 };
 
-const knotSizes: Record<string, [number, number]> = {"tap-a-row": [918, 922], "the-key": [918, 914], "plain-words": [1600, 636], "diagrams": [1600, 809], "your-place": [918, 646], "your-size": [1392, 694], "your-hook": [918, 798], "yarns": [920, 830], "01-tagline": [720, 900], "05-uk-us": [720, 900], "03-key": [720, 900], "12-why": [720, 900]};
+const knotSizes: Record<string, [number, number]> = {"tap-a-row": [918, 922], "the-key": [918, 914], "plain-words": [1600, 636], "diagrams": [1600, 809], "your-place": [918, 646], "your-size": [1392, 694], "your-hook": [918, 798], "yarns": [920, 830]};
 /* A Knot a Problem image, with its size so pairs can be laid out at equal heights */
 const k = (name: string, alt: string): Img => ({ src: `/work/knot/${name}.webp`, alt, w: knotSizes[name][0], h: knotSizes[name][1] });
 
@@ -629,17 +629,6 @@ export const caseStudies: CaseStudy[] = [
           { value: '88', label: 'test files' },
           { value: '4', label: 'kinds of real pattern studied' },
           { value: '2', label: 'months, first commit to live' },
-        ],
-      },
-      {
-        type: 'gallery',
-        heading: 'Telling people about it',
-        body: 'A set of posts for Instagram, each making one point a crocheter would recognise.',
-        images: [
-          k('01-tagline', 'Never get stuck reading a crochet pattern again'),
-          k('05-uk-us', 'Your pattern says dc: the same word in UK and US terms'),
-          k('03-key', 'The key: every stitch this pattern uses, in its own terms'),
-          k('12-why', 'Why I built it: it started with (2sc, inc) x5'),
         ],
       },
       {
