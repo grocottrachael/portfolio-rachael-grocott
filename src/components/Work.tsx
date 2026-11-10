@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight, Plus, X, ExternalLink } from 'lucide-react';
 import { C } from './Shapes';
+import RoleCycle from './RoleCycle';
 import { Link, navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
 
@@ -47,7 +48,8 @@ type Project = {
   /** grid placement when closed */
   span: string;
   summary: string;
-  image?: { src: string; alt: string; className?: string };
+  /* fill: the picture fills the rest of the block (for the big block) */
+  image?: { src: string; alt: string; className?: string; fill?: boolean };
   /** shown above the title */
   logo?: React.ReactNode;
   /** on a wide block, show the logo big on the right instead of above the title */
@@ -75,7 +77,8 @@ const projects: Project[] = [
     image: {
       src: '/swatchmaker-tile.webp?v=2',
       alt: 'SwatchMaker matching paints to the Rivers wallpaper by Living Quarters: Lick Green 03, Dulux Bracken Salts 5 and Valspar Ode to Joy',
-      className: 'aspect-[4/3] object-cover border-[3px] border-[var(--ink)]',
+      className: 'aspect-[4/3] md:aspect-auto border-[3px] border-[var(--ink)]',
+      fill: true,
     },
     story: (
       <>
@@ -94,6 +97,11 @@ const projects: Project[] = [
     bg: C.accent,
     span: 'col-span-2 md:col-span-1',
     summary: 'Editable charts for developers and their AI agents. I design the developer experience, and own the design of graphy.dev.',
+    image: {
+      src: '/work/graphy/theme-botanical.webp',
+      alt: 'A chart drawn with the Graphy SDK in its Botanical theme: bars as leaf blades on grained paper',
+      className: 'border-[3px] border-[var(--ink)]',
+    },
     story: (
       <>
         Graphy turns data into clear, beautiful stories. I&rsquo;m a Senior Product Designer on the SDK, which lets
@@ -172,7 +180,24 @@ const projects: Project[] = [
   },
 ];
 
-function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
+/*
+ * What a block does, shown when you hover it (and always on touch screens,
+ * which have no hover): read the case study, open a site, or find out more.
+ */
+export function HoverCta({ label, icon }: { label: string; icon: React.ReactNode }) {
+  return (
+    <span
+      aria-hidden
+      className="pointer-events-none absolute top-4 right-4 md:top-5 md:right-5 z-10 inline-flex items-center gap-1.5 rounded-full border-2 border-[var(--ink)] bg-white px-2 [@media(hover:hover)]:px-3 py-1.5 text-[13px] font-bold text-[var(--ink)] shadow-[0_2px_0_var(--ink)] transition-all duration-200 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:translate-y-1 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-focus-within:opacity-100 [@media(hover:hover)]:group-focus-within:translate-y-0"
+    >
+      {/* On touch screens there's no room for words next to the title, so just the icon */}
+      <span className="hidden [@media(hover:hover)]:inline">{label}</span>
+      {icon}
+    </span>
+  );
+}
+
+function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: { label: string; icon: React.ReactNode } }) {
   const soft = p.dark ? 'text-white/70' : 'text-[var(--ink-soft)]';
   return (
     <article
@@ -234,15 +259,16 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
       </button>
       )}
 
+      <HoverCta {...cta} />
       {p.logo && p.logoBelow && <div className="mt-auto pt-6">{p.logo}</div>}
 
       {p.image && (
-        <div className="mt-5 flex-1 flex items-end">
+        <div className={`mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>
           <img
             src={p.image.src}
             alt={p.image.alt}
             loading="lazy"
-            className={`w-full transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-1 ${
+            className={`w-full ${p.image.fill ? 'h-full object-cover object-left-top' : ''} transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-1 ${
               p.image.className ?? ''
             }`}
           />
@@ -345,6 +371,9 @@ function InfoTile({
 }) {
   const inner = (
     <>
+      {href && (
+        <HoverCta label="Opens in a new tab" icon={<ArrowUpRight className="w-3.5 h-3.5" />} />
+      )}
       <h3 className="font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
       <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
     </>
@@ -396,7 +425,14 @@ export function Work() {
       else if (hasStudy) navigate(`/work/${id}`);
       else setOpenId(id);
     };
-    return <ProjectTile key={id} p={p} onOpen={onOpen} />;
+    const cta = p.linksOut ? (
+      { label: "Opens in a new tab", icon: <ArrowUpRight className="w-3.5 h-3.5" /> }
+    ) : hasStudy ? (
+      { label: "Read the case study", icon: <ArrowRight className="w-3.5 h-3.5" /> }
+    ) : (
+      { label: "Find out more", icon: <Plus className="w-3.5 h-3.5" /> }
+    );
+    return <ProjectTile key={id} p={p} onOpen={onOpen} cta={cta} />;
   };
   const openProject = projects.find((x) => x.id === openId);
 
@@ -413,12 +449,13 @@ export function Work() {
           className="group relative overflow-hidden p-5 md:p-7 flex flex-col text-[var(--ink)] col-span-2 md:col-span-1 min-h-[220px]"
           style={{ background: C.green }}
         >
+          <HoverCta label="See my experience" icon={<ArrowRight className="w-3.5 h-3.5" />} />
           <span className="block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
             Experience
           </span>
-          <span className="mt-3 block text-[16px] leading-snug max-w-[24ch] text-[var(--ink-soft)]">
-            Graphy, Trint, Geckoboard and more. Plus skills and talks.
-          </span>
+          <span className="mt-3 block text-[16px] leading-snug text-[var(--ink-soft)]">Plus skills, talks and press.</span>
+          {/* A mini CV that flips through the roles, with their logos */}
+          <RoleCycle />
         </Link>
         {tile('graphy')}
         {tile('knot-a-problem')}

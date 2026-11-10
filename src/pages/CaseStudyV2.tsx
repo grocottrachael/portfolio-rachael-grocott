@@ -44,7 +44,7 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
       return (
         <section id={id} className={`${measure} scroll-mt-10 pt-12 md:pt-20 first:pt-0`}>
           <span className="chunky-tag" style={{ background: bg }}>{block.label}</span>
-          <h2 className="mt-4 font-display text-[30px] md:text-[40px] leading-[1.08] text-balance">{block.heading}</h2>
+          <h2 className="mt-1.5 font-display text-[30px] md:text-[40px] leading-[1.08] text-balance">{block.heading}</h2>
           {block.body && <div className={`${prose} mt-5`}>{block.body}</div>}
         </section>
       );
@@ -96,14 +96,14 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
         <div className={`${measure} grid sm:grid-cols-2 gap-6 sm:gap-8`}>
           <div>
             <Label>{block.before.label}</Label>
-            <p className="mt-3 font-display text-[21px] leading-[1.2] line-through decoration-2 decoration-[var(--ink)]/40 text-[var(--ink)]/60">
+            <p className="mt-1.5 font-display text-[21px] leading-[1.2] line-through decoration-2 decoration-[var(--ink)]/40 text-[var(--ink)]/60">
               {block.before.title}
             </p>
             <p className="mt-2 text-[16px] leading-[1.6] text-[var(--ink-soft)]">{block.before.body}</p>
           </div>
           <div>
             <span className="chunky-tag" style={{ background: bg }}>{block.after.label}</span>
-            <p className="mt-3 font-display text-[21px] leading-[1.2]">{block.after.title}</p>
+            <p className="mt-1.5 font-display text-[21px] leading-[1.2]">{block.after.title}</p>
             <p className="mt-2 text-[16px] leading-[1.6] text-[var(--ink-soft)]">{block.after.body}</p>
           </div>
         </div>
@@ -172,7 +172,7 @@ function Toggle({ tldr, setTldr }: { tldr: boolean; setTldr: (v: boolean) => voi
       on ? 'bg-[var(--ink)] text-[var(--paper)]' : 'bg-white text-[var(--ink)] hover:bg-[var(--ink)]/5'
     }`;
   return (
-    <div role="group" aria-label="How much to read" className="inline-flex overflow-hidden rounded-full border-[2px] border-[var(--ink)] shadow-[3px_3px_0_var(--ink)]">
+    <div role="group" aria-label="How much to read" className="inline-flex overflow-hidden rounded-full border-[2px] border-[var(--ink)] shadow-[0_3px_0_var(--ink)]">
       <button type="button" aria-pressed={!tldr} onClick={() => setTldr(false)} className={btn(!tldr)}>
         Full story
       </button>
@@ -237,7 +237,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
                 {study.tldr.points.map((p) => (
                   <div key={p.label}>
                     <dt><span className="chunky-tag" style={{ background: study.bg }}>{p.label}</span></dt>
-                    <dd className="mt-3 text-[19px] leading-[1.55]">{p.body}</dd>
+                    <dd className="mt-1.5 text-[19px] leading-[1.55]">{p.body}</dd>
                   </div>
                 ))}
               </dl>
@@ -263,7 +263,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
           <div className="mx-auto max-w-[720px] flex items-center justify-between gap-6">
             <div>
               <Label>Next case study</Label>
-              <p className="mt-3 font-display text-[26px] md:text-[32px] leading-none">{next.title}</p>
+              <p className="mt-1.5 font-display text-[26px] md:text-[32px] leading-none">{next.title}</p>
               {next.teaser && <p className="mt-2 text-[16px] md:text-[17px] leading-snug">{next.teaser}</p>}
             </div>
             <span className="chunky-icon shrink-0 transition-transform group-hover:translate-x-1" aria-hidden>
