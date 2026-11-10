@@ -111,7 +111,13 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
     case 'quote':
       return (
         <blockquote className={`${measure} font-display text-[30px] md:text-[42px] leading-[1.1] text-balance`}>
-          <span className="px-1 box-decoration-clone" style={{ background: bg }}>&ldquo;{block.text}&rdquo;</span>
+          {/* A different colour from the project's, so the quote doesn't read as another label */}
+          <span
+            className="px-1 box-decoration-clone"
+            style={{ background: bg === 'var(--c-pink)' ? 'var(--c-blue)' : 'var(--c-pink)' }}
+          >
+            &ldquo;{block.text}&rdquo;
+          </span>
         </blockquote>
       );
     case 'stats':
