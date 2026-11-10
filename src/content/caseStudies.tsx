@@ -592,12 +592,13 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         type: 'text',
-        heading: 'Everything has to answer',
+        heading: 'Every tap has to do something',
         body: (
           <p>
-            Testing the prototype, 6 of the 58 bits of text I tried returned nothing: all of them the front matter,
-            like tension, notes and measurements. That&rsquo;s exactly what a nervous crocheter reads first. So I made
-            every part of a pattern lead somewhere.
+            When I tested the prototype, I tapped my way through a real pattern: 58 different bits of it. Six did
+            nothing at all. They were all the bits at the start, before the rows begin: the tension, the notes, the
+            measurements. That&rsquo;s exactly what a nervous crocheter reads first, so it&rsquo;s the worst place for
+            the app to go quiet. Now every part of a pattern gives you something when you tap it.
           </p>
         ),
       },
