@@ -363,7 +363,7 @@ export function Work() {
     <LayoutGroup>
       <section
         aria-label="Things I've made"
-        className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:auto-rows-[minmax(13vw,auto)]"
+        className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:auto-rows-[minmax(13vw,auto)] gap-2.5 p-2.5 md:gap-3 md:p-3 md:pl-0"
       >
         {tile('swatchmaker')}
         <ShapeTile>
