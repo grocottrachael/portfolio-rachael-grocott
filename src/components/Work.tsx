@@ -113,8 +113,9 @@ const projects: Project[] = [
     span: 'col-span-2 md:col-span-1 md:row-span-2',
     summary: 'Never get stuck reading a crochet pattern again. It started with my granny.',
     image: {
-      src: '/knot-a-problem.webp',
-      alt: 'Knot a Problem social post: Put it down. Pick it up. Still on round 3.',
+      src: '/knot-diagram.webp',
+      alt: 'A granny square drawn by Knot a Problem as a stitch diagram, round by round',
+      className: 'aspect-square object-cover bg-white border-2 border-[var(--ink)]',
     },
     story: (
       <>
