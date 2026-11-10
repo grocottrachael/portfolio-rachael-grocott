@@ -73,6 +73,37 @@ function BlockView({ block }: { block: Block }) {
           </p>
         </blockquote>
       );
+    case 'stats':
+      return (
+        <section className={wide}>
+          <dl className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {block.items.map((st) => (
+              <div key={st.label} className="p-6 md:p-7" style={{ background: 'var(--c-yellow)' }}>
+                <dt className="sr-only">{st.label}</dt>
+                <dd>
+                  <span className="block font-black text-[48px] md:text-[60px] leading-none tracking-[-0.03em] tabular-nums">
+                    {st.value}
+                  </span>
+                  <span className="mt-2 block text-[15px] font-bold leading-snug">{st.label}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      );
+    case 'shows':
+      return (
+        <section className={wide}>
+          <ul className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 border-y border-[var(--ink)]/10 py-6">
+            {block.items.map((it) => (
+              <li key={it.title}>
+                <span className="block text-[15px] font-black uppercase tracking-[0.02em]">{it.title}</span>
+                <span className="mt-1 block text-[15px] leading-snug text-[var(--ink-soft)]">{it.body}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
     case 'decisions':
       return (
         <section className={text}>
