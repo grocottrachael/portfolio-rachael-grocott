@@ -15,7 +15,7 @@ const button =
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white md:flex">
+    <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] md:flex">
       {/* Who I am: pinned on the left while the blocks scroll on the right */}
       <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen md:overflow-y-auto px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-8 md:gap-10">
         <h1 className="uppercase leading-[0.85]">
@@ -34,14 +34,14 @@ export default function App() {
             I&rsquo;m a Senior Product Designer at <Pill bg={C.blue}>Graphy</Pill>. I make complex things simple, then
             polish them till they&rsquo;re <Pill bg={C.pink}>genuinely beautiful</Pill>.
           </p>
-          <p className="mt-5 text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[#181818]/75">
+          <p className="mt-5 text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
             I&rsquo;m all in on AI and use it to build my own products, start to finish. I founded Triangirls, I speak
             at events, and I love rallying a team around a good idea.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-2.5">
-          <a href="mailto:rachaelgrocott@gmail.com" className={`${button} bg-[#181818] text-white`}>
+          <a href="mailto:rachaelgrocott@gmail.com" className={`${button} bg-[var(--ink)] text-[var(--paper)]`}>
             Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
           </a>
           <a

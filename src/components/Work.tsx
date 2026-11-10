@@ -14,7 +14,7 @@ function For({ children, dark }: { children: React.ReactNode; dark?: boolean }) 
   return (
     <span
       className={`inline-block whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-[0.06em] ${
-        dark ? 'bg-white text-[#181818]' : 'bg-[#181818] text-white'
+        dark ? 'bg-white text-[var(--ink)]' : 'bg-white/75 text-[var(--ink)]'
       }`}
     >
       {children}
@@ -27,7 +27,7 @@ function Visit({ href, label, dark }: { href: string; label: string; dark?: bool
     <External
       href={href}
       className={`inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[15px] font-bold transition-transform hover:-translate-y-0.5 ${
-        dark ? 'bg-white text-[#181818]' : 'bg-[#181818] text-white'
+        dark ? 'bg-white text-[var(--ink)]' : 'bg-[var(--ink)] text-[var(--paper)]'
       }`}
     >
       {label} <ArrowUpRight className="w-4 h-4" aria-hidden />
@@ -74,8 +74,7 @@ const projects: Project[] = [
     id: 'graphy',
     title: 'Graphy SDK',
     madeFor: 'For developers',
-    bg: C.black,
-    dark: true,
+    bg: C.accent,
     span: 'col-span-2 md:col-span-1',
     summary: 'Beautiful, editable charts for developers and their AI agents. My day job.',
     story: (
@@ -164,8 +163,8 @@ function ProjectTile({ p, open, onToggle }: { p: Project; open: boolean; onToggl
     return () => clearTimeout(t);
   }, [open]);
 
-  const text = p.dark ? 'text-white' : 'text-[#181818]';
-  const soft = p.dark ? 'text-white/70' : 'text-[#181818]/75';
+  const text = p.dark ? 'text-white' : 'text-[var(--ink)]';
+  const soft = p.dark ? 'text-white/70' : 'text-[var(--ink-soft)]';
 
   return (
     <motion.article
@@ -235,7 +234,7 @@ function ProjectTile({ p, open, onToggle }: { p: Project; open: boolean; onToggl
         transition={spring}
         aria-hidden
         className={`absolute top-5 right-5 w-9 h-9 rounded-full flex items-center justify-center transition-transform group-hover:rotate-90 ${
-          p.dark ? 'bg-white text-[#181818]' : 'bg-[#181818] text-white'
+          p.dark ? 'bg-white text-[var(--ink)]' : 'bg-white/75 text-[var(--ink)]'
         }`}
       >
         {open ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
@@ -273,9 +272,9 @@ function InfoTile({
     <>
       <For dark={dark}>{madeFor}</For>
       <h3 className="mt-4 font-black uppercase leading-[0.9] text-[30px] md:text-[clamp(24px,2vw,36px)]">{title}</h3>
-      <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[#181818]/75'}`}>{children}</div>
+      <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
       {href && (
-        <span className={`absolute top-5 right-5 w-9 h-9 rounded-full flex ${dark ? 'bg-white text-[#181818]' : 'bg-[#181818] text-white'} items-center justify-center transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5`}>
+        <span className={`absolute top-5 right-5 w-9 h-9 rounded-full flex bg-white/75 text-[var(--ink)] items-center justify-center transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5`}>
           <ArrowUpRight className="w-4 h-4" aria-hidden />
         </span>
       )}
@@ -347,8 +346,7 @@ export function Work() {
           Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
         </InfoTile>
         <InfoTile
-          bg={C.black}
-          dark
+          bg={C.accent}
           madeFor="For anyone curious"
           title="My latest work"
           href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"

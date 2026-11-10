@@ -3,12 +3,14 @@ import { useEffect, useRef, useState } from 'react';
 /* Colours from the original rachaelgrocott.com, and its eyes, redrawn as SVG */
 
 export const C = {
-  blue: '#7B9AE8',
-  pink: '#E5BAC4',
-  yellow: '#EBCC70',
-  green: '#8CCC94',
-  grey: '#E5E5E5',
-  black: '#181818',
+  pink: 'var(--c-pink)',
+  blue: 'var(--c-blue)',
+  yellow: 'var(--c-yellow)',
+  green: 'var(--c-green)',
+  grey: 'var(--c-grey)',
+  accent: 'var(--c-accent)',
+  ink: 'var(--ink)',
+  paper: 'var(--paper)',
 };
 
 const svg = 'absolute inset-0 w-full h-full';
@@ -72,11 +74,11 @@ export function Eyes() {
   return (
     <svg ref={ref} viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" className={svg} aria-hidden>
       <rect x="-50" y="-50" width="200" height="200" fill={C.blue} />
-      <ellipse cx="38.5" cy="50" rx="13.5" ry="19" fill={C.grey} />
-      <ellipse cx="61.5" cy="50" rx="13.5" ry="19" fill={C.grey} />
+      <ellipse cx="38.5" cy="50" rx="13.5" ry="19" fill={C.paper} />
+      <ellipse cx="61.5" cy="50" rx="13.5" ry="19" fill={C.paper} />
       <g style={{ transformOrigin: '50px 50px', transformBox: 'view-box', ...pupil }}>
-        <ellipse cx="38.5" cy="50" rx="10" ry="13" fill={C.black} />
-        <ellipse cx="61.5" cy="50" rx="10" ry="13" fill={C.black} />
+        <ellipse cx="38.5" cy="50" rx="10" ry="13" fill={C.ink} />
+        <ellipse cx="61.5" cy="50" rx="10" ry="13" fill={C.ink} />
       </g>
     </svg>
   );
