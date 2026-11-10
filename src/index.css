@@ -59,10 +59,8 @@
   border-radius: 999px;
   box-shadow: 0 3px 0 var(--ink);
   padding: 0.7rem 1.3rem;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   line-height: 1;
   transition: transform 120ms ease, box-shadow 120ms ease;
 }

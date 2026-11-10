@@ -94,7 +94,8 @@ function Home() {
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-2.5">
+        {/* One button to say hiya; LinkedIn and GitHub are just quiet icons beside it */}
+        <div className="flex items-center gap-5">
           <a href="mailto:rachaelgrocott@gmail.com" className={button}>
             Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
           </a>
@@ -102,17 +103,19 @@ function Home() {
             href="https://www.linkedin.com/in/rachaelgrocott/"
             target="_blank"
             rel="noopener noreferrer"
-            className={button}
+            aria-label="LinkedIn"
+            className="text-[var(--ink)] opacity-80 hover:opacity-100 transition-[opacity,transform] hover:-translate-y-0.5 [&_svg]:w-6 [&_svg]:h-6"
           >
-            <LinkedinMark /> LinkedIn
+            <LinkedinMark />
           </a>
           <a
             href="https://github.com/grocottrachael"
             target="_blank"
             rel="noopener noreferrer"
-            className={button}
+            aria-label="GitHub"
+            className="text-[var(--ink)] opacity-80 hover:opacity-100 transition-[opacity,transform] hover:-translate-y-0.5 [&_svg]:w-6 [&_svg]:h-6"
           >
-            <GithubMark /> GitHub
+            <GithubMark />
           </a>
         </div>
         {/* The flower with lashes. Hover her (or tap on a phone) and her stickers pop out */}
