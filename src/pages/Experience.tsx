@@ -60,9 +60,8 @@ export function Experience() {
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <span className="text-[19px] font-bold">{r.company}</span>
                     <span className="text-[16px] text-[var(--ink-soft)]">{r.what}</span>
-                    <span aria-hidden className="hidden sm:block flex-1 min-w-6 border-b-2 border-dotted border-[var(--ink)]/25 translate-y-[-4px]" />
+                    <span aria-hidden className="hidden sm:block flex-1 min-w-6" />
                     <span className="text-[15px] text-[var(--ink-soft)] tabular-nums inline-flex items-center gap-1.5 whitespace-nowrap">
-                      {r.current && <span className="w-2 h-2 rounded-full bg-[#2FBF71]" aria-hidden />}
                       {r.dates}
                     </span>
                   </div>

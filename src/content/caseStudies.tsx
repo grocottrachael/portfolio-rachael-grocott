@@ -26,6 +26,7 @@ export type Block =
   | { type: 'quote'; text: string }
   | { type: 'stats'; items: { value: string; label: string }[] }
   | { type: 'liveCharts'; caption?: string }
+  | { type: 'claudeMock'; caption?: string }
   | { type: 'liveEdit'; caption?: string }
   | { type: 'liveArrow'; caption?: string }
   | { type: 'shows'; items: { title: string; body: string }[] }
@@ -178,6 +179,24 @@ export const caseStudies: CaseStudy[] = [
             <p>
               Figma could never cope with all the edge cases a chart has: long labels, empty data, a hundred categories, negative values. Now I design on real charts with real data, and honestly, I can make anything. And I’m always pairing with engineers along the way.
             </p>
+          </>
+        ),
+      },
+      {
+        type: 'claudeMock',
+        caption: 'A mock-up of how I work: the Graphy SDK in Claude, so what I design is the real chart. The chart on the right is live.',
+      },
+      {
+        type: 'chapter',
+        label: 'Results',
+        heading: 'Developers are picking it up',
+        body: (
+          <>
+            <p>
+              The React SDK has been downloaded nearly 59,000 times since mid-August, and the latest week was the
+              biggest yet at almost 9,800, up 67% on the week before.
+            </p>
+            <p>These charts are drawn live by the SDK itself, from npm&rsquo;s public numbers.</p>
           </>
         ),
       },

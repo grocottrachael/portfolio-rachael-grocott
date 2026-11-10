@@ -95,7 +95,7 @@ const projects: Project[] = [
   },
   {
     sticker: (
-      <WordSticker lines={["Currently", "working here!"]} color={C.yellow} className="text-[26px] md:text-[clamp(17px,1.45vw,28px)] -rotate-[5deg] origin-bottom-left" />
+      <WordSticker lines={["Currently", "working here!"]} color={C.yellow} className="text-[22px] md:text-[clamp(18px,1.6vw,34px)] 2xl:text-[clamp(22px,1.9vw,34px)] -rotate-[5deg] origin-bottom-left" />
     ),
     /* Pinned to the bottom corner on desktop, so it doesn't make the card (and the row) taller */
     stickerClass: 'self-start xl:absolute xl:left-7 xl:bottom-7 xl:mt-0 xl:pt-0',
@@ -132,7 +132,8 @@ const projects: Project[] = [
     linksOut: true,
   },
   {
-    sticker: <Heart color={C.pink} className="sticker absolute -top-5 -right-3 w-11 h-11 md:w-12 md:h-12 rotate-[12deg]" />,
+    sticker: <Heart color={C.pink} className="sticker block w-11 h-11 md:w-12 md:h-12 rotate-[12deg]" />,
+    stickerClass: 'absolute -top-5 -right-3',
     id: 'knot-a-problem',
     title: 'Knot a Problem',
     madeFor: 'For crocheters',
@@ -201,6 +202,25 @@ const projects: Project[] = [
  * What a block does, shown when you hover it (and always on touch screens,
  * which have no hover): read the case study, open a site, or find out more.
  */
+/* A sticker you can pick up and move around its card. It lifts when you hover or grab it */
+function DragSticker({ cardRef, className, children }: { cardRef: React.RefObject<HTMLElement | null>; className: string; children: React.ReactNode }) {
+  return (
+    <motion.div
+      drag
+      dragConstraints={cardRef}
+      dragElastic={0.15}
+      dragMomentum={false}
+      whileHover={{ scale: 1.04, rotate: -2 }}
+      whileDrag={{ scale: 1.08, rotate: 3, filter: 'drop-shadow(0 10px 8px rgba(43,35,64,0.25))' }}
+      onClick={(e) => e.stopPropagation()}
+      className={`z-20 cursor-grab active:cursor-grabbing touch-none ${className}`}
+      title="Pick me up"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function HoverCta({ label, icon }: { label: string; icon: React.ReactNode }) {
   /* Just a round button with the icon: arrow for a case study, + for more, a corner arrow for a new tab */
   return (
@@ -280,22 +300,8 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
 
       <HoverCta {...cta} />
       {p.logo && p.logoBelow && <div className="mt-auto pt-6">{p.logo}</div>}
-      {/* A sticker you can pick up and move around the card. It lifts when you hover or grab it */}
-      {!p.image && p.sticker && (
-        <motion.div
-          drag
-          dragConstraints={cardRef}
-          dragElastic={0.15}
-          dragMomentum={false}
-          whileHover={{ scale: 1.04, rotate: -2 }}
-          whileDrag={{ scale: 1.08, rotate: 3, filter: 'drop-shadow(0 10px 8px rgba(43,35,64,0.25))' }}
-          onClick={(e) => e.stopPropagation()}
-          className={`relative z-20 mt-auto pt-6 cursor-grab active:cursor-grabbing touch-none ${p.stickerClass ?? 'self-start'}`}
-          title="Pick me up"
-        >
-          {p.sticker}
-        </motion.div>
-      )}
+      {/* A sticker you can pick up and move around the card */}
+      {!p.image && p.sticker && <DragSticker cardRef={cardRef} className={`relative mt-auto pt-6 ${p.stickerClass ?? 'self-start'}`}>{p.sticker}</DragSticker>}
 
       {p.image && (
         <div className={`relative mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>
@@ -307,7 +313,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
               p.image.className ?? ''
             }`}
           />
-          {p.sticker}
+          {p.sticker && <DragSticker cardRef={cardRef} className={p.stickerClass ?? 'absolute -top-5 -right-3'}>{p.sticker}</DragSticker>}
         </div>
       )}
 
@@ -481,7 +487,7 @@ export function Work() {
     <LayoutGroup>
       <section
         aria-label="Things I've made"
-        className="grid grid-cols-2 md:grid-cols-6 grid-flow-row-dense md:[grid-template-rows:1fr_1fr] md:auto-rows-[minmax(10vw,auto)] gap-3 p-3 md:gap-5 md:p-5 md:pl-0"
+        className="grid grid-cols-2 md:grid-cols-6 grid-flow-row-dense md:[grid-template-rows:1fr_1fr] md:auto-rows-[minmax(10vw,auto)] gap-3 p-3 md:gap-5 md:p-5 xl:pl-0"
       >
         {tile('swatchmaker')}
         {/* Experience: where hiring managers look first */}

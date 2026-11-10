@@ -191,3 +191,28 @@
     display: none;
   }
 }
+
+/*
+ * The Graphy editor's popovers and toolbars, dressed like the rest of the site:
+ * white with an ink border, a hard drop shadow, Silka text and Fraunces titles.
+ */
+:root {
+  --graphy-editor-surface: #fff;
+  --graphy-editor-text: var(--ink);
+  --graphy-editor-accent: var(--ink);
+  --graphy-editor-border: var(--ink);
+  --graphy-editor-font-family: "Silka", system-ui, sans-serif;
+  --graphy-font-family: "Silka", system-ui, sans-serif;
+  --graphy-editor-menu-radius: 18px;
+  --graphy-editor-menu-shadow: 0 4px 0 var(--ink);
+  --graphy-editor-menu-title-font: 800 18px/1.2 "Fraunces", Georgia, serif;
+  --graphy-editor-tooltip-background: var(--ink);
+  --graphy-toolbar-button-background-color-hovered: var(--c-grey);
+  --graphy-toolbar-button-background-color-selected: var(--c-accent);
+}
+/* The SDK draws these with a 1px border; ours are 2px. (Class names from @graphysdk/react-renderer's editable.css) */
+.kwvn4c1,
+.vez73g1,
+.vez73g2 {
+  border-width: 2px !important;
+}

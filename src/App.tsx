@@ -63,11 +63,11 @@ function Scallop({ color, className }: { color: string; className?: string }) {
 function Home() {
   const [stickers, setStickers] = useState(false);
   return (
-    <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] md:flex">
+    <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] xl:flex">
       {/* Who I am: pinned on the left while the blocks scroll on the right */}
-      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen p-3 pb-0 md:p-5 md:pr-5">
+      <aside className="xl:w-[34%] xl:flex-none xl:sticky xl:top-0 xl:h-screen p-3 pb-0 md:p-5 md:pb-0 xl:pb-5 xl:pr-5">
         {/* A block of its own, so the white gutters run round it like the grid */}
-        <div className="relative overflow-hidden h-full md:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] pt-10 pb-40 md:py-[6vh] flex flex-col gap-6 md:gap-7 md:justify-center">
+        <div className="relative overflow-hidden h-full xl:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] pt-10 pb-40 xl:py-[6vh] flex flex-col gap-6 md:gap-7 xl:justify-center">
         <div>
         {/* My photo on a scalloped badge, so the eyed flower is the only flower */}
         <div className="group relative mb-4 -ml-1 w-24 h-24 md:w-28 md:h-28">
@@ -134,7 +134,10 @@ function Home() {
           <Heart color={C.pink} className="pop [--d:0ms] absolute left-[0%] top-[42%] w-14 h-14 md:w-16 md:h-16 -rotate-[16deg]" />
           <span
             className="pointer-events-auto absolute right-0 bottom-0 w-36 h-36 md:w-44 md:h-44"
-            onClick={() => setStickers((v) => !v)}
+            onClick={() => {
+              /* Tapping only toggles them on phones; with a mouse they just follow the hover */
+              if (!window.matchMedia('(hover: hover)').matches) setStickers((v) => !v);
+            }}
           >
             <Flower color={C.blue} eyes className="sticker w-full h-full -rotate-[14deg]" />
           </span>
@@ -143,7 +146,7 @@ function Home() {
         </div>
       </aside>
 
-      <main className="md:flex-1 min-w-0">
+      <main className="xl:flex-1 min-w-0">
         <Work />
       </main>
     </div>
