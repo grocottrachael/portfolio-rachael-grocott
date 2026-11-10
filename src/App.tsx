@@ -1,7 +1,15 @@
 import { useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
 
 /* Solid brand marks (Simple Icons), rather than outline icons */
+function MailMark() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" aria-hidden>
+      <rect x="1.5" y="4" width="21" height="16" rx="2" />
+      <path d="M4.5 7.5 12 13l7.5-5.5" fill="none" stroke="var(--c-grey)" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function LinkedinMark() {
   return (
     <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor" aria-hidden>
@@ -35,9 +43,6 @@ function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
     </span>
   );
 }
-
-const button =
-  'chunky';
 
 /* A round badge with a scalloped edge: 12 bumps round a circle */
 function Scallop({ color, className }: { color: string; className?: string }) {
@@ -94,10 +99,10 @@ function Home() {
           </p>
         </div>
 
-        {/* One button to say hiya; LinkedIn and GitHub are just quiet icons beside it */}
-        <div className="flex items-center gap-5">
-          <a href="mailto:rachaelgrocott@gmail.com" className={button}>
-            Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
+        {/* Email, LinkedIn and GitHub as three quiet icons; the flower's speech bubble does the hiya */}
+        <div className="flex items-center gap-5 -ml-0.5">
+          <a href="mailto:rachaelgrocott@gmail.com" aria-label="Email me" className="text-[var(--ink)] opacity-80 hover:opacity-100 transition-[opacity,transform] hover:-translate-y-0.5 [&_svg]:w-6 [&_svg]:h-6">
+            <MailMark />
           </a>
           <a
             href="https://www.linkedin.com/in/rachaelgrocott/"

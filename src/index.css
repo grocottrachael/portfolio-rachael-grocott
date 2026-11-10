@@ -168,7 +168,10 @@
   -webkit-text-stroke: 5px var(--ink);
   paint-order: stroke fill;
   letter-spacing: 0.02em;
-  line-height: 1.05;
+  /* Lines tucked close and a fat white edge, so the sticker is one white shape with no gaps */
+  line-height: 0.9;
+  filter: drop-shadow(5px 0 0 #fff) drop-shadow(-5px 0 0 #fff) drop-shadow(0 5px 0 #fff) drop-shadow(0 -5px 0 #fff)
+    drop-shadow(3px 3px 0 #fff) drop-shadow(-3px -3px 0 #fff) drop-shadow(0 3px 0 rgba(43, 35, 64, 0.18));
 }
 
 /* Card hover button: centred on the first line of the card title (padding + half the line, minus half the 36px button) */

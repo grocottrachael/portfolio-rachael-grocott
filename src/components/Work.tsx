@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight, Plus, X, ExternalLink } from 'lucide-react';
-import { C, Heart, SwatchChip, WordSticker } from './Shapes';
+import { C, Heart, WordSticker } from './Shapes';
 import RoleCycle from './RoleCycle';
 import { Link, navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
@@ -70,7 +70,6 @@ type Project = {
 
 const projects: Project[] = [
   {
-    sticker: <SwatchChip className="sticker absolute -top-6 -right-3 w-11 h-14 md:w-12 md:h-16 rotate-[10deg]" />,
     id: 'swatchmaker',
     title: 'SwatchMaker',
     madeFor: 'For anyone choosing paint',
