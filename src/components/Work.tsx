@@ -45,6 +45,8 @@ type Project = {
   image?: { src: string; alt: string; className?: string };
   /** shown above the title */
   logo?: React.ReactNode;
+  /** on a wide block, show the logo big on the right instead of above the title */
+  logoRight?: boolean;
   /** the logo spells out the name, so the big title is for screen readers only */
   wordmark?: boolean;
   story: React.ReactNode;
@@ -148,6 +150,7 @@ const projects: Project[] = [
     bg: C.green,
     span: 'col-span-2',
     logo: <img src="/crumbs-icon.svg" alt="" width={44} height={44} className="h-11 w-11 rounded-[10px]" />,
+    logoRight: true,
     summary: 'A no-faff calorie diary for our household. Snap your plate and it works it out.',
     story: (
       <>
@@ -184,7 +187,15 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
       <div className="pr-12">
         <For dark={p.dark}>{p.madeFor}</For>
       </div>
-      {p.logo && <div className="mt-6">{p.logo}</div>}
+      {p.logo && <div className={`mt-6 ${p.logoRight ? 'md:hidden' : ''}`}>{p.logo}</div>}
+      {p.logo && p.logoRight && (
+        <div
+          aria-hidden
+          className="hidden md:block absolute right-[20%] top-1/2 -translate-y-1/2 w-[clamp(88px,8vw,130px)] -rotate-6 transition-transform duration-300 group-hover:rotate-0 [&_img]:w-full [&_img]:h-auto [&_img]:rounded-[22%]"
+        >
+          {p.logo}
+        </div>
+      )}
       <button
         type="button"
         aria-haspopup="dialog"
