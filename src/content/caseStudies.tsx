@@ -529,6 +529,14 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         type: 'figure',
+        images: [
+          k('tap-a-row', 'Tap a row for the help you need: a pattern row with Save my place, Diagram and Explain'),
+          k('the-key', 'The Key: every stitch this pattern uses, explained in UK terms'),
+        ],
+        caption: 'Tap a row and get three choices, nothing more. The Key explains every stitch this pattern uses, in its own terms.',
+      },
+      {
+        type: 'figure',
         images: [k('diagrams', 'Three stitch diagrams drawn from pattern text: a star, a granny square and flat rows')],
         caption: 'Some things are easier to see than to read. Every diagram is drawn from the pattern’s words alone.',
       },

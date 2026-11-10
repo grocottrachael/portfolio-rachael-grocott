@@ -209,7 +209,6 @@ export function CaseStudyV2({ study }: { study: Study }) {
             </>
           ) : (
             <>
-              {study.hero && <Blocks block={{ type: 'figure', images: study.hero }} bg={study.bg} />}
               {study.blocks.map((b, i) => (
                 <Blocks key={i} block={b} bg={study.bg} id={ids[i]} />
               ))}
