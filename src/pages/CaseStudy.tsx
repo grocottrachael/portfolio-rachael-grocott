@@ -148,7 +148,7 @@ export function CaseStudy({ study }: { study: Study }) {
       <nav className="px-5 md:px-8 py-5 flex items-center justify-between">
         <Link
           to="/"
-          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--c-grey)] px-4 py-2 text-[14px] font-bold transition-transform hover:-translate-x-0.5"
+          className="chunky"
         >
           <ArrowLeft className="w-4 h-4" aria-hidden /> All work
         </Link>
@@ -160,7 +160,7 @@ export function CaseStudy({ study }: { study: Study }) {
       <article className="px-5 md:px-8 pt-8 md:pt-14 pb-20 space-y-16 md:space-y-20">
         <header className={text}>
           <span
-            className="inline-block whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-[0.06em]"
+            className="chunky-tag"
             style={{ background: study.bg }}
           >
             {study.madeFor}
@@ -184,7 +184,7 @@ export function CaseStudy({ study }: { study: Study }) {
               href={study.link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-1.5 rounded-full bg-[var(--ink)] text-[var(--paper)] px-5 py-2.5 text-[15px] font-bold transition-transform hover:-translate-y-0.5"
+              className="chunky mt-8"
             >
               {study.link.label} <ArrowUpRight className="w-4 h-4" aria-hidden />
             </a>
@@ -198,13 +198,13 @@ export function CaseStudy({ study }: { study: Study }) {
         <footer className={`${text} pt-8 border-t border-[var(--ink)]/10 flex flex-wrap items-center justify-between gap-4`}>
           <Link
             to="/"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--c-grey)] px-5 py-2.5 text-[15px] font-bold"
+            className="chunky"
           >
             <ArrowLeft className="w-4 h-4" aria-hidden /> All work
           </Link>
           <a
             href="mailto:rachaelgrocott@gmail.com"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--ink)] text-[var(--paper)] px-5 py-2.5 text-[15px] font-bold"
+            className="chunky"
           >
             Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
           </a>

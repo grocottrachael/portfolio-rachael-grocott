@@ -9,7 +9,7 @@ import { CaseStudy } from './pages/CaseStudy';
 function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
   return (
     <span
-      className="whitespace-nowrap rounded-full px-[0.32em] py-[0.06em]"
+      className="whitespace-nowrap px-[0.18em]"
       style={{ background: `color-mix(in srgb, ${bg} 45%, white)` }}
     >
       {children}
@@ -18,7 +18,7 @@ function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
 }
 
 const button =
-  'inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[15px] font-bold transition-transform hover:-translate-y-0.5';
+  'chunky';
 
 function Home() {
   return (
@@ -57,7 +57,7 @@ function Home() {
         </div>
 
         <div className="flex flex-wrap gap-2.5">
-          <a href="mailto:rachaelgrocott@gmail.com" className={`${button} bg-[var(--ink)] text-[var(--paper)]`}>
+          <a href="mailto:rachaelgrocott@gmail.com" className={button}>
             Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
           </a>
           <a
@@ -65,7 +65,6 @@ function Home() {
             target="_blank"
             rel="noopener noreferrer"
             className={button}
-            style={{ background: C.grey }}
           >
             <Linkedin className="w-4 h-4" aria-hidden /> LinkedIn
           </a>
@@ -74,7 +73,6 @@ function Home() {
             target="_blank"
             rel="noopener noreferrer"
             className={button}
-            style={{ background: C.grey }}
           >
             <Github className="w-4 h-4" aria-hidden /> GitHub
           </a>

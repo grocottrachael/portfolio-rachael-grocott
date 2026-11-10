@@ -15,9 +15,7 @@ function External(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
 function For({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
   return (
     <span
-      className={`inline-block whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-[0.06em] ${
-        dark ? 'bg-white text-[var(--ink)]' : 'bg-white/75 text-[var(--ink)]'
-      }`}
+      className={`chunky-tag `}
     >
       {children}
     </span>
@@ -28,9 +26,7 @@ function Visit({ href, label, dark }: { href: string; label: string; dark?: bool
   return (
     <External
       href={href}
-      className={`inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[15px] font-bold transition-transform hover:-translate-y-0.5 ${
-        dark ? 'bg-white text-[var(--ink)]' : 'bg-[var(--ink)] text-[var(--paper)]'
-      }`}
+      className={`chunky `}
     >
       {label} <ArrowUpRight className="w-4 h-4" aria-hidden />
     </External>
@@ -201,7 +197,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
 
       <span
         aria-hidden
-        className="absolute top-5 right-5 w-9 h-9 rounded-full flex items-center justify-center bg-white/75 text-[var(--ink)] transition-transform duration-300 group-hover:rotate-90"
+        className="chunky-icon absolute top-5 right-5"
       >
         <Plus className="w-4 h-4" />
       </span>
@@ -250,7 +246,7 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute top-5 right-5 w-10 h-10 rounded-full flex items-center justify-center bg-white/75 transition-transform duration-300 hover:rotate-90 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--ink)]"
+          className="chunky-icon absolute top-5 right-5 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--ink)]"
         >
           <X className="w-4 h-4" />
         </button>
@@ -310,7 +306,7 @@ function InfoTile({
       <h3 className="mt-4 font-black uppercase leading-[0.9] text-[30px] md:text-[clamp(24px,2vw,36px)]">{title}</h3>
       <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
       {href && (
-        <span className={`absolute top-5 right-5 w-9 h-9 rounded-full flex bg-white/75 text-[var(--ink)] items-center justify-center transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5`}>
+        <span className="chunky-icon absolute top-5 right-5">
           <ArrowUpRight className="w-4 h-4" aria-hidden />
         </span>
       )}
