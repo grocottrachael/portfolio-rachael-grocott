@@ -51,15 +51,8 @@ function Home() {
           height={64}
           className="mb-5 w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-[5px] border-white"
         />
-        <h1 className="uppercase leading-[0.85]">
-          <span className="block font-bold text-[16px] md:text-[clamp(14px,1.1vw,20px)] tracking-tight mb-2">
-            Hiya! I&rsquo;m
-          </span>
-          <span className="block font-black text-[12vw] md:text-[clamp(34px,3.6vw,68px)] tracking-[-0.02em]">
-            Rachael
-            <br />
-            Grocott
-          </span>
+        <h1 className="whitespace-nowrap font-black leading-none tracking-[-0.02em] text-[9vw] md:text-[clamp(26px,2.5vw,46px)]">
+          Hiya, I&rsquo;m Rachael!
         </h1>
         </div>
 
