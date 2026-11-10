@@ -4,7 +4,10 @@ import { C } from './components/Shapes';
 
 function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
   return (
-    <span className="inline-block rounded-full px-[0.35em] leading-[1.15] box-decoration-clone" style={{ background: bg }}>
+    <span
+      className="whitespace-nowrap rounded-full px-[0.32em] py-[0.06em]"
+      style={{ background: `color-mix(in srgb, ${bg} 45%, white)` }}
+    >
       {children}
     </span>
   );
@@ -30,7 +33,7 @@ export default function App() {
         </h1>
 
         <div>
-          <p className="font-bold text-[28px] md:text-[clamp(22px,1.9vw,34px)] leading-[1.12] tracking-[-0.015em]">
+          <p className="font-bold text-[28px] md:text-[clamp(22px,1.9vw,34px)] leading-[1.32] tracking-[-0.015em]">
             I&rsquo;m a Senior Product Designer at <Pill bg={C.blue}>Graphy</Pill>. I make complex things simple, then
             polish them till they&rsquo;re <Pill bg={C.pink}>genuinely beautiful</Pill>.
           </p>
