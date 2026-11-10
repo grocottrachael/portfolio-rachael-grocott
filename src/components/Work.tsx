@@ -157,7 +157,7 @@ const projects: Project[] = [
   {
     id: 'crumbs',
     title: 'Crumbs',
-    madeFor: 'Just for me',
+    madeFor: 'For our household',
     bg: C.green,
     span: 'col-span-2 md:col-span-4',
     /* The app icon as a sticker you can move about, like the Graphy one */

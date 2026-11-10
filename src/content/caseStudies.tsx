@@ -752,7 +752,7 @@ export const caseStudies: CaseStudy[] = [
         body: (
           <>
             <p>
-              I’ve tracked what I eat on and off for years, and MyFitnessPal drives me up the wall. Every time you add
+              MyFitnessPal drives me up the wall. Every time you add
               a food it plays an animation that lasts about a second, which doesn’t sound like much until you’re
               logging a coffee, a crumpet and a yoghurt one after the other and sitting there waiting for it each
               time.
@@ -829,7 +829,7 @@ export const caseStudies: CaseStudy[] = [
         before: {
           label: 'First version',
           title: 'Ask Claude about everything',
-          body: 'Every typed food went to Claude, even “banana”, so even the easy ones took a few seconds and cost a little each time.',
+          body: 'Every typed food went to Claude, so even the simple ones took a few seconds and cost a little each time.',
         },
         after: {
           label: 'What I changed',
