@@ -27,7 +27,7 @@ function Framed({ img, className = '' }: { img: Img; className?: string }) {
       width={img.w}
       height={img.h}
       loading="lazy"
-      className={`w-full h-auto border-[3px] border-[var(--ink)] shadow-[5px_5px_0_var(--ink)] ${className}`}
+      className={`w-full h-auto border-[3px] border-[var(--ink)] ${className}`}
     />
   );
 }
@@ -78,20 +78,26 @@ function BlockView({ block, bg, chapter, joined }: { block: Block; bg: string; c
         </section>
       );
     case 'figure':
-      /* A full-width band of the project colour, with the pictures framed inside */
+      /* Like the home grid: each picture in its own flat colour block, white gaps between */
       return (
-        <figure
-          className={`-mx-5 md:-mx-8 px-5 md:px-8 py-10 md:py-16 ${joined ? '-mt-16 md:-mt-24 pt-0 md:pt-0' : ''}`}
-          style={{ background: bg }}
-        >
-          <div className={wide}>
-            <Row images={block.images} />
-            {block.caption && (
-              <figcaption className="mt-6 max-w-[680px] text-[15px] leading-relaxed font-medium text-[var(--ink)]">
-                {block.caption}
-              </figcaption>
-            )}
+        <figure className={`${wide} ${joined ? '-mt-14 md:-mt-[5.5rem]' : ''}`}>
+          <div className={`grid gap-2.5 md:gap-3 ${block.images.length > 1 ? 'md:grid-cols-2' : ''}`}>
+            {block.images.map((img) => (
+              <div key={img.src} className="flex items-center justify-center p-6 md:p-12" style={{ background: bg }}>
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  width={img.w}
+                  height={img.h}
+                  loading="lazy"
+                  className="w-full h-auto border-[3px] border-[var(--ink)]"
+                />
+              </div>
+            ))}
           </div>
+          {block.caption && (
+            <figcaption className="mt-4 max-w-[680px] text-[15px] leading-relaxed text-[var(--ink-soft)]">{block.caption}</figcaption>
+          )}
         </figure>
       );
     case 'hmw':
@@ -249,6 +255,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
       {/* Colour block header */}
+      <div className="p-2.5 md:p-3">
       <header style={{ background: study.bg }}>
         <nav className="px-5 md:px-8 py-6">
           <div className="mx-auto max-w-[1240px]">
@@ -284,6 +291,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
           </div>
         </div>
       </header>
+      </div>
 
       <div className="px-5 md:px-8 pt-10 flex justify-center">
         <Toggle tldr={tldr} setTldr={setTldr} />
@@ -324,6 +332,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
       )}
 
       {/* Next project, in its own colour */}
+      <div className="px-2.5 md:px-3">
       <Link to={`/work/${next.id}`} className="group block px-5 md:px-8 py-12 md:py-16" style={{ background: next.bg }}>
         <div className={`${text} flex items-center justify-between gap-6`}>
           <div>
@@ -335,6 +344,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
           </span>
         </div>
       </Link>
+      </div>
       {/* Same column as the text above, so every edge lines up */}
       <footer className="px-5 md:px-8 py-10">
         <div className={`${text} flex flex-wrap items-center justify-between gap-4`}>
