@@ -91,7 +91,7 @@ export function BentoGrid() {
         >
           <h4 className="text-[15px] tracking-tight mb-1 font-medium">Dotties</h4>
           <p className="text-[14px] text-neutral-400">
-            Turn any image into halftone dots, dithering or ASCII art.
+            I built this to help me at work. Turn any image into halftone dots, dithering or ASCII art.
           </p>
           <Arrow />
         </External>
@@ -116,10 +116,54 @@ export function BentoGrid() {
         >
           <h4 className="text-[15px] tracking-tight mb-1 font-medium">Triangirls</h4>
           <p className="text-[14px] text-neutral-600">
-            Founded a 2000+ member strong community for women in tech.
+            Founded and ran a 2000+ member strong community for women in tech, for years.
           </p>
           <Arrow />
         </External>
+
+        {/* graphy.dev: I own the website design */}
+        <External
+          href="https://graphy.dev/"
+          className={`${linkCard} col-span-6 md:col-span-3 bg-neutral-100 p-4`}
+        >
+          <div className="flex items-center gap-2 mb-1">
+            <h4 className="text-[15px] tracking-tight font-medium">graphy.dev</h4>
+            <div className="px-2 py-0.5 rounded-full bg-white/80 text-[11px] text-neutral-600">Website</div>
+          </div>
+          <p className="text-[14px] text-neutral-600">
+            I own the design of the Graphy developer website, as well as the product.
+          </p>
+          <Arrow />
+        </External>
+
+        {/* Latest work lives on LinkedIn */}
+        <External
+          href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
+          className={`${linkCard} col-span-6 md:col-span-3 bg-[#FFE3F1] p-4`}
+        >
+          <h4 className="text-[15px] tracking-tight mb-1 font-medium">My latest work</h4>
+          <p className="text-[14px] text-neutral-700">
+            I post what I{'\u2019'}m working on as I go. LinkedIn is the place to see it.
+          </p>
+          <Arrow />
+        </External>
+
+        {/* Talks */}
+        <div className={`${card} col-span-6 md:col-span-3 bg-neutral-50 p-4`}>
+          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Talks & workshops</h4>
+          <p className="text-[14px] text-neutral-600">
+            I{'\u2019'}ve spoken at loads of events, and I run sessions like{' '}
+            <em>How to give and receive feedback</em>.
+          </p>
+        </div>
+
+        {/* Press */}
+        <div className={`${card} col-span-6 md:col-span-3 bg-neutral-50 p-4`}>
+          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Press</h4>
+          <p className="text-[14px] text-neutral-600">
+            Interviewed by VICE. Featured in Samsung{'\u2019'}s Not a School.
+          </p>
+        </div>
 
         {/* Contact */}
         <a href="mailto:rachaelgrocott@gmail.com" className={contact}>
