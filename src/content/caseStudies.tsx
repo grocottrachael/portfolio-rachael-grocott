@@ -27,6 +27,7 @@ export type Block =
   | { type: 'stats'; items: { value: string; label: string }[] }
   | { type: 'liveCharts'; caption?: string }
   | { type: 'liveEdit'; caption?: string }
+  | { type: 'liveArrow'; caption?: string }
   | { type: 'shows'; items: { title: string; body: string }[] }
   | { type: 'decisions'; eyebrow: string; heading: string; items: { title: string; body: React.ReactNode }[] }
   | { type: 'gallery'; eyebrow?: string; heading?: string; body?: React.ReactNode; images: Img[] };
@@ -157,10 +158,9 @@ export const caseStudies: CaseStudy[] = [
         ),
       },
       {
-        type: 'figure',
-        images: [g('annotate', 'The same chart with a difference arrow from 25 Oct to 1 Nov, labelled +67.15%')],
+        /* Drawn live by the SDK, in the same style as the editable chart above */
+        type: 'liveArrow',
         caption: 'A difference arrow works out the change between two bars for you.',
-        frame: true,
       },
       {
         type: 'chapter',
