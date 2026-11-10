@@ -14,7 +14,7 @@ const prose =
   'space-y-4 text-[17px] md:text-[18px] leading-[1.65] text-[var(--ink-soft)] [&_em]:text-[var(--ink)] [&_strong]:text-[var(--ink)]';
 
 /* Long-form column on the right: one reading measure, pictures a little wider */
-const measure = 'max-w-[640px]';
+const measure = '';
 
 function Picture({ img, bg }: { img: Img; bg: string }) {
   /* A picture that's already a coloured card stands alone; anything else gets the ink stroke on the project colour */
@@ -191,7 +191,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
 
       {/* The story, as a grid of blocks */}
       <main className="md:flex-1 min-w-0 px-5 md:px-[5vw] py-10 md:py-[6vh]">
-        <div className="max-w-[900px] space-y-14 md:space-y-20">
+        <div className="max-w-[720px] space-y-14 md:space-y-20">
           {tldr && study.tldr ? (
             <>
               <dl className={`${measure} space-y-8`}>
