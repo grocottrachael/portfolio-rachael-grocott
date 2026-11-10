@@ -68,7 +68,7 @@ function Chart({ kind }: { kind: 'weekly' | 'total' }) {
 
 export default function LiveCharts() {
   return (
-    <div className="grid md:grid-cols-2 gap-5">
+    <div className="grid gap-5">
       <Chart kind="weekly" />
       <Chart kind="total" />
     </div>

@@ -1,6 +1,8 @@
-import { useMemo, useState } from 'react';
+import { lazy, Suspense, useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Link } from '../router';
+/* The Graphy SDK only loads on the page that uses it */
+const LiveCharts = lazy(() => import('../components/LiveCharts'));
 import { caseStudies, type Block, type CaseStudy as Study, type Img } from '../content/caseStudies';
 
 /*
@@ -21,7 +23,7 @@ function Picture({ img, bg }: { img: Img; bg: string }) {
   if (img.bg)
     return <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" className="w-full h-auto block" />;
   return (
-    <div className="p-6 md:p-10" style={{ background: bg }}>
+    <div className="p-4 md:p-6 h-full flex items-center" style={{ background: bg }}>
       <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" className="w-full h-auto border-[3px] border-[var(--ink)]" />
     </div>
   );
@@ -58,8 +60,9 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
       return (
         /* A picture straight after another picture sits close, so they read as one set */
         <figure className={tight ? '!mt-4' : ''}>
+          {/* One or two pictures: columns sized so a pair comes out the same height. More: a two-up grid, so none get tiny */}
           <div
-            className="grid gap-2.5 md:gap-3 md:[grid-template-columns:var(--cols)]"
+            className={`grid gap-2.5 md:gap-3 ${block.images.length > 3 ? 'grid-cols-2' : 'md:[grid-template-columns:var(--cols)]'}`}
             style={{ '--cols': block.images.map((i) => `${i.w / i.h}fr`).join(' ') } as React.CSSProperties}
           >
             {block.images.map((img) => (
@@ -105,6 +108,17 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
       );
     case 'stats':
       return <Stats items={block.items} />;
+    case 'liveCharts':
+      return (
+        <figure>
+          <div className="p-5 md:p-8" style={{ background: bg }}>
+            <Suspense fallback={<div className="h-[440px]" />}>
+              <LiveCharts />
+            </Suspense>
+          </div>
+          {block.caption && <Caption>{block.caption}</Caption>}
+        </figure>
+      );
     default:
       return null;
   }

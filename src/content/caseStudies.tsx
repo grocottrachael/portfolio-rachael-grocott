@@ -52,7 +52,7 @@ const k = (name: string, alt: string): Img => ({ src: `/work/knot/${name}.webp`,
 
 
 const smSizes: Record<string, [number, number]> = {"chips": [1700, 1015], "phone-1": [780, 1520], "phone-2": [780, 1520], "phone-3": [780, 1520], "post-008": [720, 960], "post-012": [720, 960], "post-016": [720, 960], "post-019": [720, 960]};
-/* A SWATCHMAKER image */
+/* A SwatchMaker image */
 const sm = (name: string, alt: string): Img => ({ src: `/work/swatchmaker/${name}.webp`, alt, w: smSizes[name][0], h: smSizes[name][1] });
 
 const gSizes: Record<string, [number, number]> = {"point-and-edit": [1600, 980], "annotate": [1560, 980], "theme-botanical": [1120, 760], "theme-chalkboard": [1120, 760], "theme-blueprint": [1120, 760], "theme-watercolor": [1120, 760], "theme-neo-brutalist": [1120, 760], "theme-comic": [1120, 760]};
@@ -62,6 +62,7 @@ const g = (name: string, alt: string): Img => ({ src: `/work/graphy/${name}.webp
 export const caseStudies: CaseStudy[] = [
   {
     id: 'graphy',
+    v2: true,
     title: 'Graphy SDK',
     madeFor: 'Currently working here',
     bg: C.accent,
@@ -74,25 +75,24 @@ export const caseStudies: CaseStudy[] = [
       { label: 'I work in', value: 'Claude, on the real SDK' },
     ],
     link: { href: 'https://graphy.dev/', label: 'Visit graphy.dev' },
+    tldr: {
+      points: [
+        { label: 'The context', body: 'Six years at Graphy, through every pivot. AI changed the landscape, and an SDK became the right fit: charts for developers and their AI agents.' },
+        { label: 'What I did', body: 'I design the SDK’s developer experience and own graphy.dev. Most proud of point and edit: click any part of a chart and change that thing.' },
+        { label: 'How I work', body: 'I design on the real SDK in Claude, and hand over pull requests or a spec with every edge case, pairing with engineers all the way.' },
+        { label: 'The result', body: 'The React SDK hit 9.8k npm downloads in one week, up 67% on the week before.' },
+      ],
+      stats: [
+        { value: '9.8k', label: 'npm downloads in one week' },
+        { value: '+67%', label: 'on the week before' },
+        { value: '58.8k', label: 'downloads, 16 Aug to 1 Nov' },
+        { value: '6', label: 'years at Graphy' },
+      ],
+    },
     blocks: [
       {
-        type: 'shows',
-        items: [
-          { title: 'Point and edit', body: 'Click any part of a chart and change that thing.' },
-          { title: 'Freeform annotation', body: 'Notes and arrows that sit where the story needs them.' },
-          { title: 'Themes', body: 'Whole looks, well beyond a colour scheme.' },
-          { title: 'Designed in code', body: 'Specs and PRs built on top of the real SDK.' },
-        ],
-      },
-      {
-        type: 'figure',
-        images: [g('point-and-edit', 'A bar chart in edit mode: the bars are selected and a menu offers fill colour and bar thickness')],
-        caption: 'Point and edit: click the bars and their controls open right there. Every chart on this page is drawn with the real SDK, on its own public weekly downloads from npm.',
-        frame: true,
-      },
-      {
-        type: 'text',
-        eyebrow: 'The context',
+        type: 'chapter',
+        label: 'The context',
         heading: 'Six years, a few pivots, and a new audience',
         body: (
           <>
@@ -110,8 +110,8 @@ export const caseStudies: CaseStudy[] = [
         ),
       },
       {
-        type: 'text',
-        eyebrow: 'The work I’m proudest of',
+        type: 'chapter',
+        label: 'The work I’m proudest of',
         heading: 'Point and edit',
         body: (
           <>
@@ -127,8 +127,27 @@ export const caseStudies: CaseStudy[] = [
         ),
       },
       {
-        type: 'text',
-        eyebrow: 'Just shipped',
+        type: 'pivot',
+        before: {
+          label: 'Before',
+          title: 'Side panels',
+          body: 'Every setting lived in a panel off to the side. You had to know where something was before you could change it.',
+        },
+        after: {
+          label: 'Point and edit',
+          title: 'Click the thing, change the thing',
+          body: 'Click a bar, an axis or the legend and its controls open right there. Working with AI let us move fast enough to make it.',
+        },
+      },
+      {
+        type: 'figure',
+        images: [g('point-and-edit', 'A bar chart in edit mode: the bars are selected and a menu offers fill colour and bar thickness')],
+        caption: 'Point and edit: click the bars and their controls open right there. Every chart on this page is drawn with the real SDK, on its own public weekly downloads from npm.',
+        frame: true,
+      },
+      {
+        type: 'chapter',
+        label: 'Just shipped',
         heading: 'Annotating, made freeform',
         body: (
           <>
@@ -147,8 +166,8 @@ export const caseStudies: CaseStudy[] = [
         frame: true,
       },
       {
-        type: 'text',
-        eyebrow: 'Going beyond a colour scheme',
+        type: 'chapter',
+        label: 'Going beyond a colour scheme',
         heading: 'Themes',
         body: (
           <>
@@ -167,11 +186,7 @@ export const caseStudies: CaseStudy[] = [
           g('theme-botanical', 'The downloads chart in the Botanical theme: bars drawn as leaf blades on grained paper'),
           g('theme-chalkboard', 'The same chart on a chalkboard, drawn in chalk'),
           g('theme-blueprint', 'The same chart as a blueprint, with hatched bars on a blue drafting grid'),
-        ],
-      },
-      {
-        type: 'figure',
-        images: [
+
           g('theme-watercolor', 'The same chart in watercolour washes'),
           g('theme-neo-brutalist', 'The same chart in Neo Brutalist: loud pink blocks with a hard black shadow'),
           g('theme-comic', 'The same chart as a comic panel, with halftone dots and black outlines'),
@@ -179,8 +194,8 @@ export const caseStudies: CaseStudy[] = [
         caption: 'One chart, six themes. Nothing changed but the theme.',
       },
       {
-        type: 'text',
-        eyebrow: 'How I work',
+        type: 'chapter',
+        label: 'How I work',
         heading: 'I design on top of real charts',
         body: (
           <>
@@ -206,6 +221,7 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: 'swatchmaker',
+    v2: true,
     title: 'SwatchMaker',
     madeFor: 'For anyone choosing paint',
     bg: C.pink,
@@ -218,29 +234,24 @@ export const caseStudies: CaseStudy[] = [
       { label: 'Covers', value: '5,000+ paints, 10 brands' },
     ],
     link: { href: 'https://www.swatchmaker.uk/', label: 'Visit swatchmaker.uk' },
+    tldr: {
+      points: [
+        { label: 'The problem', body: 'Paint is hard to judge. Screenshots scattered through my Figma files, and tester pots that look nothing like the wall.' },
+        { label: 'What I did', body: 'Designed and built a way to see any paints side by side: over 5,000 real colours from ten UK brands, shuffled with the spacebar.' },
+        { label: 'What I learned', body: 'My first one-shot looked right, but every colour in it was made up. Real data had to come first, so I scrape every brand’s own colours, and still do.' },
+        { label: 'The result', body: 'Live at swatchmaker.uk. Most traffic comes from a wallpaper company that links to it, and Claude posts a palette to Instagram every day.' },
+      ],
+      stats: [
+        { value: '5,000+', label: 'real paint colours' },
+        { value: '10', label: 'UK paint brands' },
+        { value: '34', label: 'scraping scripts' },
+        { value: '4,600', label: 'colour descriptions written' },
+      ],
+    },
     blocks: [
       {
-        type: 'shows',
-        items: [
-          { title: 'Hit space', body: 'Shuffle real paint pairings. Lock the ones you love.' },
-          { title: 'Upload anything', body: 'A wallpaper, a photo, a painting, matched to real paints.' },
-          { title: 'Real colours', body: 'Every hex taken from the brand’s own published values.' },
-          { title: 'Posts itself', body: 'A daily palette on Instagram, after a yes from me.' },
-        ],
-      },
-      {
-        type: 'figure',
-        images: [
-          sm('phone-1', 'Dulux Roasted Pumpkin 6 above Valspar Rhubarb and Custard, on a phone'),
-          sm('phone-2', 'Valspar Green Willow above Dulux Chalky Downs 5'),
-          sm('phone-3', 'Valspar Kidney Bean above Farrow & Ball Middle Ground'),
-        ],
-        frame: true,
-        caption: 'Hit space, or tap New colours, for a fresh pairing. Every one is a real paint you can buy.',
-      },
-      {
-        type: 'text',
-        eyebrow: 'The problem',
+        type: 'chapter',
+        label: 'The problem',
         heading: 'Paint is hard to judge, wherever you look at it',
         body: (
           <>
@@ -255,15 +266,23 @@ export const caseStudies: CaseStudy[] = [
             </p>
             <p>
               Side by side, big, on your phone, you see the tone of a colour much more honestly, because it sits next
-              to another one. And a plain line like And a plain line like &ldquo;a warm grey with a hint of pink&rdquo; tells you what yourldquo;On the blue side of aquaAnd a plain line like &ldquo;a warm grey with a hint of pink&rdquo; tells you what yourrdquo; tells you what your
+              to another one. And a plain line like &ldquo;On the blue side of aqua&rdquo; tells you what your
               eye might miss.
             </p>
           </>
         ),
       },
       {
-        type: 'text',
-        eyebrow: 'Where it started',
+        type: 'hmw',
+        items: [
+          'help someone see two brands’ colours side by side, honestly?',
+          'make choosing paint feel like play, not homework?',
+          'say what a colour really is, in plain words?',
+        ],
+      },
+      {
+        type: 'chapter',
+        label: 'Where it started',
         heading: 'One prompt, at 4am',
         body: (
           <>
@@ -288,8 +307,21 @@ export const caseStudies: CaseStudy[] = [
         caption: 'The first version, called chips. One prompt, already useful, and every colour in it invented.',
       },
       {
-        type: 'text',
-        eyebrow: 'Perfectionism',
+        type: 'pivot',
+        before: {
+          label: 'First version',
+          title: 'Looks right, colours made up',
+          body: 'The one-shot prototype was useful straight away, but every hex code in it was invented. A paint app with fake colours is worse than none.',
+        },
+        after: {
+          label: 'What I changed',
+          title: 'Real colours, from the brands themselves',
+          body: 'I scrape every brand’s own published colours, and re-run it whenever a range changes. Nothing is guessed.',
+        },
+      },
+      {
+        type: 'chapter',
+        label: 'Perfectionism',
         heading: 'Every colour has to be the real colour',
         body: (
           <>
@@ -317,8 +349,8 @@ export const caseStudies: CaseStudy[] = [
         ],
       },
       {
-        type: 'text',
-        eyebrow: 'Delight',
+        type: 'chapter',
+        label: 'Delight',
         heading: 'One key, endless pairings',
         body: (
           <>
@@ -338,14 +370,24 @@ export const caseStudies: CaseStudy[] = [
       {
         type: 'figure',
         images: [
+          sm('phone-1', 'Dulux Roasted Pumpkin 6 above Valspar Rhubarb and Custard, on a phone'),
+          sm('phone-2', 'Valspar Green Willow above Dulux Chalky Downs 5'),
+          sm('phone-3', 'Valspar Kidney Bean above Farrow & Ball Middle Ground'),
+        ],
+        frame: true,
+        caption: 'Hit space, or tap New colours, for a fresh pairing. Every one is a real paint you can buy.',
+      },
+      {
+        type: 'figure',
+        images: [
           { src: '/swatchmaker.webp', alt: 'A bathroom photo next to the paints it matched: La Torre, Follingsby and Pale Taupe', w: 1200, h: 657 },
         ],
         frame: true,
         caption: 'Upload any picture and it finds the closest real paints.',
       },
       {
-        type: 'text',
-        eyebrow: 'AI in my day-to-day',
+        type: 'chapter',
+        label: 'AI in my day-to-day',
         heading: 'Claude runs the marketing. I just say yes.',
         body: (
           <>
@@ -357,36 +399,24 @@ export const caseStudies: CaseStudy[] = [
             </p>
             <p>
               The same setup makes reels, recording the real app on a phone, taps and all. That&rsquo;s taken
-              SWATCHMAKER onto TikTok, where my second post got 230 views on day two.
+              SwatchMaker onto TikTok, where my second post got 230 views on day two.
             </p>
             <p>
               The best channel so far is still a person, though. After the Product Hunt launch, a designer in my
-              community asked to link to SWATCHMAKER from his wife&rsquo;s wallpaper company, Living Quarters, so
+              community asked to link to SwatchMaker from his wife&rsquo;s wallpaper company, Living Quarters, so
               customers can find paints to go with their wallpaper. That link sends most of my traffic.
             </p>
           </>
         ),
       },
       {
-        type: 'gallery',
-        eyebrow: 'Telling people about it',
-        heading: 'A palette a day',
-        body: <>A numbered series of real-paint palettes for Instagram, made by code from the app itself.</>,
-        images: [
-          sm('post-008', 'Palette 008: Charlotte’s Locks and Hague Blue, both Farrow & Ball'),
-          sm('post-012', 'Palette 012: Royal Navy by Little Greene and Fine White by Edward Bulmer'),
-          sm('post-016', 'Palette 016: Setting Plaster and Brinjal, both Farrow & Ball'),
-          sm('post-019', 'Palette 019: Joanna, Ochre Glow and Preference Red, with paint tins'),
-        ],
-      },
-      {
-        type: 'text',
-        eyebrow: 'Built with AI',
+        type: 'chapter',
+        label: 'Built with AI',
         heading: 'From a one-shot to a product',
         body: (
           <>
             <p>
-              SWATCHMAKER is where I learned to build. AI got me from an idea to something useful in five minutes,
+              SwatchMaker is where I learned to build. AI got me from an idea to something useful in five minutes,
               then did the grinding work: scraping thousands of colours, writing thousands of descriptions, rendering
               posts and reels.
             </p>
