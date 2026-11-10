@@ -22,7 +22,7 @@ export default function App() {
           <span className="block font-bold text-[16px] md:text-[clamp(14px,1.1vw,20px)] tracking-tight mb-2">
             Hiya! I&rsquo;m
           </span>
-          <span className="block font-black text-[17vw] md:text-[clamp(44px,5.6vw,104px)] tracking-[-0.02em]">
+          <span className="block font-black text-[12vw] md:text-[clamp(32px,3.4vw,60px)] tracking-[-0.02em]">
             Rachael
             <br />
             Grocott
