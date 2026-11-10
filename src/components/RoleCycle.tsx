@@ -3,7 +3,8 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { roles } from '../content/experience';
 
 /*
- * The Experience block's picture: one role at a time, with the company's
+ * The Experience block's picture: one role at a time, sliding right to left
+ * with the same timing as the dots underneath, with the company's
  * logo, flipping through the CV. Pauses while you hover, and sits still
  * on the latest role if you've asked for less motion.
  */
@@ -30,7 +31,7 @@ export default function RoleCycle() {
   const r = roles[i];
   return (
     <div
-      className="mt-auto pt-5"
+      className="flex-1 flex flex-col justify-center pt-5"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -38,10 +39,10 @@ export default function RoleCycle() {
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={r.company}
-            initial={{ y: 40, opacity: 0, rotate: -3 }}
-            animate={{ y: 0, opacity: 1, rotate: 0 }}
-            exit={{ y: -40, opacity: 0, rotate: 3 }}
-            transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+            initial={{ x: 48, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: -48, opacity: 0 }}
+            transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1] }}
             className="flex items-center gap-3"
           >
             {/* Each logo as it comes, no frame. Graphy's mark is see-through, so it gets a white tile */}
@@ -70,7 +71,7 @@ export default function RoleCycle() {
       {/* Little dots for where you are in the CV */}
       <span className="mt-1 flex gap-1.5" aria-hidden>
         {roles.map((x, n) => (
-          <span key={x.company} className={`h-1.5 rounded-full bg-[var(--ink)] transition-all duration-300 ${n === i ? 'w-5' : 'w-1.5 opacity-30'}`} />
+          <span key={x.company} className={`h-1.5 rounded-full bg-[var(--ink)] transition-all duration-[450ms] ease-[cubic-bezier(.65,0,.35,1)] ${n === i ? 'w-5' : 'w-1.5 opacity-30'}`} />
         ))}
       </span>
       <span className="sr-only">{roles.map((x) => `${x.company}, ${x.dates}`).join('. ')}</span>
