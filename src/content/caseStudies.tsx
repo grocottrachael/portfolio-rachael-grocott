@@ -33,7 +33,191 @@ const knotSizes: Record<string, [number, number]> = {"tap-a-row": [918, 922], "t
 /* A Knot a Problem image, with its size so pairs can be laid out at equal heights */
 const k = (name: string, alt: string): Img => ({ src: `/work/knot/${name}.webp`, alt, w: knotSizes[name][0], h: knotSizes[name][1] });
 
+
+const smSizes: Record<string, [number, number]> = {"chips-browse": [1600, 860], "chips-compare": [1600, 858], "space-1": [1600, 1000], "space-2": [1600, 1000], "post-008": [720, 960], "post-012": [720, 960], "post-016": [720, 960], "post-019": [720, 960]};
+/* A SWATCHMAKER image */
+const sm = (name: string, alt: string): Img => ({ src: `/work/swatchmaker/${name}.webp`, alt, w: smSizes[name][0], h: smSizes[name][1] });
+
 export const caseStudies: CaseStudy[] = [
+  {
+    id: 'swatchmaker',
+    title: 'SWATCHMAKER',
+    madeFor: 'For anyone choosing paint',
+    bg: C.pink,
+    intro:
+      'See any paints together before you buy. Over 5,000 real colours from ten UK brands, side by side, with one key to shuffle through them. My first app: it began as a one-shot prototype and became a product people use every day.',
+    facts: [
+      { label: 'Role', value: 'Design and build, solo' },
+      { label: 'Started in', value: 'Figma Make, one prompt' },
+      { label: 'Built with', value: 'Claude Code' },
+      { label: 'Covers', value: '5,000+ paints, 10 brands' },
+    ],
+    link: { href: 'https://www.swatchmaker.uk/', label: 'Visit swatchmaker.uk' },
+    blocks: [
+      {
+        type: 'shows',
+        items: [
+          { title: 'Hit space', body: 'Shuffle real paint pairings. Lock the ones you love.' },
+          { title: 'Upload anything', body: 'A wallpaper, a photo, a painting, matched to real paints.' },
+          { title: 'Real colours', body: 'Every hex taken from the brand’s own published values.' },
+          { title: 'Posts itself', body: 'A daily palette on Instagram, after a yes from me.' },
+        ],
+      },
+      {
+        type: 'figure',
+        images: [
+          sm('space-1', 'Valspar Whirled Peas next to Rust-Oleum Odyssey, with a hint: hit Space for new colours'),
+          sm('space-2', 'Paint & Paper Library Sand IV next to Dulux Relaxing Siesta'),
+        ],
+        caption: 'Hit space for new colours. Every one is a real paint you can buy, from whichever brand makes it.',
+      },
+      {
+        type: 'text',
+        eyebrow: 'The problem',
+        heading: 'Choosing paint means ten tabs and a camera roll of screenshots',
+        body: (
+          <>
+            <p>
+              I was decorating my home in York, and every brand keeps its colours on its own website. To see a Farrow
+              &amp; Ball next to a Little Greene you jump between sites, save screenshots, and squint at them side by
+              side. Tester pots cost money and still only show you one brand at a time.
+            </p>
+            <p>SWATCHMAKER puts every brand in one simple view, so you can build a palette before you buy a thing.</p>
+          </>
+        ),
+      },
+      {
+        type: 'text',
+        eyebrow: 'Where it started',
+        heading: 'One prompt, at 4am',
+        body: (
+          <>
+            <p>
+              I woke up with the idea and made it in Figma Make in about five minutes. That first one-shot was already
+              useful to me, and when I shared it on LinkedIn I got seven DMs. So I kept going: from Figma Make to
+              Cursor, and eventually to Claude Code.
+            </p>
+            <p>
+              There was one big catch. It looked right, but every hex code in it was made up. A paint app with fake
+              colours is worse than no app at all.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'figure',
+        images: [
+          sm('chips-browse', 'The first version, called chips: a grid of 75 Farrow & Ball colours to browse'),
+          sm('chips-compare', 'chips comparing Skimming Stone and Hague Blue side by side, with codes and RGB values'),
+        ],
+        caption: 'The first version, called chips. One prompt, already useful, and every colour in it invented.',
+      },
+      {
+        type: 'text',
+        eyebrow: 'Perfectionism',
+        heading: 'Every colour has to be the real colour',
+        body: (
+          <>
+            <p>
+              So the very first job was a script to scrape every correct hex code from every brand&rsquo;s website,
+              and I still run them today whenever a range changes. Every site is built differently: some publish
+              their colours as data, some hide them in the page, some sit behind a wall that needs a real browser.
+              The rule never changes: the colour comes from what the brand itself publishes, never guessed.
+            </p>
+            <p>
+              Then the words. Brands describe a colour in a paragraph, or not at all. Every paint now has one plain
+              line about its tone, like &ldquo;A soft, pale warm beige&rdquo;, in sentence case and British spelling,
+              short enough to fit on one line.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'stats',
+        items: [
+          { value: '5,000+', label: 'real paint colours' },
+          { value: '10', label: 'UK paint brands' },
+          { value: '34', label: 'scraping scripts' },
+          { value: '4,600', label: 'colour descriptions written' },
+        ],
+      },
+      {
+        type: 'text',
+        eyebrow: 'Delight',
+        heading: 'One key, endless pairings',
+        body: (
+          <>
+            <p>
+              The heart of it is the spacebar. Hit it and you get a new pairing of real paints, from any brand. Lock
+              the colour you love and keep hitting space until its partner turns up. Change your mind and undo. A
+              friend of mine is obsessed with smashing the spacebar, which is exactly the point: choosing paint should
+              feel like play, not homework.
+            </p>
+            <p>
+              My favourite feature is the upload. Give it any inspiration, a wallpaper, a photo, a painting, and it
+              finds the closest real paints from the whole library.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'figure',
+        images: [
+          { src: '/swatchmaker.webp', alt: 'A bathroom photo next to the paints it matched: La Torre, Follingsby and Pale Taupe', w: 1200, h: 657 },
+        ],
+        caption: 'Upload any picture and it finds the closest real paints.',
+      },
+      {
+        type: 'text',
+        eyebrow: 'Getting it out there',
+        heading: 'From a launch to a daily habit',
+        body: (
+          <>
+            <p>
+              I launched it on Product Hunt. Then a designer in my community asked if his wife&rsquo;s wallpaper
+              company, Living Quarters, could link to it, so their customers could find paints to go with their
+              wallpaper. That link is where most of my traffic comes from today.
+            </p>
+            <p>
+              I&rsquo;ve since connected Claude to the Instagram API. Every day it picks a palette, renders the post
+              from the app itself so it always matches the site, and asks me a yes or no before it goes out. I&rsquo;ve
+              started on TikTok too: my second post, on day two, got 230 views.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'gallery',
+        eyebrow: 'Telling people about it',
+        heading: 'A palette a day',
+        body: <>A numbered series of real-paint palettes for Instagram, made by code from the app itself.</>,
+        images: [
+          sm('post-008', 'Palette 008: Charlotte’s Locks and Hague Blue, both Farrow & Ball'),
+          sm('post-012', 'Palette 012: Royal Navy by Little Greene and Fine White by Edward Bulmer'),
+          sm('post-016', 'Palette 016: Setting Plaster and Brinjal, both Farrow & Ball'),
+          sm('post-019', 'Palette 019: Joanna, Ochre Glow and Preference Red, with paint tins'),
+        ],
+      },
+      {
+        type: 'text',
+        eyebrow: 'Built with AI',
+        heading: 'From a one-shot to a product',
+        body: (
+          <>
+            <p>
+              SWATCHMAKER is where I learned to build. AI got me from an idea to something useful in five minutes,
+              then did the grinding work: scraping thousands of colours, writing thousands of descriptions, rendering
+              posts and reels.
+            </p>
+            <p>
+              What it couldn&rsquo;t do was notice the colours were fake, decide a description should fit on one
+              line, or know that hitting space should feel like a game. That part was mine.
+            </p>
+          </>
+        ),
+      },
+    ],
+  },
   {
     id: 'knot-a-problem',
     title: 'Knot a Problem',
