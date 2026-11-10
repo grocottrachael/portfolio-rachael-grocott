@@ -3,7 +3,7 @@ import profileImage from '../assets/rachael-avatar.webp';
 
 export function Hero() {
   return (
-    <div className="h-full flex flex-col md:flex-row gap-8 md:gap-12 2xl:gap-16 items-center max-w-7xl 2xl:max-w-[1600px] mx-auto w-full pb-[125px] md:pb-0 pt-[75px] md:pt-0">
+    <div className="h-full flex flex-col md:flex-row gap-8 md:gap-12 2xl:gap-16 items-center max-w-7xl 2xl:max-w-[1600px] mx-auto w-full">
       {/* Left side: Name and intro - 30% */}
       <div className="flex-shrink-0 w-full md:w-[30%] space-y-3">
         <img 

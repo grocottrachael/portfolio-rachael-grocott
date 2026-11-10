@@ -1,20 +1,32 @@
 import React from 'react';
-import { Github, Linkedin, Dribbble, Mail, ArrowUpRight } from 'lucide-react';
-const swatchmakerImage = '/swatchmaker.webp';
+import { Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+
+const card = 'group relative rounded-xl overflow-hidden transition-all';
+const linkCard = `${card} hover:shadow-lg cursor-pointer`;
+const contact =
+  'col-span-2 bg-neutral-100 rounded-xl p-2.5 flex flex-col items-center justify-center gap-1 hover:bg-neutral-200 transition-all';
+
+function Arrow() {
+  return (
+    <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+      <ArrowUpRight className="w-3 h-3 text-neutral-700" />
+    </div>
+  );
+}
+
+function External(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
+  return <a target="_blank" rel="noopener noreferrer" {...props} />;
+}
 
 export function BentoGrid() {
   return (
     <div className="w-full md:w-[50vw] mx-auto">
-      {/* Bento grid - portrait oriented */}
       <div className="grid grid-cols-6 gap-3">
-        {/* Row 1 & 2 */}
-        {/* Large Project Card - spans 2 rows */}
-        <a 
-          href="https://swatchmaker.uk/" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="col-span-6 md:col-span-4 md:row-span-2 group relative bg-neutral-100 rounded-xl overflow-hidden hover:shadow-lg transition-all cursor-pointer order-1 md:order-none"
+        {/* SWATCHMAKER: featured, spans 2 rows */}
+        <External
+          href="https://swatchmaker.uk/"
+          className={`${linkCard} col-span-6 md:col-span-4 md:row-span-2 bg-neutral-100`}
         >
           <div className="h-full p-4 flex flex-col justify-between min-h-[180px] md:min-h-[200px]">
             <div>
@@ -24,100 +36,104 @@ export function BentoGrid() {
                   Featured
                 </div>
               </div>
-              
               <p className="text-[14px] text-neutral-600">
                 A passion project for people to see paint colours from all brands side by side.
               </p>
             </div>
-
             <ImageWithFallback
-              src={swatchmakerImage}
+              src="/swatchmaker.webp"
               alt="SWATCHMAKER interface"
               className="w-full mt-3 rounded-lg"
             />
-
-            <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <ArrowUpRight className="w-3 h-3 text-neutral-700" />
-            </div>
+            <Arrow />
           </div>
-        </a>
+        </External>
 
-        {/* Project Card 2 - Design System */}
-        <a 
-          href="https://x.com/triangirlsocial" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="col-span-6 md:col-span-2 md:aspect-square group bg-neutral-50 rounded-xl p-3 hover:shadow-lg transition-all cursor-pointer min-h-[85px] md:min-h-0 flex flex-col relative order-3 md:order-none"
+        {/* Graphy SDK: current role */}
+        <External
+          href="https://graphy.dev/"
+          className={`${linkCard} col-span-6 md:col-span-2 bg-gradient-to-br from-neutral-900 to-neutral-800 text-white p-4 flex flex-col justify-between min-h-[120px]`}
         >
-          <h4 className="text-xs tracking-tight mb-1.5 font-medium text-[15px]">Triangirls</h4>
-          <div className="text-[10px] text-neutral-500 space-y-0.5">
-            <div className="text-[14px] text-[rgb(82,82,82)]">Founded a 2000+ member strong community for women in Tech.</div>
-          </div>
-          <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <ArrowUpRight className="w-3 h-3 text-neutral-700" />
-          </div>
-        </a>
-
-        {/* Combined Mobile App + Skills */}
-        <div className="col-span-6 md:col-span-2 md:row-span-2 bg-neutral-50 rounded-xl p-4 flex flex-col md:min-h-[200px] order-4 md:order-none">
           <div>
-            <h4 className="text-xs tracking-tight mb-1.5 font-medium text-[15px]">Skills</h4>
-            <div className="text-[10px] text-neutral-500 space-y-0.5">
-              <div className="text-[14px] text-[rgb(82,82,82)]">Clear IA • Intuitive UX • DX • Visual Polish • Fast AI Prototyping • Design Systems • Interaction Design • Research & Testing • Product Thinking • Cross-team Collaboration • Clear Communication • Coaching • Public speaking</div>
+            <h4 className="text-[15px] tracking-tight mb-1 font-medium">Graphy SDK</h4>
+            <p className="text-[14px] text-neutral-300">
+              Beautiful, editable charts for developers and their AI agents.
+            </p>
+          </div>
+          <div className="flex items-center gap-1.5 mt-3">
+            <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+            <span className="text-[12px] text-neutral-300">Working on this now</span>
+          </div>
+          <Arrow />
+        </External>
+
+        {/* Knot a Problem */}
+        <External
+          href="https://knotaproblem.app/"
+          className={`${linkCard} col-span-6 md:col-span-2 bg-[#F3C5CD] p-4 flex flex-col`}
+        >
+          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Knot a Problem</h4>
+          <p className="text-[14px] text-neutral-700">
+            Never get stuck reading a crochet pattern again.
+          </p>
+          <ImageWithFallback
+            src="/knot-a-problem.webp"
+            alt="Knot a Problem: never get stuck reading a crochet pattern again"
+            className="w-full mt-3 rounded-md"
+          />
+          <Arrow />
+        </External>
+
+        {/* Dotties */}
+        <External
+          href="https://dotties.app/"
+          className={`${linkCard} col-span-6 md:col-span-2 bg-[#0A0A0A] text-white p-4`}
+        >
+          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Dotties</h4>
+          <p className="text-[14px] text-neutral-400">
+            Turn any image into halftone dots, dithering or ASCII art.
+          </p>
+          <Arrow />
+        </External>
+
+        {/* Crumbs: private and self-hosted, so no link */}
+        <div className={`${card} col-span-6 md:col-span-2 bg-[#D4EAE2] p-4`}>
+          <div className="flex items-center gap-2 mb-1">
+            <h4 className="text-[15px] tracking-tight font-medium">Crumbs</h4>
+            <div className="px-2 py-0.5 rounded-full bg-white/70 text-[11px] text-neutral-600">
+              Just for us
             </div>
           </div>
+          <p className="text-[14px] text-neutral-700">
+            A no-faff calorie diary for our household. Snap your plate and it works it out.
+          </p>
         </div>
 
-        {/* Row 3: Availability - under e-commerce */}
-        <a 
-          href="https://graphy.app/" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="col-span-6 md:col-span-4 group relative bg-gradient-to-br from-neutral-900 to-neutral-800 text-white rounded-xl p-4 flex items-center justify-between min-h-[75px] md:min-h-[80px] hover:shadow-lg transition-all cursor-pointer order-2 md:order-none"
+        {/* Triangirls */}
+        <External
+          href="https://x.com/triangirlsocial"
+          className={`${linkCard} col-span-6 md:col-span-2 bg-neutral-50 p-4`}
         >
-          <div>
-            <h4 className="text-[15px] tracking-wider text-[rgb(255,255,255)] mb-0.5 font-medium">Graphy</h4>
-            <p className="text-xs tracking-tight mb-1 text-[14px] text-[rgb(195,195,195)]">An AI-powered tool for turning data into clear, beautiful stories.</p>
-            <div className="flex items-center gap-1.5">
-              <div className="w-1 h-1 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-[12px] text-neutral-300">Currently working here on DX</span>
-            </div>
-          </div>
-          <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <ArrowUpRight className="w-3 h-3 text-neutral-700" />
-          </div>
-        </a>
+          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Triangirls</h4>
+          <p className="text-[14px] text-neutral-600">
+            Founded a 2000+ member strong community for women in tech.
+          </p>
+          <Arrow />
+        </External>
 
-        {/* Email */}
-        <a
-          href="mailto:rachaelgrocott@gmail.com"
-          className="col-span-2 bg-neutral-100 text-neutral-700 rounded-xl p-2.5 flex flex-col items-center justify-center gap-1 hover:bg-neutral-200 transition-all order-4 md:order-none"
-        >
-          <Mail className="w-4 h-4" />
-          <span className="text-[15px] font-medium text-[rgb(82,82,82)]">Email</span>
+        {/* Contact */}
+        <a href="mailto:rachaelgrocott@gmail.com" className={contact}>
+          <Mail className="w-4 h-4 text-neutral-700" />
+          <span className="text-[15px] font-medium text-neutral-600">Email</span>
         </a>
-
-        {/* GitHub */}
-        <a
-          href="https://github.com/grocottrachael"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="col-span-2 bg-neutral-100 text-neutral-700 rounded-xl p-2.5 flex flex-col items-center justify-center gap-1 hover:bg-neutral-200 transition-all order-5 md:order-none"
-        >
-          <Github className="w-4 h-4" />
-          <span className="text-[15px] font-medium text-[rgb(82,82,82)]">GitHub</span>
-        </a>
-
-        {/* LinkedIn */}
-        <a
-          href="https://www.linkedin.com/in/rachaelgrocott/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="col-span-2 bg-neutral-100 text-neutral-700 rounded-xl p-2.5 flex flex-col items-center justify-center gap-1 hover:bg-neutral-200 transition-all order-6 md:order-none"
-        >
-          <Linkedin className="w-4 h-4" />
-          <span className="text-[15px] font-medium text-[rgb(82,82,82)]">LinkedIn</span>
-        </a>
+        <External href="https://github.com/grocottrachael" className={contact}>
+          <Github className="w-4 h-4 text-neutral-700" />
+          <span className="text-[15px] font-medium text-neutral-600">GitHub</span>
+        </External>
+        <External href="https://www.linkedin.com/in/rachaelgrocott/" className={contact}>
+          <Linkedin className="w-4 h-4 text-neutral-700" />
+          <span className="text-[15px] font-medium text-neutral-600">LinkedIn</span>
+        </External>
       </div>
     </div>
   );
