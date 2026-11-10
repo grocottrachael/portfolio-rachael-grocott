@@ -12,11 +12,16 @@ function External(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
 }
 
 /* "For work", "Just for us"... who each thing was made for */
-function For({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
+/* "live" adds a pulsing green dot: for what I'm doing right now */
+function For({ children, live }: { children: React.ReactNode; dark?: boolean; live?: boolean }) {
   return (
-    <span
-      className={`chunky-tag `}
-    >
+    <span className="chunky-tag" style={live ? { display: 'inline-flex', alignItems: 'center', gap: '0.4rem' } : undefined}>
+      {live && (
+        <span className="relative flex w-2 h-2" aria-hidden>
+          <span className="absolute inset-0 rounded-full bg-[#2FBF71] opacity-70 motion-safe:animate-ping" />
+          <span className="relative w-2 h-2 rounded-full bg-[#2FBF71]" />
+        </span>
+      )}
       {children}
     </span>
   );
@@ -49,6 +54,8 @@ type Project = {
   logoRight?: boolean;
   /** show the logo big at the foot of the block, so titles line up with their neighbours */
   logoBelow?: boolean;
+  /** happening now: a pulsing dot on the label */
+  live?: boolean;
   /** no detail panel yet: the block goes straight to the project's own site */
   linksOut?: boolean;
   /** the logo spells out the name, so the big title is for screen readers only */
@@ -56,20 +63,6 @@ type Project = {
   story: React.ReactNode;
   link?: { href: string; label: string };
 };
-
-/* The Dotties mark, as drawn in the Dotties app: a framed, rotated 3x3 dot grid (the name is the tile title) */
-function DottiesLogo() {
-  return (
-    <span className="relative block w-[clamp(88px,8vw,130px)] aspect-square border border-[var(--ink)]/15 bg-white/50" aria-hidden>
-      {['-left-px -top-px', '-right-px -top-px', '-left-px -bottom-px', '-right-px -bottom-px'].map((pos) => (
-        <span key={pos} className={`absolute w-1 h-1 bg-[var(--ink)]/40 ${pos}`} />
-      ))}
-      <svg viewBox="0 0 13 13" className="absolute inset-0 m-auto w-[30%] h-[30%] rotate-45">
-        {[0, 5, 10].flatMap((y) => [0, 5, 10].map((x) => <rect key={`${x}-${y}`} x={x} y={y} width="3" height="3" fill="var(--ink)" />))}
-      </svg>
-    </span>
-  );
-}
 
 const projects: Project[] = [
   {
@@ -96,10 +89,11 @@ const projects: Project[] = [
   {
     id: 'graphy',
     title: 'Graphy SDK',
-    madeFor: 'For developers',
+    madeFor: 'My day job',
+    live: true,
     bg: C.accent,
     span: 'col-span-2 md:col-span-1',
-    summary: 'Beautiful, editable charts for developers and their AI agents. My day job.',
+    summary: 'Editable charts for developers and their AI agents. I design the developer experience, and own the design of graphy.dev.',
     story: (
       <>
         Graphy turns data into clear, beautiful stories. I&rsquo;m a Senior Product Designer on the SDK, which lets
@@ -116,8 +110,6 @@ const projects: Project[] = [
     bg: C.grey,
     span: 'col-span-2 md:col-span-1',
     summary: 'I needed it, so I built it. Images into halftone, dithering or ASCII.',
-    logo: <DottiesLogo />,
-    logoBelow: true,
     story: (
       <>
         Upload an image and turn it into halftone dots, ordered dithering or ASCII. Choose circle or square dots, tune
@@ -192,7 +184,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
       style={{ background: p.bg }}
     >
       <div className="pr-12">
-        <For dark={p.dark}>{p.madeFor}</For>
+        <For dark={p.dark} live={p.live}>{p.madeFor}</For>
       </div>
       {p.logo && !p.logoBelow && <div className={`mt-6 ${p.logoRight ? 'md:hidden' : ''}`}>{p.logo}</div>}
       {p.logo && p.logoRight && (
@@ -444,13 +436,6 @@ export function Work() {
         {tile('knot-a-problem')}
         {tile('crumbs')}
         {tile('dotties')}
-        {tile('triangirls')}
-        <InfoTile bg={C.pink} madeFor="For teams" title="Talks & workshops" className="col-span-2 md:col-span-1">
-          I&rsquo;ve spoken at loads of events, and I run sessions like <em>How to give and receive feedback</em>.
-        </InfoTile>
-        <InfoTile bg={C.green} madeFor="In the press" title="VICE & Samsung" className="col-span-2 md:col-span-1">
-          Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
-        </InfoTile>
         <InfoTile
           bg={C.accent}
           madeFor="For anyone curious"
@@ -460,6 +445,13 @@ export function Work() {
         >
           I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
         </InfoTile>
+        <InfoTile bg={C.pink} madeFor="For teams" title="Talks & workshops" className="col-span-2 md:col-span-1">
+          I&rsquo;ve spoken at loads of events, and I run sessions like <em>How to give and receive feedback</em>.
+        </InfoTile>
+        <InfoTile bg={C.green} madeFor="In the press" title="VICE & Samsung" className="col-span-2 md:col-span-1">
+          Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
+        </InfoTile>
+        {tile('triangirls')}
         <InfoTile bg={C.yellow} madeFor="What I bring" title="Skills" className="col-span-2 md:col-span-3">
           <ul className="mt-1 flex flex-wrap gap-1.5 max-w-[900px]">
             {[
