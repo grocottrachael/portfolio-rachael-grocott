@@ -171,7 +171,7 @@ export function CaseStudy({ study }: { study: Study }) {
           >
             {study.madeFor}
           </span>
-          <h1 className="mt-5 font-black uppercase leading-[0.9] tracking-[-0.02em] text-[44px] md:text-[64px]">
+          <h1 className="mt-4 font-black leading-[1.05] tracking-[-0.025em] text-[36px] md:text-[48px]">
             {study.title}
           </h1>
           <p className="mt-5 text-[20px] md:text-[22px] leading-[1.45] font-medium text-[var(--ink-soft)] text-pretty">

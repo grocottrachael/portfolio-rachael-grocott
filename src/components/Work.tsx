@@ -73,7 +73,7 @@ function DottiesLogo() {
 const projects: Project[] = [
   {
     id: 'swatchmaker',
-    title: 'SWATCHMAKER',
+    title: 'SwatchMaker',
     madeFor: 'For anyone choosing paint',
     bg: C.pink,
     span: 'col-span-2 md:row-span-2',
@@ -204,7 +204,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
           className={
             p.wordmark
               ? 'sr-only'
-              : 'block font-black uppercase leading-[0.9] tracking-[-0.01em] text-[34px] md:text-[clamp(26px,2.3vw,42px)]'
+              : 'block font-black leading-[1.05] tracking-[-0.02em] text-[28px] md:text-[clamp(22px,1.8vw,32px)]'
           }
         >
           {p.title}
@@ -283,7 +283,7 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
         <For>{p.madeFor}</For>
         <h3
           id={`${p.id}-title`}
-          className="mt-4 pr-12 font-black uppercase leading-[0.9] tracking-[-0.01em] text-[36px] md:text-[48px]"
+          className="mt-4 pr-12 font-black leading-[1.05] tracking-[-0.02em] text-[32px] md:text-[40px]"
         >
           {p.title}
         </h3>
@@ -333,7 +333,7 @@ function InfoTile({
   const inner = (
     <>
       <For dark={dark}>{madeFor}</For>
-      <h3 className="mt-4 font-black uppercase leading-[0.9] text-[30px] md:text-[clamp(24px,2vw,36px)]">{title}</h3>
+      <h3 className="mt-4 font-black leading-[1.05] tracking-[-0.02em] text-[28px] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
       <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
       {href && (
         <span className="chunky-icon absolute top-5 right-5">

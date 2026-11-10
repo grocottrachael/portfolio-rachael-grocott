@@ -41,7 +41,7 @@ const sm = (name: string, alt: string): Img => ({ src: `/work/swatchmaker/${name
 export const caseStudies: CaseStudy[] = [
   {
     id: 'swatchmaker',
-    title: 'SWATCHMAKER',
+    title: 'SwatchMaker',
     madeFor: 'For anyone choosing paint',
     bg: C.pink,
     intro:
