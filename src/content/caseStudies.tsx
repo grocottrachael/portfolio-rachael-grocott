@@ -76,15 +76,23 @@ export const caseStudies: CaseStudy[] = [
       {
         type: 'text',
         eyebrow: 'The problem',
-        heading: 'Choosing paint means ten tabs and a camera roll of screenshots',
+        heading: 'Paint is hard to judge, wherever you look at it',
         body: (
           <>
             <p>
-              I was decorating my home in York, and every brand keeps its colours on its own website. To see a Farrow
-              &amp; Ball next to a Little Greene you jump between sites, save screenshots, and squint at them side by
-              side. Tester pots cost money and still only show you one brand at a time.
+              I kept finding screenshots of paint colours scattered through my Figma files, one from each brand&rsquo;s
+              website, dropped next to each other so I could compare them. That was my system.
             </p>
-            <p>SWATCHMAKER puts every brand in one simple view, so you can build a palette before you buy a thing.</p>
+            <p>
+              The shop doesn&rsquo;t help much either. A colour on a tin or a tiny chip can be really misleading: a
+              light colour looks light in your hand, then goes on the wall a lot darker. You only find out once
+              it&rsquo;s up.
+            </p>
+            <p>
+              Side by side, big, on your phone, you see the tone of a colour much more honestly, because it sits next
+              to another one. And a plain line like &ldquo;a warm grey with a hint of pink&rdquo; tells you what your
+              eye might miss.
+            </p>
           </>
         ),
       },
