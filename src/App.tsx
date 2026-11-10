@@ -47,14 +47,17 @@ function Home() {
         <div className="relative overflow-hidden h-full md:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-6 md:gap-7 md:justify-center">
         <div>
         {/* My photo in the middle of a flower */}
-        <div className="relative mb-4 -ml-2 w-24 h-24 md:w-28 md:h-28">
-          <Flower color={C.pink} className="absolute inset-0 w-full h-full" />
+        <div className="group relative mb-4 -ml-2 w-24 h-24 md:w-28 md:h-28">
+          <Flower
+            color={C.pink}
+            className="absolute inset-0 w-full h-full transition-transform origin-[50%_51.3%] duration-500 ease-in-out motion-safe:group-hover:rotate-[20deg]"
+          />
           <img
           src={profileImage}
           alt="Rachael"
           width={64}
           height={64}
-          className="absolute left-[19%] top-[24%] w-[62%] h-[62%] rounded-full object-cover border-2 border-[var(--ink)]"
+          className="absolute left-[19%] top-[24%] w-[62%] h-[62%] rounded-full object-cover border-2 border-[var(--ink)] transition-transform duration-500 ease-in-out motion-safe:group-hover:scale-[1.04]"
         />
         </div>
         <h1 className="whitespace-nowrap font-display leading-none text-[9vw] md:text-[clamp(26px,2.5vw,46px)]">
@@ -63,7 +66,7 @@ function Home() {
         </div>
 
         <div>
-          <p className="font-bold text-[24px] md:text-[clamp(19px,1.55vw,28px)] leading-[1.32] tracking-[-0.015em]">
+          <p className="text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
             I&rsquo;m a Senior Product Designer at <Pill bg={C.accent}>Graphy</Pill>. I make complex things simple, then
             polish them till they&rsquo;re <Pill bg={C.yellow}>genuinely beautiful</Pill>.
           </p>

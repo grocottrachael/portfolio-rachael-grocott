@@ -24,7 +24,7 @@ function Picture({ img, bg }: { img: Img; bg: string }) {
   if (img.bg)
     return <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" className="w-full h-auto block" />;
   return (
-    <div className="p-4 md:p-6 h-full flex items-center" style={{ background: bg }}>
+    <div className="p-2.5 sm:p-4 md:p-6 h-full flex items-center" style={{ background: bg }}>
       <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" className="w-full h-auto border-[3px] border-[var(--ink)]" />
     </div>
   );
@@ -44,7 +44,7 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
       return (
         <section id={id} className={`${measure} scroll-mt-10 pt-12 md:pt-20 first:pt-0`}>
           <span className="chunky-tag" style={{ background: bg }}>{block.label}</span>
-          <h2 className="mt-4 font-display text-[30px] md:text-[40px] leading-[1.08] text-balance">{block.heading}</h2>
+          <h2 className="mt-1.5 font-display text-[30px] md:text-[40px] leading-[1.08] text-balance">{block.heading}</h2>
           {block.body && <div className={`${prose} mt-5`}>{block.body}</div>}
         </section>
       );
@@ -63,7 +63,14 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
         <figure className={tight ? '!mt-4' : ''}>
           {/* One or two pictures: columns sized so a pair comes out the same height. More: a two-up grid, so none get tiny */}
           <div
-            className={`grid gap-2.5 md:gap-3 ${block.images.length > 3 ? 'grid-cols-2' : 'md:[grid-template-columns:var(--cols)]'}`}
+            className={`grid gap-2.5 md:gap-3 ${
+              block.images.length > 3
+                ? 'grid-cols-2'
+                : block.images.every((i) => i.h > i.w)
+                  ? /* tall phone screens stay side by side on phones too, so they don't fill the screen */
+                    '[grid-template-columns:var(--cols)]'
+                  : 'md:[grid-template-columns:var(--cols)]'
+            }`}
             style={{ '--cols': block.images.map((i) => `${i.w / i.h}fr`).join(' ') } as React.CSSProperties}
           >
             {block.images.map((img) => (
@@ -89,14 +96,14 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
         <div className={`${measure} grid sm:grid-cols-2 gap-6 sm:gap-8`}>
           <div>
             <Label>{block.before.label}</Label>
-            <p className="mt-3 font-display text-[21px] leading-[1.2] line-through decoration-2 decoration-[var(--ink)]/40 text-[var(--ink)]/60">
+            <p className="mt-1.5 font-display text-[21px] leading-[1.2] line-through decoration-2 decoration-[var(--ink)]/40 text-[var(--ink)]/60">
               {block.before.title}
             </p>
             <p className="mt-2 text-[16px] leading-[1.6] text-[var(--ink-soft)]">{block.before.body}</p>
           </div>
           <div>
             <span className="chunky-tag" style={{ background: bg }}>{block.after.label}</span>
-            <p className="mt-3 font-display text-[21px] leading-[1.2]">{block.after.title}</p>
+            <p className="mt-1.5 font-display text-[21px] leading-[1.2]">{block.after.title}</p>
             <p className="mt-2 text-[16px] leading-[1.6] text-[var(--ink-soft)]">{block.after.body}</p>
           </div>
         </div>
@@ -104,11 +111,17 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
     case 'quote':
       return (
         <blockquote className={`${measure} font-display text-[30px] md:text-[42px] leading-[1.1] text-balance`}>
-          <span className="px-1 box-decoration-clone" style={{ background: bg }}>&ldquo;{block.text}&rdquo;</span>
+          {/* A different colour from the project's, so the quote doesn't read as another label */}
+          <span
+            className="px-1 box-decoration-clone"
+            style={{ background: bg === 'var(--c-pink)' ? 'var(--c-blue)' : 'var(--c-pink)' }}
+          >
+            &ldquo;{block.text}&rdquo;
+          </span>
         </blockquote>
       );
     case 'stats':
-      return <Stats items={block.items} />;
+      return <Stats items={block.items} bg={bg} />;
     case 'liveEdit':
       return (
         <figure>
@@ -136,15 +149,16 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
   }
 }
 
-function Stats({ items }: { items: { value: string; label: string }[] }) {
+/* Stats as a 2x2 of flat blocks in the project colour, so big numbers always have room */
+function Stats({ items, bg }: { items: { value: string; label: string }[]; bg: string }) {
   return (
-    <dl className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-6 border-t-[2px] border-[var(--ink)] pt-6">
+    <dl className="grid grid-cols-2 gap-2.5 md:gap-3">
       {items.map((st) => (
-        <div key={st.label}>
+        <div key={st.label} className="p-5 md:p-7" style={{ background: bg }}>
           <dt className="sr-only">{st.label}</dt>
           <dd>
-            <span className="block font-display text-[48px] md:text-[56px] leading-none tabular-nums">{st.value}</span>
-            <span className="mt-2 block text-[15px] font-bold leading-snug">{st.label}</span>
+            <span className="block font-display text-[34px] sm:text-[40px] md:text-[52px] leading-none tabular-nums">{st.value}</span>
+            <span className="mt-2 block text-[15px] md:text-[16px] font-medium leading-snug">{st.label}</span>
           </dd>
         </div>
       ))}
@@ -158,7 +172,7 @@ function Toggle({ tldr, setTldr }: { tldr: boolean; setTldr: (v: boolean) => voi
       on ? 'bg-[var(--ink)] text-[var(--paper)]' : 'bg-white text-[var(--ink)] hover:bg-[var(--ink)]/5'
     }`;
   return (
-    <div role="group" aria-label="How much to read" className="inline-flex border-[2px] border-[var(--ink)] shadow-[3px_3px_0_var(--ink)]">
+    <div role="group" aria-label="How much to read" className="inline-flex overflow-hidden rounded-full border-[2px] border-[var(--ink)] shadow-[0_3px_0_var(--ink)]">
       <button type="button" aria-pressed={!tldr} onClick={() => setTldr(false)} className={btn(!tldr)}>
         Full story
       </button>
@@ -223,11 +237,11 @@ export function CaseStudyV2({ study }: { study: Study }) {
                 {study.tldr.points.map((p) => (
                   <div key={p.label}>
                     <dt><span className="chunky-tag" style={{ background: study.bg }}>{p.label}</span></dt>
-                    <dd className="mt-3 text-[19px] leading-[1.55]">{p.body}</dd>
+                    <dd className="mt-1.5 text-[19px] leading-[1.55]">{p.body}</dd>
                   </div>
                 ))}
               </dl>
-              {study.tldr.stats && <Stats items={study.tldr.stats} />}
+              {study.tldr.stats && <Stats items={study.tldr.stats} bg={study.bg} />}
               <button type="button" className="chunky" onClick={() => { setTldr(false); window.scrollTo({ top: 0 }); }}>
                 Read the full story <ArrowRight className="w-4 h-4" aria-hidden />
               </button>
@@ -240,30 +254,24 @@ export function CaseStudyV2({ study }: { study: Study }) {
             </>
           )}
 
-          {/* Next project, in its own colour */}
-          <div className="space-y-2.5 md:space-y-3">
-            <Link
-              to={`/work/${next.id}`}
-              className="group p-6 md:p-10 flex items-center justify-between gap-6"
-              style={{ background: next.bg }}
-            >
-              <div>
-                <Label>Next case study</Label>
-                <p className="mt-4 font-display text-[34px] md:text-[48px] leading-none">{next.title}</p>
-              </div>
-              <span className="chunky-icon transition-transform group-hover:translate-x-1" aria-hidden>
-                <ArrowRight className="w-4 h-4" />
-              </span>
-            </Link>
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
-              <p className="font-display text-[22px]">Like what you see?</p>
-              <a href="mailto:rachaelgrocott@gmail.com" className="chunky">
-                Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
-              </a>
-            </div>
-          </div>
         </div>
       </main>
+
+      {/* Next project: a full-width card in its own colour, like the one at the top */}
+      <div className="p-2.5 md:p-3 pt-0 md:pt-0">
+        <Link to={`/work/${next.id}`} className="group block px-5 py-8 md:py-12" style={{ background: next.bg }}>
+          <div className="mx-auto max-w-[720px] flex items-center justify-between gap-6">
+            <div>
+              <Label>Next case study</Label>
+              <p className="mt-1.5 font-display text-[26px] md:text-[32px] leading-none">{next.title}</p>
+              {next.teaser && <p className="mt-2 text-[16px] md:text-[17px] leading-snug">{next.teaser}</p>}
+            </div>
+            <span className="chunky-icon shrink-0 transition-transform group-hover:translate-x-1" aria-hidden>
+              <ArrowRight className="w-4 h-4" />
+            </span>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }

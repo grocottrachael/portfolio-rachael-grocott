@@ -42,11 +42,13 @@ export type CaseStudy = {
   blocks: Block[];
   /* v2 template */
   v2?: boolean;
+  /* one line about the project, for the Next case study card */
+  teaser?: string;
   hero?: Img[];
   tldr?: { points: { label: string; body: React.ReactNode }[]; stats?: { value: string; label: string }[] };
 };
 
-const knotSizes: Record<string, [number, number]> = {"tap-a-row": [918, 922], "the-key": [918, 914], "plain-words": [1600, 636], "diagrams": [1600, 809], "your-place": [918, 646], "your-size": [1392, 694], "your-hook": [918, 798], "yarns": [920, 830]};
+const knotSizes: Record<string, [number, number]> = {"tap-a-row": [918, 922], "the-key": [918, 914], "plain-words": [1600, 636], "diagrams": [1600, 697], "your-place": [918, 723], "your-size": [1392, 715], "your-hook": [918, 820], "yarns": [920, 850]};
 /* A Knot a Problem image, with its size so pairs can be laid out at equal heights */
 const knotBg: Record<string, string> = {"diagrams": "#a6d4a7", "plain-words": "#f1d16c", "tap-a-row": "#f1d16c", "the-key": "#f1d16c", "yarns": "#899cee", "your-hook": "#8a9ded", "your-place": "#a6d4a7", "your-size": "#8a9ded"};
 const k = (name: string, alt: string): Img => ({ src: `/work/knot/${name}.webp`, alt, w: knotSizes[name][0], h: knotSizes[name][1], bg: knotBg[name] });
@@ -64,6 +66,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'graphy',
     v2: true,
+    teaser: 'Editable, AI-native charts for developers and their AI agents. My current work.',
     title: 'Graphy SDK',
     madeFor: 'Currently working here',
     bg: C.accent,
@@ -212,6 +215,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'swatchmaker',
     v2: true,
+    teaser: 'See any paints together before you buy.',
     title: 'SwatchMaker',
     madeFor: 'For anyone choosing paint',
     bg: C.pink,
@@ -421,6 +425,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'knot-a-problem',
     v2: true,
+    teaser: 'A crochet pattern reader with no AI inside.',
     title: 'Knot a Problem',
     madeFor: 'For crocheters',
     bg: C.yellow,

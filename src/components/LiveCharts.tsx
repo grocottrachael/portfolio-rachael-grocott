@@ -58,7 +58,7 @@ function Chart({ kind }: { kind: 'weekly' | 'total' }) {
     };
   }, [kind]);
   return (
-    <div className="h-[440px] border-[3px] border-[var(--ink)] shadow-[4px_4px_0_var(--ink)]">
+    <div className="h-[440px] border-[3px] border-[var(--ink)] shadow-[0_4px_0_var(--ink)]">
       <GraphProvider spec={spec} data={data}>
         <GraphRenderer />
       </GraphProvider>
