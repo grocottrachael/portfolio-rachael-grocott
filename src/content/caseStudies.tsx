@@ -14,6 +14,7 @@ export type Block =
   | { type: 'figure'; images: Img[]; caption?: string; /** screenshots: set on a mat in the project colour, with a stroke */ frame?: boolean }
   | { type: 'quote'; text: string }
   | { type: 'stats'; items: { value: string; label: string }[] }
+  | { type: 'liveCharts'; caption?: string }
   | { type: 'shows'; items: { title: string; body: string }[] }
   | { type: 'decisions'; eyebrow: string; heading: string; items: { title: string; body: React.ReactNode }[] }
   | { type: 'gallery'; eyebrow: string; heading: string; body?: React.ReactNode; images: Img[] };
@@ -181,13 +182,9 @@ export const caseStudies: CaseStudy[] = [
         ),
       },
       {
-        type: 'stats',
-        items: [
-          { value: '9.8k', label: 'npm downloads in one week' },
-          { value: '+67%', label: 'on the week before' },
-          { value: '61k+', label: 'downloads since August' },
-          { value: '6', label: 'years at Graphy' },
-        ],
+        type: 'liveCharts',
+        caption:
+          'These two are live: drawn right here by the Graphy SDK, styled to this site. The React SDK’s public weekly downloads from npm, weeks starting 16 Aug to 1 Nov 2026.',
       },
     ],
   },

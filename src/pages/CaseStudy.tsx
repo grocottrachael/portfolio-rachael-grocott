@@ -1,4 +1,8 @@
+import { lazy, Suspense } from 'react';
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+
+/* The Graphy SDK only loads on the page that uses it */
+const LiveCharts = lazy(() => import('../components/LiveCharts'));
 import { Link } from '../router';
 import type { Block, CaseStudy as Study } from '../content/caseStudies';
 
@@ -95,6 +99,19 @@ function BlockView({ block, bg }: { block: Block; bg: string }) {
             ))}
           </dl>
         </section>
+      );
+    case 'liveCharts':
+      return (
+        <figure className={wide}>
+          <div className="p-5 md:p-12" style={{ background: bg }}>
+            <Suspense fallback={<div className="h-[440px]" />}>
+              <LiveCharts />
+            </Suspense>
+          </div>
+          {block.caption && (
+            <figcaption className={`${text} mt-3 text-[14px] leading-relaxed text-[var(--ink-soft)]`}>{block.caption}</figcaption>
+          )}
+        </figure>
       );
     case 'shows':
       return (
