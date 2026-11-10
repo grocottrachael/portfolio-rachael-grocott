@@ -34,7 +34,7 @@ const knotSizes: Record<string, [number, number]> = {"tap-a-row": [918, 922], "t
 const k = (name: string, alt: string): Img => ({ src: `/work/knot/${name}.webp`, alt, w: knotSizes[name][0], h: knotSizes[name][1] });
 
 
-const smSizes: Record<string, [number, number]> = {"chips-browse": [1600, 860], "chips-compare": [1600, 858], "space-1": [1600, 1000], "space-2": [1600, 1000], "post-008": [720, 960], "post-012": [720, 960], "post-016": [720, 960], "post-019": [720, 960]};
+const smSizes: Record<string, [number, number]> = {"chips-browse": [1600, 860], "chips-compare": [1600, 858], "phone-1": [780, 1520], "phone-2": [780, 1520], "phone-3": [780, 1520], "post-008": [720, 960], "post-012": [720, 960], "post-016": [720, 960], "post-019": [720, 960]};
 /* A SWATCHMAKER image */
 const sm = (name: string, alt: string): Img => ({ src: `/work/swatchmaker/${name}.webp`, alt, w: smSizes[name][0], h: smSizes[name][1] });
 
@@ -66,10 +66,11 @@ export const caseStudies: CaseStudy[] = [
       {
         type: 'figure',
         images: [
-          sm('space-1', 'Valspar Whirled Peas next to Rust-Oleum Odyssey, with a hint: hit Space for new colours'),
-          sm('space-2', 'Paint & Paper Library Sand IV next to Dulux Relaxing Siesta'),
+          sm('phone-1', 'Dulux Roasted Pumpkin 6 above Valspar Rhubarb and Custard, on a phone'),
+          sm('phone-2', 'Valspar Green Willow above Dulux Chalky Downs 5'),
+          sm('phone-3', 'Valspar Kidney Bean above Farrow & Ball Middle Ground'),
         ],
-        caption: 'Hit space for new colours. Every one is a real paint you can buy, from whichever brand makes it.',
+        caption: 'Hit space, or tap New colours, for a fresh pairing. Every one is a real paint you can buy.',
       },
       {
         type: 'text',
