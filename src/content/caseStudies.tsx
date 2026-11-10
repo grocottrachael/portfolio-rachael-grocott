@@ -102,7 +102,7 @@ export const caseStudies: CaseStudy[] = [
             </p>
             <p>
               And because no two patterns are written alike, Easy-read lays every one out the same way: the
-              designer&rsquo;s own words, set bigger and calmer, a row at a time, with only your size. Whoever wrote
+              designer&rsquo;s own words, set bigger and calmer, with only your size. Whoever wrote
               it, it reads the same.
             </p>
             <p>
