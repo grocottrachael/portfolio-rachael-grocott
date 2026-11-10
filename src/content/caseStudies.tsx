@@ -71,14 +71,9 @@ export const caseStudies: CaseStudy[] = [
         heading: 'Patterns are written in a shorthand nobody remembers',
         body: (
           <>
-            <p>My granny has crocheted for sixty years, and an increase repeat like this one stopped her in her tracks:</p>
-            <p className="not-prose my-6 rounded-sm bg-white px-5 py-4 font-mono text-[15px] md:text-[16px] leading-relaxed text-[var(--ink)] shadow-[4px_4px_0_var(--ink)] border-2 border-[var(--ink)]">
-              R25 *3 sc into next ch-10 sp, **ch 3, 3 sc into same ch-10 sp**. Repeat **-** 3 times. * Repeat *-* 36
-              times
-            </p>
             <p>
-              A repeat inside a repeat, marked with one and two asterisks, with two different counts. Then my cousin
-              started learning and got stuck on the stitches. Then I caught myself googling the same terms.
+              My granny has crocheted for sixty years and couldn&rsquo;t remember what an increase repeat meant. Then my
+              cousin started learning and got stuck on the stitches. Then I caught myself googling the same terms.
             </p>
             <p>
               Patterns are dense with abbreviations, often in UK or US terms without saying which, with every size
@@ -87,6 +82,12 @@ export const caseStudies: CaseStudy[] = [
             </p>
           </>
         ),
+      },
+      {
+        type: 'figure',
+        images: [k('plain-words', 'A confusing row of pattern text, and the same row explained in plain English')],
+        caption:
+          'Tap the bit that has lost you. It doesn’t just read the shorthand out, it says what the stitches do.',
       },
       {
         type: 'text',
@@ -106,12 +107,6 @@ export const caseStudies: CaseStudy[] = [
             </p>
           </>
         ),
-      },
-      {
-        type: 'figure',
-        images: [k('plain-words', 'A confusing row of pattern text, and the same row explained in plain English')],
-        caption:
-          'It doesn’t just read the shorthand out. It says what the stitches do: squeezing four into one place is what makes the scallop.',
       },
       {
         type: 'text',
