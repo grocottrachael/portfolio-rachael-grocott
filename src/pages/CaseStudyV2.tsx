@@ -248,30 +248,24 @@ export function CaseStudyV2({ study }: { study: Study }) {
             </>
           )}
 
-          {/* Next project, in its own colour */}
-          <div className="space-y-2.5 md:space-y-3">
-            <Link
-              to={`/work/${next.id}`}
-              className="group p-6 md:p-10 flex items-center justify-between gap-6"
-              style={{ background: next.bg }}
-            >
-              <div>
-                <Label>Next case study</Label>
-                <p className="mt-4 font-display text-[34px] md:text-[48px] leading-none">{next.title}</p>
-              </div>
-              <span className="chunky-icon transition-transform group-hover:translate-x-1" aria-hidden>
-                <ArrowRight className="w-4 h-4" />
-              </span>
-            </Link>
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
-              <p className="font-display text-[22px]">Like what you see?</p>
-              <a href="mailto:rachaelgrocott@gmail.com" className="chunky">
-                Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
-              </a>
-            </div>
-          </div>
         </div>
       </main>
+
+      {/* Next project: a full-width card in its own colour, like the one at the top */}
+      <div className="p-2.5 md:p-3 pt-0 md:pt-0">
+        <Link to={`/work/${next.id}`} className="group block px-5 py-8 md:py-12" style={{ background: next.bg }}>
+          <div className="mx-auto max-w-[720px] flex items-center justify-between gap-6">
+            <div>
+              <Label>Next case study</Label>
+              <p className="mt-3 font-display text-[26px] md:text-[32px] leading-none">{next.title}</p>
+              {next.teaser && <p className="mt-2 text-[16px] md:text-[17px] leading-snug">{next.teaser}</p>}
+            </div>
+            <span className="chunky-icon shrink-0 transition-transform group-hover:translate-x-1" aria-hidden>
+              <ArrowRight className="w-4 h-4" />
+            </span>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }

@@ -42,6 +42,8 @@ export type CaseStudy = {
   blocks: Block[];
   /* v2 template */
   v2?: boolean;
+  /* one line about the project, for the Next case study card */
+  teaser?: string;
   hero?: Img[];
   tldr?: { points: { label: string; body: React.ReactNode }[]; stats?: { value: string; label: string }[] };
 };
@@ -64,6 +66,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'graphy',
     v2: true,
+    teaser: 'Editable, AI-native charts for developers and their AI agents. My current work.',
     title: 'Graphy SDK',
     madeFor: 'Currently working here',
     bg: C.accent,
@@ -212,6 +215,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'swatchmaker',
     v2: true,
+    teaser: 'See any paints together before you buy.',
     title: 'SwatchMaker',
     madeFor: 'For anyone choosing paint',
     bg: C.pink,
@@ -421,6 +425,7 @@ export const caseStudies: CaseStudy[] = [
   {
     id: 'knot-a-problem',
     v2: true,
+    teaser: 'A crochet pattern reader with no AI inside.',
     title: 'Knot a Problem',
     madeFor: 'For crocheters',
     bg: C.yellow,
