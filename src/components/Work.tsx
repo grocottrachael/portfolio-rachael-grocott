@@ -302,7 +302,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
             src={p.image.src}
             alt={p.image.alt}
             loading="lazy"
-            className={`w-full ${p.image.fill ? 'h-full object-cover object-left-top' : ''} transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-1 ${
+            className={`w-full ${p.image.fill ? 'h-full object-cover object-left-top' : ''} ${
               p.image.className ?? ''
             }`}
           />
