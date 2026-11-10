@@ -1,9 +1,74 @@
 @import "tailwindcss";
 
-/* any of your own extra styles can go here */
-/* If you want Google fonts, keep them renamed here: */
-@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap");
+/* Silka, from the original rachaelgrocott.com */
+@font-face {
+  font-family: "Silka";
+  src: url("/fonts/silka-medium-webfont.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Silka";
+  src: url("/fonts/silka-bold-webfont.woff2") format("woff2");
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Silka";
+  src: url("/fonts/silka-black-webfont.woff2") format("woff2");
+  font-weight: 900;
+  font-display: swap;
+}
 
 :root {
-  font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+  font-family: "Silka", system-ui, sans-serif;
+  font-weight: 500;
+  color: #181818;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #ebcc70;
+}
+
+/* Shape tile animations */
+@keyframes bob {
+  50% { transform: translateY(3px); }
+}
+@keyframes breathe {
+  50% { transform: scaleY(1.12); }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes drop {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(3px); }
+}
+/* Down the stairs: three hops, then a pause */
+@keyframes hop {
+  0%   { left: 72%; top: 14%; opacity: 0; }
+  6%   { opacity: 1; }
+  14%  { left: 58%; top: 2%; }
+  24%  { left: 49%; top: 39%; }
+  34%  { left: 35%; top: 27%; }
+  44%  { left: 26%; top: 64%; }
+  54%  { left: 12%; top: 52%; }
+  64%  { left: 3%;  top: 89%; }
+  70%  { opacity: 1; }
+  76%, 100% { left: 3%; top: 89%; opacity: 0; }
+}
+
+.anim-bob { animation: bob 3.2s ease-in-out infinite; }
+.anim-bob-slow { animation: bob 4.4s ease-in-out infinite reverse; }
+.anim-breathe { animation: breathe 5s ease-in-out infinite; transform-origin: 50px 50px; transform-box: view-box; }
+.anim-spin { animation: spin 24s linear infinite; }
+.anim-drop { animation: drop 2.4s ease-in-out infinite; }
+.anim-hop { animation: hop 4.2s cubic-bezier(.4,0,.6,1) infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-bob, .anim-bob-slow, .anim-breathe, .anim-spin, .anim-drop, .anim-hop {
+    animation: none;
+  }
+  .anim-hop { left: 3%; top: 89%; }
 }
