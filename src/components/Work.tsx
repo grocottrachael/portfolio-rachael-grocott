@@ -93,11 +93,7 @@ const projects: Project[] = [
   },
   {
     sticker: (
-      <WordSticker color={C.yellow} className="text-[30px] md:text-[clamp(28px,2.4vw,38px)] -rotate-[5deg] origin-bottom-left">
-        Currently
-        <br />
-        working here!
-      </WordSticker>
+      <WordSticker lines={["Currently", "working here!"]} color={C.yellow} className="text-[30px] md:text-[clamp(28px,2.4vw,38px)] -rotate-[5deg] origin-bottom-left" />
     ),
     id: 'graphy',
     title: 'Graphy SDK',

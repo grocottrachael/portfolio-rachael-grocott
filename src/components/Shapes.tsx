@@ -226,17 +226,52 @@ export function Sparkle({ color, className = '' }: { color: string; className?: 
 }
 
 /*
- * Bubble-letter sticker: chunky soft letters with an ink outline, and the
- * white sticker edge from the .sticker class round the lot.
+ * Bubble-letter sticker, drawn as SVG so every outline has round joins:
+ * a fat white sticker edge, then the ink outline, then the colour fill.
+ * The box is measured from the text itself, so it always fits.
  */
-export function WordSticker({ children, color, className = '' }: { children: React.ReactNode; color: string; className?: string }) {
-  return (
-    <span
-      className={`sticker bubble-letters inline-block font-display ${className}`}
-      style={{ color }}
+export function WordSticker({ lines, color, className = '' }: { lines: string[]; color: string; className?: string }) {
+  const ref = useRef<SVGTextElement>(null);
+  const [box, setBox] = useState({ x: 0, y: -40, w: 300, h: 90 });
+  const size = 40;
+  const lead = 36;
+  useEffect(() => {
+    const fit = () => {
+      const b = ref.current?.getBBox();
+      if (b && b.width) setBox({ x: b.x - 16, y: b.y - 16, w: b.width + 32, h: b.height + 36 });
+    };
+    fit();
+    document.fonts?.ready.then(fit);
+  }, [lines.join('|')]);
+  const text = (props: React.SVGProps<SVGTextElement>, measure = false) => (
+    <text
+      ref={measure ? ref : undefined}
+      fontFamily='"Cherry Bomb One", Fraunces, sans-serif'
+      fontSize={size}
+      strokeLinejoin="round"
+      strokeLinecap="round"
+      {...props}
     >
-      {children}
-    </span>
+      {lines.map((l, n) => (
+        <tspan key={n} x={0} y={n * lead}>
+          {l}
+        </tspan>
+      ))}
+    </text>
+  );
+  return (
+    <svg
+      viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`}
+      className={className}
+      style={{ width: `${box.w / size}em`, height: `${box.h / size}em`, overflow: 'visible' }}
+      role="img"
+      aria-label={lines.join(' ')}
+    >
+      {/* soft shadow, white sticker edge, ink outline, fill */}
+      {text({ fill: 'rgba(43,35,64,0.18)', stroke: 'rgba(43,35,64,0.18)', strokeWidth: 26, transform: 'translate(0 4)' })}
+      {text({ fill: '#fff', stroke: '#fff', strokeWidth: 26 })}
+      {text({ fill: color, stroke: 'var(--ink)', strokeWidth: 9, paintOrder: 'stroke fill' }, true)}
+    </svg>
   );
 }
 
