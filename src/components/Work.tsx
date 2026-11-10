@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, LayoutGroup } from 'motion/react';
 import { ArrowUpRight, Plus, X } from 'lucide-react';
-import { C, Arches, Bands, Ovals, Stairs, StairsBall } from './Shapes';
+import { C, Eyes } from './Shapes';
 
 const spring = { type: 'spring', stiffness: 380, damping: 38 } as const;
 
@@ -73,10 +73,10 @@ const projects: Project[] = [
   {
     id: 'graphy',
     title: 'Graphy SDK',
-    madeFor: 'For developers & their AI agents',
+    madeFor: 'For developers & AI agents',
     bg: C.black,
     dark: true,
-    span: 'col-span-2',
+    span: 'col-span-2 md:col-span-1',
     summary: 'Beautiful, editable charts for developers and their AI agents. My day job.',
     story: (
       <>
@@ -178,12 +178,14 @@ function ProjectTile({ p, open, onToggle }: { p: Project; open: boolean; onToggl
         onToggle();
       }}
       className={`group relative cursor-pointer overflow-hidden p-5 md:p-7 flex flex-col ${text} ${
-        open ? 'col-span-2 md:col-span-4' : p.span
+        open ? 'col-span-2 md:col-span-3' : p.span
       }`}
       style={{ background: p.bg }}
     >
       <motion.div layout="position" transition={spring}>
-        <For dark={p.dark}>{p.madeFor}</For>
+        <div className="pr-12">
+          <For dark={p.dark}>{p.madeFor}</For>
+        </div>
         <button
           type="button"
           aria-expanded={open}
@@ -193,7 +195,7 @@ function ProjectTile({ p, open, onToggle }: { p: Project; open: boolean; onToggl
           }}
           className="mt-4 block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
         >
-          <span className="block font-black uppercase leading-[0.9] tracking-[-0.01em] text-[34px] md:text-[clamp(28px,2.6vw,44px)]">
+          <span className="block font-black uppercase leading-[0.9] tracking-[-0.01em] text-[34px] md:text-[clamp(26px,2.3vw,42px)]">
             {p.title}
           </span>
           <span className={`mt-3 block text-[16px] leading-snug max-w-[36ch] ${soft}`}>{p.summary}</span>
@@ -244,7 +246,7 @@ function ProjectTile({ p, open, onToggle }: { p: Project; open: boolean; onToggl
 
 function ShapeTile({ children, className = '' }: { children: React.ReactNode; className?: string }) {
   return (
-    <motion.div layout transition={spring} className={`relative min-h-[180px] ${className}`} aria-hidden>
+    <motion.div layout transition={spring} className={`relative aspect-square md:aspect-auto ${className}`} aria-hidden>
       {children}
     </motion.div>
   );
@@ -252,6 +254,7 @@ function ShapeTile({ children, className = '' }: { children: React.ReactNode; cl
 
 function InfoTile({
   bg,
+  dark,
   madeFor,
   title,
   children,
@@ -259,6 +262,7 @@ function InfoTile({
   className = '',
 }: {
   bg: string;
+  dark?: boolean;
   madeFor: string;
   title: string;
   children: React.ReactNode;
@@ -267,17 +271,17 @@ function InfoTile({
 }) {
   const inner = (
     <>
-      <For>{madeFor}</For>
-      <h3 className="mt-4 font-black uppercase leading-[0.9] text-[30px] md:text-[clamp(26px,2.2vw,38px)]">{title}</h3>
-      <div className="mt-3 text-[16px] leading-snug text-[#181818]/75">{children}</div>
+      <For dark={dark}>{madeFor}</For>
+      <h3 className="mt-4 font-black uppercase leading-[0.9] text-[30px] md:text-[clamp(24px,2vw,36px)]">{title}</h3>
+      <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[#181818]/75'}`}>{children}</div>
       {href && (
-        <span className="absolute top-5 right-5 w-9 h-9 rounded-full bg-[#181818] text-white flex items-center justify-center transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+        <span className={`absolute top-5 right-5 w-9 h-9 rounded-full flex ${dark ? 'bg-white text-[#181818]' : 'bg-[#181818] text-white'} items-center justify-center transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5`}>
           <ArrowUpRight className="w-4 h-4" aria-hidden />
         </span>
       )}
     </>
   );
-  const cls = 'group relative block p-5 md:p-7';
+  const cls = `group relative block p-5 md:p-7 ${dark ? 'text-white' : ''}`;
   return (
     <motion.div layout transition={spring} className={className.split(/\s+/).filter((c) => /(^|:)(col|row)-/.test(c)).join(' ')}>
       {href ? (
@@ -325,42 +329,33 @@ export function Work() {
     <LayoutGroup>
       <section
         aria-label="Things I've made"
-        className="grid grid-cols-2 md:grid-cols-4 grid-flow-row-dense md:auto-rows-[minmax(300px,auto)]"
+        className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:auto-rows-[minmax(21vw,auto)]"
       >
         {tile('swatchmaker')}
-        {tile('graphy')}
         <ShapeTile>
-          <Arches />
+          <Eyes />
         </ShapeTile>
-        {tile('dotties')}
+        {tile('graphy')}
         {tile('knot-a-problem')}
         {tile('crumbs')}
-        <ShapeTile>
-          <Stairs />
-          <StairsBall />
-        </ShapeTile>
+        {tile('dotties')}
         {tile('triangirls')}
-        <InfoTile bg={C.yellow} madeFor="For teams" title="Talks & workshops" className="col-span-2 md:col-span-1">
+        <InfoTile bg={C.pink} madeFor="For teams" title="Talks & workshops" className="col-span-2 md:col-span-1">
           I&rsquo;ve spoken at loads of events, and I run sessions like <em>How to give and receive feedback</em>.
         </InfoTile>
-        <InfoTile bg={C.grey} madeFor="In the press" title="VICE & Samsung" className="col-span-2 md:col-span-1">
+        <InfoTile bg={C.green} madeFor="In the press" title="VICE & Samsung" className="col-span-2 md:col-span-1">
           Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
         </InfoTile>
         <InfoTile
-          bg={C.blue}
+          bg={C.black}
+          dark
           madeFor="For anyone curious"
           title="My latest work"
           href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
-          className="col-span-2"
+          className="col-span-2 md:col-span-1"
         >
           I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
         </InfoTile>
-        <ShapeTile>
-          <Ovals />
-        </ShapeTile>
-        <ShapeTile>
-          <Bands />
-        </ShapeTile>
       </section>
     </LayoutGroup>
   );

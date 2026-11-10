@@ -1,5 +1,4 @@
 import { ArrowUpRight, Github, Linkedin } from 'lucide-react';
-import { Hero } from './components/Hero';
 import { Work } from './components/Work';
 import { C } from './components/Shapes';
 
@@ -11,32 +10,45 @@ function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
   );
 }
 
+const button =
+  'inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[15px] font-bold transition-transform hover:-translate-y-0.5';
+
 export default function App() {
   return (
-    <div className="min-h-screen bg-white">
-      <Hero />
+    <div className="min-h-screen bg-white md:flex">
+      {/* Who I am: pinned on the left while the blocks scroll on the right */}
+      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen md:overflow-y-auto px-5 md:px-[3vw] py-10 md:py-[4vh] flex flex-col gap-8 md:justify-between">
+        <h1 className="uppercase leading-[0.85]">
+          <span className="block font-bold text-[16px] md:text-[clamp(14px,1.1vw,20px)] tracking-tight mb-2">
+            Hiya! I&rsquo;m
+          </span>
+          <span className="block font-black text-[17vw] md:text-[clamp(44px,5.6vw,104px)] tracking-[-0.02em]">
+            Rachael
+            <br />
+            Grocott
+          </span>
+        </h1>
 
-      <section className="px-5 md:px-10 py-16 md:py-24">
-        <p className="max-w-[22ch] md:max-w-[26ch] font-bold text-[30px] md:text-[clamp(36px,4.2vw,64px)] leading-[1.08] tracking-[-0.02em]">
-          I&rsquo;m a Senior Product Designer at <Pill bg={C.blue}>Graphy</Pill>. I make complex things simple, then
-          polish them till they&rsquo;re <Pill bg={C.pink}>genuinely beautiful</Pill>.
-        </p>
-        <p className="mt-8 max-w-[52ch] text-[18px] md:text-[21px] leading-relaxed text-[#181818]/75">
-          I&rsquo;m all in on AI and use it to build my own products, start to finish. I founded Triangirls, I speak
-          at events, and I love rallying a team around a good idea.
-        </p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a
-            href="mailto:rachaelgrocott@gmail.com"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[#181818] text-white px-6 py-3 text-[16px] font-bold transition-transform hover:-translate-y-0.5"
-          >
+        <div>
+          <p className="font-bold text-[28px] md:text-[clamp(22px,1.9vw,34px)] leading-[1.12] tracking-[-0.015em]">
+            I&rsquo;m a Senior Product Designer at <Pill bg={C.blue}>Graphy</Pill>. I make complex things simple, then
+            polish them till they&rsquo;re <Pill bg={C.pink}>genuinely beautiful</Pill>.
+          </p>
+          <p className="mt-5 text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[#181818]/75">
+            I&rsquo;m all in on AI and use it to build my own products, start to finish. I founded Triangirls, I speak
+            at events, and I love rallying a team around a good idea.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap gap-2.5">
+          <a href="mailto:rachaelgrocott@gmail.com" className={`${button} bg-[#181818] text-white`}>
             Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
           </a>
           <a
             href="https://www.linkedin.com/in/rachaelgrocott/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-[16px] font-bold transition-transform hover:-translate-y-0.5"
+            className={button}
             style={{ background: C.grey }}
           >
             <Linkedin className="w-4 h-4" aria-hidden /> LinkedIn
@@ -45,30 +57,17 @@ export default function App() {
             href="https://github.com/grocottrachael"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-[16px] font-bold transition-transform hover:-translate-y-0.5"
+            className={button}
             style={{ background: C.grey }}
           >
             <Github className="w-4 h-4" aria-hidden /> GitHub
           </a>
         </div>
-      </section>
+      </aside>
 
-      <Work />
-
-      <footer className="px-5 md:px-10 py-16 md:py-24 bg-[#181818] text-white">
-        <a
-          href="mailto:rachaelgrocott@gmail.com"
-          className="group inline-flex items-end gap-3 font-black uppercase leading-[0.85] text-[16vw] md:text-[9vw] tracking-[-0.02em]"
-        >
-          Say hiya
-          <ArrowUpRight
-            className="w-[0.6em] h-[0.6em] transition-transform group-hover:translate-x-2 group-hover:-translate-y-2"
-            style={{ color: C.yellow }}
-            aria-hidden
-          />
-        </a>
-        <p className="mt-6 text-[18px] text-white/60">rachaelgrocott@gmail.com</p>
-      </footer>
+      <main className="md:flex-1 min-w-0">
+        <Work />
+      </main>
     </div>
   );
 }
