@@ -40,7 +40,7 @@ function Blocks({ block, bg, id }: { block: Block; bg: string; id?: string }) {
     case 'chapter':
       return (
         <section id={id} className={`${measure} scroll-mt-10 pt-6 md:pt-10`}>
-          <Label>{block.label}</Label>
+          <span className="chunky-tag" style={{ background: bg }}>{block.label}</span>
           <h2 className="mt-4 font-display text-[30px] md:text-[40px] leading-[1.08] text-balance">{block.heading}</h2>
           {block.body && <div className={`${prose} mt-5`}>{block.body}</div>}
         </section>
@@ -156,24 +156,24 @@ export function CaseStudyV2({ study }: { study: Study }) {
   }, [study]);
 
   return (
-    <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] md:flex">
-      {/* The project, pinned on the left like the intro on the home page */}
-      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen p-2.5 pb-0 md:p-3">
-        <div className="h-full md:overflow-y-auto px-5 md:px-[3vw] py-8 md:py-[5vh] flex flex-col gap-6" style={{ background: study.bg }}>
-          <Link to="/" className="self-start inline-flex items-center gap-1.5 text-[15px] font-bold hover:underline underline-offset-4">
-            <ArrowLeft className="w-4 h-4" aria-hidden /> Rachael Grocott
-          </Link>
-          <div className="md:my-auto flex flex-col gap-6">
+    <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
+      {/* The project as one card at the top, like a block from the home grid. Scroll past it to read */}
+      <header className="p-2.5 md:p-3">
+        <div className="px-5 py-8 md:py-14" style={{ background: study.bg }}>
+          <div className="mx-auto max-w-[720px] flex flex-col gap-7">
+            <Link to="/" className="self-start inline-flex items-center gap-1.5 text-[15px] font-bold hover:underline underline-offset-4">
+              <ArrowLeft className="w-4 h-4" aria-hidden /> Rachael Grocott
+            </Link>
             <div>
               <Label>{study.madeFor}</Label>
-              <h1 className="mt-4 font-display leading-[1.02] text-[40px] md:text-[clamp(34px,3.4vw,56px)]">{study.title}</h1>
-              <p className="mt-4 text-[17px] md:text-[clamp(16px,1.15vw,19px)] leading-[1.5] font-medium">{study.intro}</p>
+              <h1 className="mt-4 font-display leading-[1.02] text-[40px] md:text-[60px]">{study.title}</h1>
+              <p className="mt-4 text-[18px] md:text-[20px] leading-[1.5] font-medium">{study.intro}</p>
             </div>
-            <dl className="border-t-[2px] border-[var(--ink)]">
+            <dl className="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-4 border-t-[2px] border-[var(--ink)] pt-4">
               {study.facts.map((f) => (
-                <div key={f.label} className="grid grid-cols-[7.5rem_1fr] gap-3 py-2 border-b border-[var(--ink)]/20">
+                <div key={f.label}>
                   <dt className="text-[14px] text-[var(--ink)]/70">{f.label}</dt>
-                  <dd className="text-[14px] font-bold">{f.value}</dd>
+                  <dd className="mt-0.5 text-[15px] font-bold leading-snug">{f.value}</dd>
                 </div>
               ))}
             </dl>
@@ -187,17 +187,16 @@ export function CaseStudyV2({ study }: { study: Study }) {
             </div>
           </div>
         </div>
-      </aside>
+      </header>
 
-      {/* The story, as a grid of blocks */}
-      <main className="md:flex-1 min-w-0 px-5 md:px-[5vw] py-10 md:py-[6vh]">
-        <div className="max-w-[720px] space-y-14 md:space-y-20">
+      <main className="px-5 py-12 md:py-20">
+        <div className="mx-auto max-w-[720px] space-y-14 md:space-y-20">
           {tldr && study.tldr ? (
             <>
               <dl className={`${measure} space-y-8`}>
                 {study.tldr.points.map((p) => (
                   <div key={p.label}>
-                    <dt><Label>{p.label}</Label></dt>
+                    <dt><span className="chunky-tag" style={{ background: study.bg }}>{p.label}</span></dt>
                     <dd className="mt-3 text-[19px] leading-[1.55]">{p.body}</dd>
                   </div>
                 ))}
