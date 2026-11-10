@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight, Plus, X, ExternalLink } from 'lucide-react';
-import { C, Heart, Sparkle } from './Shapes';
+import { C, Heart, SwatchChip, WordSticker } from './Shapes';
 import RoleCycle from './RoleCycle';
 import { Link, navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
@@ -70,7 +70,7 @@ type Project = {
 
 const projects: Project[] = [
   {
-    sticker: <Sparkle color={C.yellow} className="sticker absolute -top-5 -right-4 w-12 h-12 md:w-14 md:h-14 rotate-[10deg]" />,
+    sticker: <SwatchChip className="sticker absolute -top-6 -right-3 w-11 h-14 md:w-12 md:h-16 rotate-[10deg]" />,
     id: 'swatchmaker',
     title: 'SwatchMaker',
     madeFor: 'For anyone choosing paint',
@@ -93,6 +93,13 @@ const projects: Project[] = [
     link: { href: 'https://swatchmaker.uk/', label: 'Visit swatchmaker.uk' },
   },
   {
+    sticker: (
+      <WordSticker color={C.yellow} className="text-[26px] md:text-[clamp(24px,2vw,32px)] -rotate-[5deg] origin-bottom-left">
+        Currently
+        <br />
+        working here!
+      </WordSticker>
+    ),
     id: 'graphy',
     title: 'Graphy SDK',
     madeFor: 'Currently working here',
@@ -260,6 +267,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
 
       <HoverCta {...cta} />
       {p.logo && p.logoBelow && <div className="mt-auto pt-6">{p.logo}</div>}
+      {!p.image && p.sticker && <div className="mt-auto pt-6 self-start">{p.sticker}</div>}
 
       {p.image && (
         <div className={`relative mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>

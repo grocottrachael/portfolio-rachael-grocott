@@ -158,3 +158,12 @@
 @media (prefers-reduced-motion: reduce) {
   .pop { transition: opacity 200ms ease; translate: 0 0; scale: 1; }
 }
+
+/* Bubble letters: thick ink outline drawn behind the fill, so the letters stay fat */
+.bubble-letters {
+  font-weight: 900;
+  -webkit-text-stroke: 4px var(--ink);
+  paint-order: stroke fill;
+  letter-spacing: 0.04em;
+  line-height: 1.12;
+}

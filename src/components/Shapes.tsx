@@ -224,3 +224,58 @@ export function Sparkle({ color, className = '' }: { color: string; className?: 
     </svg>
   );
 }
+
+/*
+ * Bubble-letter sticker: chunky soft letters with an ink outline, and the
+ * white sticker edge from the .sticker class round the lot.
+ */
+export function WordSticker({ children, color, className = '' }: { children: React.ReactNode; color: string; className?: string }) {
+  return (
+    <span
+      className={`sticker bubble-letters inline-block font-display ${className}`}
+      style={{ color }}
+    >
+      {children}
+    </span>
+  );
+}
+
+/* A speech bubble that says hiya */
+export function HiyaBubble({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 92" className={className} aria-hidden>
+      <path
+        d="M60 6 C92 6 114 22 114 42 C114 62 92 76 62 76 C54 76 47 75 41 73 L20 86 L26 66 C14 59 6 51 6 42 C6 22 28 6 60 6 Z"
+        fill="var(--c-yellow)"
+        stroke="var(--ink)"
+        strokeWidth="4"
+        strokeLinejoin="round"
+      />
+      <text
+        x="60"
+        y="51"
+        textAnchor="middle"
+        fontFamily="Fraunces, Georgia, serif"
+        fontWeight="800"
+        fontSize="30"
+        fill="var(--ink)"
+        style={{ fontVariationSettings: '"SOFT" 100, "WONK" 1' }}
+      >
+        hiya!
+      </text>
+    </svg>
+  );
+}
+
+/* A paint swatch chip, for SwatchMaker */
+export function SwatchChip({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 64 84" className={className} aria-hidden>
+      <rect x="3" y="3" width="58" height="78" rx="6" fill="#fff" stroke="var(--ink)" strokeWidth="3" />
+      <rect x="9" y="9" width="46" height="18" rx="2" fill="#7E8F7B" />
+      <rect x="9" y="30" width="46" height="18" rx="2" fill="#C9B79C" />
+      <rect x="9" y="51" width="46" height="18" rx="2" fill="#E8C1CA" />
+      <rect x="9" y="73" width="26" height="3" rx="1.5" fill="var(--ink)" opacity="0.5" />
+    </svg>
+  );
+}
