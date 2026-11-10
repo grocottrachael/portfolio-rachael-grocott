@@ -15,7 +15,7 @@ const logos: Record<string, string> = {
   Geckoboard: '/logos/geckoboard.png',
 };
 
-const years = (d: string) => d.replace(/[A-Z][a-z]{2} /g, '').replace(/^(\d{4}) – (\d{2})(\d{2})$/, '$1 – $3');
+const years = (d: string) => d.replace(/[A-Z][a-z]{2} /g, '');
 
 export default function RoleCycle() {
   const reduce = useReducedMotion();
