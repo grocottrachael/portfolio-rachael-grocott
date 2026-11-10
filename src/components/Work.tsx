@@ -251,9 +251,10 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
  * closes it.
  */
 function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
-  const closeRef = useRef<HTMLButtonElement>(null);
+  /* Focus the panel itself, so a ring doesn't land on the close button; Tab reaches it next */
+  const panelRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    closeRef.current?.focus();
+    panelRef.current?.focus();
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
@@ -271,10 +272,12 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
     >
       <div className="absolute inset-0 bg-[var(--ink)]/25 backdrop-blur-[2px]" onClick={onClose} aria-hidden />
       <motion.div
+        ref={panelRef}
+        tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-labelledby={`${p.id}-title`}
-        className="relative w-full md:max-w-4xl max-h-[90vh] overflow-y-auto p-6 md:p-10 text-[var(--ink)] shadow-[0_24px_80px_rgba(43,35,64,0.25)]"
+        className="relative w-full md:max-w-4xl max-h-[90vh] overflow-y-auto outline-none p-6 md:p-10 text-[var(--ink)] shadow-[0_24px_80px_rgba(43,35,64,0.25)]"
         style={{ background: p.bg }}
         initial={{ y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -282,11 +285,10 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
       >
         <button
-          ref={closeRef}
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="chunky-icon absolute top-5 right-5 focus-visible:outline-3 focus-visible:outline-offset-2 focus-visible:outline-[var(--ink)]"
+          className="chunky-icon absolute top-5 right-5 focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-[var(--c-blue)]"
         >
           <X className="w-4 h-4" />
         </button>
