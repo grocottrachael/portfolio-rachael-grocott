@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Loader2, X } from 'lucide-react';
-import profileImage from 'figma:asset/480c09d663e40bc21ee2dec2f07edf81d50784b4.png';
+import profileImage from '../assets/rachael-avatar.webp';
 
 interface Message {
   role: 'user' | 'assistant';

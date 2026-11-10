@@ -23,8 +23,6 @@ app.post('/make-server-3e9b33b2/chat', async (c) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
     
-    console.log('Environment check - ANTHROPIC_API_KEY exists:', !!anthropicApiKey);
-    console.log('Environment check - Key length:', anthropicApiKey?.length || 0);
     
     if (!anthropicApiKey || anthropicApiKey.trim() === '') {
       console.error('Anthropic API key not found or empty in environment variables');
@@ -106,8 +104,6 @@ ${portfolioContext}
       },
     ];
 
-    console.log("FULL SYSTEM PROMPT >>>\n\n", systemPrompt);
-    console.log('LAST MESSAGE >>>', messages[messages.length - 1]);
 
     // ---------- Call Claude API with streaming ----------
 
@@ -117,11 +113,17 @@ ${portfolioContext}
         'Content-Type': 'application/json',
         'x-api-key': anthropicApiKey,
         'anthropic-version': '2023-06-01',
+        // If Claude declines a request, retry it on a suitable fallback model in the same call.
+        'anthropic-beta': 'server-side-fallback-2026-07-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        // claude-sonnet-4-20250514 was retired on 15 June 2026.
+        model: 'claude-sonnet-5-5',
         max_tokens: 1024,
         stream: true,
+        fallbacks: 'default',
+        // Short conversational answers don't need much thinking.
+        output_config: { effort: 'low' },
         system: systemPrompt,
         messages,
       }),
@@ -152,6 +154,7 @@ ${portfolioContext}
         const reader = response.body?.getReader();
         const decoder = new TextDecoder();
         let fullResponse = '';
+        let buffer = '';
 
         if (!reader) {
           controller.close();
@@ -163,8 +166,11 @@ ${portfolioContext}
             const { done, value } = await reader.read();
             if (done) break;
 
-            const chunk = decoder.decode(value, { stream: true });
-            const lines = chunk.split('\n');
+            // An SSE event can be split across network chunks, so keep the
+            // trailing partial line in the buffer until the rest arrives.
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() ?? '';
 
             for (const line of lines) {
               if (line.startsWith('data: ')) {

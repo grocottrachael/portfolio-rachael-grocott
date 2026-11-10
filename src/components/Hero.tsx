@@ -1,5 +1,5 @@
 import { BentoGrid } from './BentoGrid';
-import profileImage from 'figma:asset/480c09d663e40bc21ee2dec2f07edf81d50784b4.png';
+import profileImage from '../assets/rachael-avatar.webp';
 
 export function Hero() {
   return (

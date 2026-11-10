@@ -1,9 +1,8 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import { Hero } from './components/Hero';
 import { ChatInput } from './components/ChatInput';
 import { ChatOverlay, Message } from './components/ChatOverlay';
 import { projectId, publicAnonKey } from './utils/supabase/info';
-import faviconImage from './assets/480c09d663e40bc21ee2dec2f07edf81d50784b4.png';
 
 
 export default function App() {
@@ -11,16 +10,6 @@ export default function App() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Set favicon on mount using the existing asset
-  useEffect(() => {
-    let favicon = document.querySelector("link[rel~='icon']") as HTMLLinkElement | null;
-    if (!favicon) {
-      favicon = document.createElement('link');
-      favicon.rel = 'icon';
-      document.head.appendChild(favicon);
-    }
-    favicon.href = faviconImage as unknown as string;
-  }, []);
 
   const handleSubmit = async () => {
     if (!input.trim() || isLoading) return;
@@ -34,7 +23,6 @@ export default function App() {
     setIsLoading(true);
 
     try {
-      console.log('Sending message to chat endpoint with streaming...');
       const response = await fetch(
         `https://${projectId}.supabase.co/functions/v1/make-server-3e9b33b2/chat`,
         {
@@ -50,8 +38,6 @@ export default function App() {
         }
       );
 
-      console.log('Response status:', response.status);
-
       if (!response.ok) {
         const data = await response.json();
         console.error('Server error response:', data);
@@ -63,6 +49,7 @@ export default function App() {
       const decoder = new TextDecoder();
       let accumulatedText = '';
       let firstChunk = true;
+      let buffer = '';
 
       if (!reader) {
         throw new Error('No reader available');
@@ -72,8 +59,10 @@ export default function App() {
         const { done, value } = await reader.read();
         if (done) break;
 
-        const chunk = decoder.decode(value, { stream: true });
-        const lines = chunk.split('\n');
+        // Events can be split across network chunks; hold back the partial last line.
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() ?? '';
 
         for (const line of lines) {
           if (line.startsWith('data: ')) {
