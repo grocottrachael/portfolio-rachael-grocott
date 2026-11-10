@@ -413,7 +413,7 @@ export function Work() {
           I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
         </InfoTile>
         <InfoTile bg={C.yellow} madeFor="What I bring" title="Skills" className="col-span-2 md:col-span-3">
-          <ul className="mt-1 flex flex-wrap gap-2">
+          <ul className="mt-1 flex flex-wrap gap-1.5 max-w-[900px]">
             {[
               'Clear IA',
               'Intuitive UX',
@@ -429,7 +429,7 @@ export function Work() {
               'Coaching',
               'Public speaking',
             ].map((skill) => (
-              <li key={skill} className="bg-white/60 px-3 py-1.5 text-[15px] font-bold text-[var(--ink)]">
+              <li key={skill} className="bg-white/40 px-2.5 py-1 text-[15px] font-medium text-[var(--ink)]/85">
                 {skill}
               </li>
             ))}
