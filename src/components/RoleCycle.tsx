@@ -4,7 +4,7 @@ import { roles } from '../content/experience';
 
 /*
  * The Experience block's picture: one role at a time, sliding right to left
- * with the same timing as the dots underneath, with the company's
+ * with an even ease in and out, with the company's
  * logo, flipping through the CV. Pauses while you hover, and sits still
  * on the latest role if you've asked for less motion.
  */
@@ -31,7 +31,7 @@ export default function RoleCycle() {
   const r = roles[i];
   return (
     <div
-      className="flex-1 flex flex-col justify-center pt-5"
+      className="mt-auto pt-5"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -46,7 +46,7 @@ export default function RoleCycle() {
             className="flex items-center gap-3"
           >
                         {/* Logos sit in a little rounded square with the ink stroke, like the rest of the site */}
-            <span className="shrink-0 grid place-items-center w-12 h-12 rounded-xl border-2 border-[var(--ink)] bg-white overflow-hidden">
+            <span className="shrink-0 grid place-items-center w-[52px] h-[52px] rounded-xl border-2 border-[var(--ink)] bg-white overflow-hidden">
               {logos[r.company] ? (
                 <img
                   src={logos[r.company]}
@@ -63,7 +63,7 @@ export default function RoleCycle() {
               )}
             </span>
             <span className="min-w-0">
-              <span className="block font-display text-[20px] leading-[1.2]">
+              <span className="block font-display text-[22px] leading-[1.15]">
                 {r.company}
               </span>
               <span className="block mt-0.5 text-[15px] leading-[1.3] text-[var(--ink-soft)]">
@@ -73,12 +73,6 @@ export default function RoleCycle() {
           </motion.div>
         </AnimatePresence>
       </div>
-      {/* Little dots for where you are in the CV */}
-      <span className="mt-1 flex gap-1.5" aria-hidden>
-        {roles.map((x, n) => (
-          <span key={x.company} className={`h-1.5 rounded-full bg-[var(--ink)] transition-all duration-[450ms] ease-[cubic-bezier(.65,0,.35,1)] ${n === i ? 'w-5' : 'w-1.5 opacity-30'}`} />
-        ))}
-      </span>
       <span className="sr-only">{roles.map((x) => `${x.company}, ${x.dates}`).join('. ')}</span>
     </div>
   );
