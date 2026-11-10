@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, Plus, X, ExternalLink } from 'lucide-react';
-import { C, Eyes } from './Shapes';
+import { C, Flower } from './Shapes';
 import { navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
 
@@ -334,9 +334,9 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
   );
 }
 
-function ShapeTile({ children, className = '' }: { children: React.ReactNode; className?: string }) {
+function ShapeTile({ children, className = '', bg }: { children: React.ReactNode; className?: string; bg?: string }) {
   return (
-    <motion.div className={`relative aspect-square md:aspect-auto ${className}`} aria-hidden>
+    <motion.div className={`relative aspect-square md:aspect-auto ${className}`} style={{ background: bg }} aria-hidden>
       {children}
     </motion.div>
   );
@@ -429,8 +429,8 @@ export function Work() {
         className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:auto-rows-[minmax(13vw,auto)] gap-2.5 p-2.5 md:gap-3 md:p-3 md:pl-0"
       >
         {tile('swatchmaker')}
-        <ShapeTile>
-          <Eyes />
+        <ShapeTile className="flex items-center justify-center" bg={C.green}>
+          <Flower color={C.blue} eyes className="w-[72%] max-w-[300px]" />
         </ShapeTile>
         {tile('graphy')}
         {tile('knot-a-problem')}

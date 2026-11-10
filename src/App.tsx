@@ -16,7 +16,7 @@ function GithubMark() {
   );
 }
 import { Work } from './components/Work';
-import { C } from './components/Shapes';
+import { C, Flower } from './components/Shapes';
 import profileImage from './assets/rachael-avatar.webp';
 import { usePath } from './router';
 import { caseStudies } from './content/caseStudies';
@@ -43,15 +43,19 @@ function Home() {
       {/* Who I am: pinned on the left while the blocks scroll on the right */}
       <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen p-2.5 pb-0 md:p-3">
         {/* A block of its own, so the white gutters run round it like the grid */}
-        <div className="h-full md:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-6 md:gap-7 md:justify-center">
+        <div className="relative overflow-hidden h-full md:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-6 md:gap-7 md:justify-center">
         <div>
-        <img
+        {/* My photo in the middle of a flower */}
+        <div className="relative mb-4 -ml-2 w-24 h-24 md:w-28 md:h-28">
+          <Flower color={C.yellow} className="absolute inset-0 w-full h-full" />
+          <img
           src={profileImage}
           alt="Rachael"
           width={64}
           height={64}
-          className="mb-5 w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-[3px] border-[var(--ink)]"
+          className="absolute left-[19%] top-[21%] w-[62%] h-[62%] rounded-full object-cover border-2 border-[var(--ink)]"
         />
+        </div>
         <h1 className="whitespace-nowrap font-display leading-none text-[9vw] md:text-[clamp(26px,2.5vw,46px)]">
           Hiya, I&rsquo;m Rachael!
         </h1>
@@ -89,6 +93,8 @@ function Home() {
             <GithubMark /> GitHub
           </a>
         </div>
+        {/* A flower tucked into the corner */}
+        <Flower color={C.pink} className="pointer-events-none absolute -right-10 -bottom-10 w-36 h-36 md:w-44 md:h-44" />
         </div>
       </aside>
 
