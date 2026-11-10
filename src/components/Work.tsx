@@ -89,7 +89,7 @@ const projects: Project[] = [
   {
     id: 'graphy',
     title: 'Graphy SDK',
-    madeFor: 'My day job',
+    madeFor: 'Currently working here',
     live: true,
     bg: C.accent,
     span: 'col-span-2 md:col-span-1',
