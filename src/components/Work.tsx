@@ -219,7 +219,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
             e.stopPropagation();
             onOpen();
           }}
-          className="mt-4 block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
+          className="block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
         >
         <span
           className={
