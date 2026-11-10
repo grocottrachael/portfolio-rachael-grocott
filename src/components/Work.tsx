@@ -149,7 +149,7 @@ const projects: Project[] = [
   {
     id: 'crumbs',
     title: 'Crumbs',
-    madeFor: 'Just for us',
+    madeFor: 'Just for me',
     bg: C.green,
     span: 'col-span-2',
     logo: <img src="/crumbs-icon.svg" alt="" width={44} height={44} className="h-11 w-11 rounded-[10px]" />,
