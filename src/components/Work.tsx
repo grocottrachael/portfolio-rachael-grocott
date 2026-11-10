@@ -47,6 +47,8 @@ type Project = {
   logo?: React.ReactNode;
   /** on a wide block, show the logo big on the right instead of above the title */
   logoRight?: boolean;
+  /** show the logo big at the foot of the block, so titles line up with their neighbours */
+  logoBelow?: boolean;
   /** the logo spells out the name, so the big title is for screen readers only */
   wordmark?: boolean;
   story: React.ReactNode;
@@ -56,11 +58,11 @@ type Project = {
 /* The Dotties mark, as drawn in the Dotties app: a framed, rotated 3x3 dot grid (the name is the tile title) */
 function DottiesLogo() {
   return (
-    <span className="relative block w-11 h-11 border border-[var(--ink)]/15 bg-white/50" aria-hidden>
+    <span className="relative block w-[clamp(88px,8vw,130px)] aspect-square border border-[var(--ink)]/15 bg-white/50" aria-hidden>
       {['-left-px -top-px', '-right-px -top-px', '-left-px -bottom-px', '-right-px -bottom-px'].map((pos) => (
         <span key={pos} className={`absolute w-1 h-1 bg-[var(--ink)]/40 ${pos}`} />
       ))}
-      <svg viewBox="0 0 13 13" className="absolute inset-0 m-auto w-4 h-4 rotate-45">
+      <svg viewBox="0 0 13 13" className="absolute inset-0 m-auto w-[30%] h-[30%] rotate-45">
         {[0, 5, 10].flatMap((y) => [0, 5, 10].map((x) => <rect key={`${x}-${y}`} x={x} y={y} width="3" height="3" fill="var(--ink)" />))}
       </svg>
     </span>
@@ -113,6 +115,7 @@ const projects: Project[] = [
     span: 'col-span-2 md:col-span-1',
     summary: 'I needed it, so I built it. Images into halftone, dithering or ASCII.',
     logo: <DottiesLogo />,
+    logoBelow: true,
     story: (
       <>
         Upload an image and turn it into halftone dots, ordered dithering or ASCII. Choose circle or square dots, tune
@@ -187,11 +190,11 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
       <div className="pr-12">
         <For dark={p.dark}>{p.madeFor}</For>
       </div>
-      {p.logo && <div className={`mt-6 ${p.logoRight ? 'md:hidden' : ''}`}>{p.logo}</div>}
+      {p.logo && !p.logoBelow && <div className={`mt-6 ${p.logoRight ? 'md:hidden' : ''}`}>{p.logo}</div>}
       {p.logo && p.logoRight && (
         <div
           aria-hidden
-          className="hidden md:block absolute right-[20%] top-1/2 -translate-y-1/2 w-[clamp(88px,8vw,130px)] -rotate-6 transition-transform duration-300 group-hover:rotate-0 [&_img]:w-full [&_img]:h-auto [&_img]:rounded-[22%]"
+          className="hidden md:block absolute right-[20%] top-1/2 -translate-y-1/2 w-[clamp(88px,8vw,130px)] [&_img]:w-full [&_img]:h-auto [&_img]:rounded-[22%]"
         >
           {p.logo}
         </div>
@@ -216,6 +219,8 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
         </span>
         <span className={`${p.wordmark ? 'mt-1' : 'mt-3'} block text-[16px] leading-snug max-w-[36ch] ${soft}`}>{p.summary}</span>
       </button>
+
+      {p.logo && p.logoBelow && <div className="mt-auto pt-6">{p.logo}</div>}
 
       {p.image && (
         <div className="mt-5 flex-1 flex items-end">
