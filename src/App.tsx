@@ -22,6 +22,7 @@ import { usePath } from './router';
 import { caseStudies } from './content/caseStudies';
 import { CaseStudy } from './pages/CaseStudy';
 import { CaseStudyV2 } from './pages/CaseStudyV2';
+import { Experience } from './pages/Experience';
 
 function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
   return (
@@ -108,6 +109,7 @@ function Home() {
 export default function App() {
   const path = usePath();
   const study = caseStudies.find((c) => path === `/work/${c.id}`);
+  if (path === '/experience') return <Experience />;
   if (study) return study.v2 ? <CaseStudyV2 study={study} /> : <CaseStudy study={study} />;
   return <Home />;
 }

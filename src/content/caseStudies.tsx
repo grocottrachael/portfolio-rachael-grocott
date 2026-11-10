@@ -67,17 +67,17 @@ export const caseStudies: CaseStudy[] = [
     madeFor: 'Currently working here',
     bg: C.accent,
     intro:
-      'Editable, AI-native charts that developers and their AI agents put into their own products. I’ve been at Graphy for six years, through every pivot to get here. I design the SDK’s developer experience, and I own the design of graphy.dev.',
+      'Editable, AI-native charts that developers and their AI agents put into their own products. I’ve been at Graphy since 2021, through every pivot to get here. I design the SDK’s developer experience, and I own the design of graphy.dev.',
     facts: [
       { label: 'Role', value: 'Senior Product Designer' },
-      { label: 'At Graphy', value: 'Six years' },
+      { label: 'At Graphy', value: 'Since April 2021' },
       { label: 'I design', value: 'The SDK’s DX, and graphy.dev' },
       { label: 'I work in', value: 'Claude, on the real SDK' },
     ],
     link: { href: 'https://graphy.dev/', label: 'Visit graphy.dev' },
     tldr: {
       points: [
-        { label: 'The context', body: 'Six years at Graphy, through every pivot. AI changed the landscape, and an SDK became the right fit: charts for developers and their AI agents.' },
+        { label: 'The context', body: 'Nearly six years at Graphy, through every pivot. AI changed the landscape, and an SDK became the right fit: charts for developers and their AI agents.' },
         { label: 'What I did', body: 'I design the SDK’s developer experience and own graphy.dev. Most proud of point and edit: click any part of a chart and change that thing.' },
         { label: 'How I work', body: 'I design on the real SDK in Claude, and hand over pull requests or a spec with every edge case, pairing with engineers all the way.' },
         { label: 'The result', body: 'The React SDK hit 9.8k npm downloads in one week, up 67% on the week before.' },
@@ -86,18 +86,18 @@ export const caseStudies: CaseStudy[] = [
         { value: '9.8k', label: 'npm downloads in one week' },
         { value: '+67%', label: 'on the week before' },
         { value: '58.8k', label: 'downloads, 16 Aug to 1 Nov' },
-        { value: '6', label: 'years at Graphy' },
+        { value: '2021', label: 'at Graphy since' },
       ],
     },
     blocks: [
       {
         type: 'chapter',
         label: 'The context',
-        heading: 'Six years, a few pivots, and a new audience',
+        heading: 'Nearly six years, a few pivots, and a new audience',
         body: (
           <>
             <p>
-              I&rsquo;ve been at Graphy for six years, and I&rsquo;ve seen the company through all sorts of pivots on
+              I&rsquo;ve been at Graphy since 2021, and I&rsquo;ve seen the company through all sorts of pivots on
               the way to product-market fit. I designed our web app. Then AI changed the landscape, and an SDK was the
               right fit: charts that developers, and the AI agents they build, can drop into their own products.
             </p>

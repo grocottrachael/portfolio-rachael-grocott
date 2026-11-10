@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, Plus, X, ExternalLink } from 'lucide-react';
-import { C, Flower } from './Shapes';
-import { navigate } from '../router';
+import { ArrowRight, ArrowUpRight, Plus, X, ExternalLink } from 'lucide-react';
+import { C } from './Shapes';
+import { Link, navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
 
 const spring = { type: 'spring', stiffness: 380, damping: 38 } as const;
@@ -334,13 +334,6 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
   );
 }
 
-function ShapeTile({ children, className = '', bg }: { children: React.ReactNode; className?: string; bg?: string }) {
-  return (
-    <motion.div className={`relative aspect-square md:aspect-auto ${className}`} style={{ background: bg }} aria-hidden>
-      {children}
-    </motion.div>
-  );
-}
 
 function InfoTile({
   bg,
@@ -429,9 +422,23 @@ export function Work() {
         className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:auto-rows-[minmax(13vw,auto)] gap-2.5 p-2.5 md:gap-3 md:p-3 md:pl-0"
       >
         {tile('swatchmaker')}
-        <ShapeTile className="flex items-center justify-center" bg={C.green}>
-          <Flower color={C.blue} eyes className="w-[72%] max-w-[300px]" />
-        </ShapeTile>
+        {/* Experience: where hiring managers look first */}
+        <Link
+          to="/experience"
+          className="group relative overflow-hidden p-5 md:p-7 flex flex-col text-[var(--ink)] col-span-2 md:col-span-1 min-h-[220px]"
+          style={{ background: C.green }}
+        >
+          <span className="chunky-tag self-start">For anyone hiring</span>
+          <span className="mt-4 block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
+            Experience
+          </span>
+          <span className="mt-3 block text-[16px] leading-snug max-w-[24ch] text-[var(--ink-soft)]">
+            Graphy, Trint, Geckoboard and more. Plus skills and talks.
+          </span>
+          <span className="chunky-icon absolute top-5 right-5 transition-transform group-hover:translate-x-0.5" aria-hidden>
+            <ArrowRight className="w-4 h-4" />
+          </span>
+        </Link>
         {tile('graphy')}
         {tile('knot-a-problem')}
         {tile('crumbs')}
@@ -451,29 +458,6 @@ export function Work() {
         {tile('triangirls')}
         <InfoTile bg={C.green} madeFor="In the press" title="VICE & Samsung" className="col-span-1">
           Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
-        </InfoTile>
-        <InfoTile bg={C.yellow} madeFor="What I bring" title="Skills" className="col-span-2 md:col-span-3">
-          <ul className="mt-1 flex flex-wrap gap-1.5 max-w-[900px]">
-            {[
-              'Clear IA',
-              'Intuitive UX',
-              'DX',
-              'Visual polish',
-              'Fast AI prototyping',
-              'Design systems',
-              'Interaction design',
-              'Research & testing',
-              'Product thinking',
-              'Cross-team collaboration',
-              'Clear communication',
-              'Coaching',
-              'Public speaking',
-            ].map((skill) => (
-              <li key={skill} className="bg-white/40 px-2.5 py-1 text-[15px] font-medium text-[var(--ink)]/85">
-                {skill}
-              </li>
-            ))}
-          </ul>
         </InfoTile>
       </section>
       <AnimatePresence>
