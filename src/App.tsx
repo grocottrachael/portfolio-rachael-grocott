@@ -17,7 +17,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-white md:flex">
       {/* Who I am: pinned on the left while the blocks scroll on the right */}
-      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen md:overflow-y-auto px-5 md:px-[3vw] py-10 md:py-[4vh] flex flex-col gap-8 md:justify-between">
+      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen md:overflow-y-auto px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-8 md:gap-10">
         <h1 className="uppercase leading-[0.85]">
           <span className="block font-bold text-[16px] md:text-[clamp(14px,1.1vw,20px)] tracking-tight mb-2">
             Hiya! I&rsquo;m

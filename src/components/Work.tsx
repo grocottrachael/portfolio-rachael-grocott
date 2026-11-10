@@ -13,7 +13,7 @@ function External(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
 function For({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
   return (
     <span
-      className={`inline-block rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-[0.06em] ${
+      className={`inline-block whitespace-nowrap rounded-full px-3 py-1 text-[12px] font-bold uppercase tracking-[0.06em] ${
         dark ? 'bg-white text-[#181818]' : 'bg-[#181818] text-white'
       }`}
     >
@@ -73,7 +73,7 @@ const projects: Project[] = [
   {
     id: 'graphy',
     title: 'Graphy SDK',
-    madeFor: 'For developers & AI agents',
+    madeFor: 'For developers',
     bg: C.black,
     dark: true,
     span: 'col-span-2 md:col-span-1',
@@ -110,10 +110,10 @@ const projects: Project[] = [
   {
     id: 'knot-a-problem',
     title: 'Knot a Problem',
-    madeFor: 'For crocheters (and my granny)',
+    madeFor: 'For crocheters',
     bg: C.yellow,
     span: 'col-span-2 md:col-span-1 md:row-span-2',
-    summary: 'Never get stuck reading a crochet pattern again.',
+    summary: 'Never get stuck reading a crochet pattern again. It started with my granny.',
     image: {
       src: '/knot-a-problem.webp',
       alt: 'Knot a Problem social post: Put it down. Pick it up. Still on round 3.',
