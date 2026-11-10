@@ -202,3 +202,25 @@ export function Eyes() {
     </svg>
   );
 }
+
+/* Kitsch stickers for the corner pile: a puffy heart and a four-point sparkle */
+export function Heart({ color, className = '' }: { color: string; className?: string }) {
+  return (
+    <svg viewBox="0 0 100 92" className={className} aria-hidden>
+      <path
+        d="M50 88 C20 66 4 50 4 30 C4 14 16 4 30 4 C40 4 46 9 50 17 C54 9 60 4 70 4 C84 4 96 14 96 30 C96 50 80 66 50 88 Z"
+        fill={color}
+      />
+      {/* a little shine */}
+      <path d="M22 26 C24 18 30 14 36 14" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round" opacity="0.8" />
+    </svg>
+  );
+}
+
+export function Sparkle({ color, className = '' }: { color: string; className?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" className={className} aria-hidden>
+      <path d="M50 2 C54 34 66 46 98 50 C66 54 54 66 50 98 C46 66 34 54 2 50 C34 46 46 34 50 2 Z" fill={color} />
+    </svg>
+  );
+}

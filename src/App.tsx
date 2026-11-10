@@ -16,7 +16,7 @@ function GithubMark() {
   );
 }
 import { Work } from './components/Work';
-import { C, Flower } from './components/Shapes';
+import { C, Flower, Heart, Sparkle } from './components/Shapes';
 import profileImage from './assets/rachael-avatar.webp';
 import { usePath } from './router';
 import { caseStudies } from './content/caseStudies';
@@ -38,27 +38,43 @@ function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
 const button =
   'chunky';
 
+/* A round badge with a scalloped edge: 12 bumps round a circle */
+function Scallop({ color, className }: { color: string; className?: string }) {
+  const n = 12;
+  const R = 41;
+  const r = 8.6;
+  const step = (2 * Math.PI) / n;
+  const pt = (a: number) => `${50 + R * Math.cos(a)} ${50 + R * Math.sin(a)}`;
+  let d = `M ${pt(-step / 2)}`;
+  for (let i = 0; i < n; i++) d += ` A ${r} ${r} 0 0 1 ${pt(-step / 2 + (i + 1) * step)}`;
+  return (
+    <svg viewBox="0 0 100 100" className={className} aria-hidden>
+      <path d={d + ' Z'} fill={color} />
+    </svg>
+  );
+}
+
 function Home() {
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] md:flex">
       {/* Who I am: pinned on the left while the blocks scroll on the right */}
       <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen p-2.5 pb-0 md:p-3">
         {/* A block of its own, so the white gutters run round it like the grid */}
-        <div className="relative overflow-hidden h-full md:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] py-10 md:py-[6vh] flex flex-col gap-6 md:gap-7 md:justify-center">
+        <div className="relative overflow-hidden h-full md:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] pt-10 pb-40 md:py-[6vh] flex flex-col gap-6 md:gap-7 md:justify-center">
         <div>
-        {/* My photo in the middle of a flower */}
-        <div className="group relative mb-4 -ml-2 w-24 h-24 md:w-28 md:h-28">
-          <Flower
+        {/* My photo on a scalloped badge, so the eyed flower is the only flower */}
+        <div className="group relative mb-4 -ml-1 w-24 h-24 md:w-28 md:h-28">
+          <Scallop
             color={C.pink}
-            className="absolute inset-0 w-full h-full transition-transform origin-[50%_51.3%] duration-500 ease-in-out motion-safe:group-hover:rotate-[20deg]"
+            className="absolute inset-0 w-full h-full transition-transform duration-500 ease-in-out motion-safe:group-hover:rotate-[15deg]"
           />
           <img
-          src={profileImage}
-          alt="Rachael"
-          width={64}
-          height={64}
-          className="absolute left-[19%] top-[24%] w-[62%] h-[62%] rounded-full object-cover border-2 border-[var(--ink)] transition-transform duration-500 ease-in-out motion-safe:group-hover:scale-[1.04]"
-        />
+            src={profileImage}
+            alt="Rachael"
+            width={64}
+            height={64}
+            className="absolute inset-[15%] w-[70%] h-[70%] rounded-full object-cover border-2 border-[var(--ink)] transition-transform duration-500 ease-in-out motion-safe:group-hover:scale-[1.04]"
+          />
         </div>
         <h1 className="whitespace-nowrap font-display leading-none text-[9vw] md:text-[clamp(26px,2.5vw,46px)]">
           Hiya, I&rsquo;m Rachael!
@@ -97,8 +113,13 @@ function Home() {
             <GithubMark /> GitHub
           </a>
         </div>
-        {/* A flower with lashes, peeking in from the corner */}
-        <Flower color={C.blue} eyes className="pointer-events-none absolute -right-8 -bottom-10 w-36 h-36 md:w-44 md:h-44 -rotate-[14deg]" />
+        {/* A little pile of kitsch stickers in the corner, led by the flower with lashes. Each one wiggles when you poke it */}
+        <div className="absolute -right-8 -bottom-10 w-52 h-48 md:w-64 md:h-56" aria-hidden>
+          <Sparkle color={C.yellow} className="sticker absolute left-[6%] top-[4%] w-12 h-12 md:w-14 md:h-14 rotate-[8deg]" />
+          <Heart color={C.pink} className="sticker absolute left-[0%] top-[42%] w-14 h-14 md:w-16 md:h-16 -rotate-[16deg]" />
+          <Sparkle color={C.green} className="sticker absolute left-[34%] top-[18%] w-7 h-7 md:w-8 md:h-8 -rotate-[10deg]" />
+          <Flower color={C.blue} eyes className="sticker absolute right-0 bottom-0 w-36 h-36 md:w-44 md:h-44 -rotate-[14deg]" />
+        </div>
         </div>
       </aside>
 
