@@ -23,10 +23,10 @@ export function BentoGrid() {
   return (
     <div className="w-full md:w-[50vw] mx-auto">
       <div className="grid grid-cols-6 gap-3">
-        {/* SWATCHMAKER: featured, spans 2 rows */}
+        {/* SWATCHMAKER: featured */}
         <External
           href="https://swatchmaker.uk/"
-          className={`${linkCard} col-span-6 md:col-span-4 md:row-span-2 bg-neutral-100`}
+          className={`${linkCard} col-span-6 md:col-span-4 bg-neutral-100`}
         >
           <div className="h-full p-4 flex flex-col justify-between min-h-[180px] md:min-h-[200px]">
             <div>
@@ -40,13 +40,46 @@ export function BentoGrid() {
                 A passion project for people to see paint colours from all brands side by side.
               </p>
             </div>
-            <ImageWithFallback
-              src="/swatchmaker.webp"
-              alt="SWATCHMAKER interface"
-              className="w-full mt-3 rounded-lg"
-            />
+            <div className="grid grid-cols-3 gap-2 mt-3">
+              {[
+                ['006', 'Sulking Room Pink and Duck Green'],
+                ['008', "Charlotte's Locks and Hague Blue"],
+                ['019', 'Joanna, Ochre Glow and Preference Red'],
+              ].map(([n, colours], i) => (
+                <img
+                  key={n}
+                  src={`/swatchmaker-${n}.webp`}
+                  alt={`SWATCHMAKER palette: ${colours}`}
+                  width={540}
+                  height={720}
+                  loading="lazy"
+                  className="w-full rounded-md shadow-sm transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-1"
+                  style={{ transitionDelay: `${i * 60}ms` }}
+                />
+              ))}
+            </div>
             <Arrow />
           </div>
+        </External>
+
+        {/* Knot a Problem */}
+        <External
+          href="https://knotaproblem.app/"
+          className={`${linkCard} col-span-6 md:col-span-2 md:row-span-2 bg-[#F3C5CD] p-4 flex flex-col`}
+        >
+          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Knot a Problem</h4>
+          <p className="text-[14px] text-neutral-700">
+            Never get stuck reading a crochet pattern again.
+          </p>
+          <ImageWithFallback
+            src="/knot-a-problem.webp"
+            alt="Knot a Problem social post: Put it down. Pick it up. Still on round 3. A granny square diagram that keeps your place."
+            width={640}
+            height={800}
+            loading="lazy"
+            className="w-full mt-3 rounded-md"
+          />
+          <Arrow />
         </External>
 
         {/* Graphy SDK: current role */}
@@ -64,23 +97,6 @@ export function BentoGrid() {
             <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
             <span className="text-[12px] text-neutral-300">Working on this now</span>
           </div>
-          <Arrow />
-        </External>
-
-        {/* Knot a Problem */}
-        <External
-          href="https://knotaproblem.app/"
-          className={`${linkCard} col-span-6 md:col-span-2 bg-[#F3C5CD] p-4 flex flex-col`}
-        >
-          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Knot a Problem</h4>
-          <p className="text-[14px] text-neutral-700">
-            Never get stuck reading a crochet pattern again.
-          </p>
-          <ImageWithFallback
-            src="/knot-a-problem.webp"
-            alt="Knot a Problem: never get stuck reading a crochet pattern again"
-            className="w-full mt-3 rounded-md"
-          />
           <Arrow />
         </External>
 
@@ -124,7 +140,7 @@ export function BentoGrid() {
         {/* graphy.dev: I own the website design */}
         <External
           href="https://graphy.dev/"
-          className={`${linkCard} col-span-6 md:col-span-3 bg-neutral-100 p-4`}
+          className={`${linkCard} col-span-6 md:col-span-2 bg-neutral-100 p-4`}
         >
           <div className="flex items-center gap-2 mb-1">
             <h4 className="text-[15px] tracking-tight font-medium">graphy.dev</h4>
@@ -139,7 +155,7 @@ export function BentoGrid() {
         {/* Latest work lives on LinkedIn */}
         <External
           href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
-          className={`${linkCard} col-span-6 md:col-span-3 bg-[#FFE3F1] p-4`}
+          className={`${linkCard} col-span-6 md:col-span-2 bg-[#FFE3F1] p-4`}
         >
           <h4 className="text-[15px] tracking-tight mb-1 font-medium">My latest work</h4>
           <p className="text-[14px] text-neutral-700">
@@ -149,7 +165,7 @@ export function BentoGrid() {
         </External>
 
         {/* Talks */}
-        <div className={`${card} col-span-6 md:col-span-3 bg-neutral-50 p-4`}>
+        <div className={`${card} col-span-6 md:col-span-2 bg-neutral-50 p-4`}>
           <h4 className="text-[15px] tracking-tight mb-1 font-medium">Talks & workshops</h4>
           <p className="text-[14px] text-neutral-600">
             I{'\u2019'}ve spoken at loads of events, and I run sessions like{' '}
@@ -158,7 +174,7 @@ export function BentoGrid() {
         </div>
 
         {/* Press */}
-        <div className={`${card} col-span-6 md:col-span-3 bg-neutral-50 p-4`}>
+        <div className={`${card} col-span-6 md:col-span-2 bg-neutral-50 p-4`}>
           <h4 className="text-[15px] tracking-tight mb-1 font-medium">Press</h4>
           <p className="text-[14px] text-neutral-600">
             Interviewed by VICE. Featured in Samsung{'\u2019'}s Not a School.
