@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, Plus, X } from 'lucide-react';
 import { C, Eyes } from './Shapes';
+import { navigate } from '../router';
+import { caseStudies } from '../content/caseStudies';
 
 const spring = { type: 'spring', stiffness: 380, damping: 38 } as const;
 
@@ -355,7 +357,8 @@ export function Work() {
 
   const tile = (id: string) => {
     const p = projects.find((x) => x.id === id)!;
-    return <ProjectTile key={id} p={p} onOpen={() => setOpenId(id)} />;
+    const hasStudy = caseStudies.some((c) => c.id === id);
+    return <ProjectTile key={id} p={p} onOpen={() => (hasStudy ? navigate(`/work/${id}`) : setOpenId(id))} />;
   };
   const openProject = projects.find((x) => x.id === openId);
 

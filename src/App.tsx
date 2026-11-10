@@ -2,6 +2,9 @@ import { ArrowUpRight, Github, Linkedin } from 'lucide-react';
 import { Work } from './components/Work';
 import { C } from './components/Shapes';
 import profileImage from './assets/rachael-avatar.webp';
+import { usePath } from './router';
+import { caseStudies } from './content/caseStudies';
+import { CaseStudy } from './pages/CaseStudy';
 
 function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
   return (
@@ -17,7 +20,7 @@ function Pill({ children, bg }: { children: React.ReactNode; bg: string }) {
 const button =
   'inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-[15px] font-bold transition-transform hover:-translate-y-0.5';
 
-export default function App() {
+function Home() {
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] md:flex">
       {/* Who I am: pinned on the left while the blocks scroll on the right */}
@@ -83,4 +86,10 @@ export default function App() {
       </main>
     </div>
   );
+}
+
+export default function App() {
+  const path = usePath();
+  const study = caseStudies.find((c) => path === `/work/${c.id}`);
+  return study ? <CaseStudy study={study} /> : <Home />;
 }
