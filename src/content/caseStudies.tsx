@@ -38,7 +38,159 @@ const smSizes: Record<string, [number, number]> = {"chips": [1700, 1015], "phone
 /* A SWATCHMAKER image */
 const sm = (name: string, alt: string): Img => ({ src: `/work/swatchmaker/${name}.webp`, alt, w: smSizes[name][0], h: smSizes[name][1] });
 
+const gSizes: Record<string, [number, number]> = {"point-and-edit": [1600, 980], "annotate": [1560, 980], "theme-botanical": [1120, 760], "theme-chalkboard": [1120, 760], "theme-blueprint": [1120, 760], "theme-watercolor": [1120, 760], "theme-neo-brutalist": [1120, 760], "theme-comic": [1120, 760]};
+/* A Graphy image: every chart here is drawn with the real Graphy SDK, on the SDK's own public npm downloads */
+const g = (name: string, alt: string): Img => ({ src: `/work/graphy/${name}.webp`, alt, w: gSizes[name][0], h: gSizes[name][1] });
+
 export const caseStudies: CaseStudy[] = [
+  {
+    id: 'graphy',
+    title: 'Graphy SDK',
+    madeFor: 'Currently working here',
+    bg: C.accent,
+    intro:
+      'Editable, AI-native charts that developers and their AI agents put into their own products. I’ve been at Graphy for six years, through every pivot to get here. I design the SDK’s developer experience, and I own the design of graphy.dev.',
+    facts: [
+      { label: 'Role', value: 'Senior Product Designer' },
+      { label: 'At Graphy', value: 'Six years' },
+      { label: 'I design', value: 'The SDK’s DX, and graphy.dev' },
+      { label: 'I work in', value: 'Claude, on the real SDK' },
+    ],
+    link: { href: 'https://graphy.dev/', label: 'Visit graphy.dev' },
+    blocks: [
+      {
+        type: 'shows',
+        items: [
+          { title: 'Point and edit', body: 'Click any part of a chart and change that thing.' },
+          { title: 'Freeform annotation', body: 'Notes and arrows that sit where the story needs them.' },
+          { title: 'Themes', body: 'Whole looks, well beyond a colour scheme.' },
+          { title: 'Designed in code', body: 'Specs and PRs built on top of the real SDK.' },
+        ],
+      },
+      {
+        type: 'figure',
+        images: [g('point-and-edit', 'A bar chart in edit mode: the bars are selected and a menu offers fill colour and bar thickness')],
+        caption: 'Point and edit: click the bars and their controls open right there. Every chart on this page is drawn with the real SDK, on its own public weekly downloads from npm.',
+        frame: true,
+      },
+      {
+        type: 'text',
+        eyebrow: 'The context',
+        heading: 'Six years, a few pivots, and a new audience',
+        body: (
+          <>
+            <p>
+              I&rsquo;ve been at Graphy for six years, and I&rsquo;ve seen the company through all sorts of pivots on
+              the way to product-market fit. I designed our web app. Then AI changed the landscape, and an SDK was the
+              right fit: charts that developers, and the AI agents they build, can drop into their own products.
+            </p>
+            <p>
+              That meant designing for a new audience on a new platform. The people choosing Graphy now read code
+              and docs first, so the developer experience is the product: the API, the docs, the defaults, and the
+              editing their own users get for free.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'text',
+        eyebrow: 'The work I’m proudest of',
+        heading: 'Point and edit',
+        body: (
+          <>
+            <p>
+              Editing a chart used to mean side panels, and everything was really hard to find. You had to know where
+              a setting lived before you could change it.
+            </p>
+            <p>
+              Now you click on any part of a chart, a bar, an axis, the legend, and change that thing, right where it
+              is. Working with AI let us move fast enough to make a change this big possible.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'text',
+        eyebrow: 'Just shipped',
+        heading: 'Annotating, made freeform',
+        body: (
+          <>
+            <p>
+              Annotations are how a chart tells its story: the arrow that says &ldquo;up 67% on last week&rdquo;, the
+              note pinned to a spike. I&rsquo;ve just redesigned annotating to be freeform, so they sit wherever the
+              story needs them.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'figure',
+        images: [g('annotate', 'The same chart with a difference arrow from 25 Oct to 1 Nov, labelled +67.15%')],
+        caption: 'A difference arrow works out the change between two bars for you.',
+        frame: true,
+      },
+      {
+        type: 'text',
+        eyebrow: 'Going beyond a colour scheme',
+        heading: 'Themes',
+        body: (
+          <>
+            <p>
+              A theme in Graphy isn&rsquo;t a palette. It decides the whole look: the paper, the type, the colours,
+              even the shapes the bars are drawn in. Leaf blades in Botanical, chalk on a board, a blueprint&rsquo;s
+              hatching. The chart itself names no theme, so the same chart draws in any of them.
+            </p>
+            <p>I designed and built themes as pull requests, and handed them to engineering ready to go.</p>
+          </>
+        ),
+      },
+      {
+        type: 'figure',
+        images: [
+          g('theme-botanical', 'The downloads chart in the Botanical theme: bars drawn as leaf blades on grained paper'),
+          g('theme-chalkboard', 'The same chart on a chalkboard, drawn in chalk'),
+          g('theme-blueprint', 'The same chart as a blueprint, with hatched bars on a blue drafting grid'),
+        ],
+      },
+      {
+        type: 'figure',
+        images: [
+          g('theme-watercolor', 'The same chart in watercolour washes'),
+          g('theme-neo-brutalist', 'The same chart in Neo Brutalist: loud pink blocks with a hard black shadow'),
+          g('theme-comic', 'The same chart as a comic panel, with halftone dots and black outlines'),
+        ],
+        caption: 'One chart, six themes. Nothing changed but the theme.',
+      },
+      {
+        type: 'text',
+        eyebrow: 'How I work',
+        heading: 'I design on top of real charts',
+        body: (
+          <>
+            <p>
+              I have the SDK in Claude, so everything I design builds on the real thing. Depending on how complex it
+              is, I either open a pull request, or share an artefact with the team that holds the whole design spec
+              and every edge case.
+            </p>
+            <p>
+              Figma could never hold all the edge cases a chart has: long labels, empty data, a hundred categories,
+              negative values. Now I design on real charts with real data, and I can make anything. And I&rsquo;m
+              always pairing with engineers along the way.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'stats',
+        items: [
+          { value: '9.8k', label: 'npm downloads in one week' },
+          { value: '+67%', label: 'on the week before' },
+          { value: '61k+', label: 'downloads since August' },
+          { value: '6', label: 'years at Graphy' },
+        ],
+      },
+    ],
+  },
   {
     id: 'swatchmaker',
     title: 'SwatchMaker',
