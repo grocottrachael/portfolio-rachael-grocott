@@ -50,14 +50,14 @@ function Home() {
         <div className="group relative mb-4 -ml-2 w-24 h-24 md:w-28 md:h-28">
           <Flower
             color={C.pink}
-            className="absolute inset-0 w-full h-full transition-transform duration-700 ease-[cubic-bezier(.34,1.56,.64,1)] motion-safe:group-hover:rotate-[72deg]"
+            className="absolute inset-0 w-full h-full transition-transform origin-[50%_51.3%] duration-500 ease-in-out motion-safe:group-hover:rotate-[20deg]"
           />
           <img
           src={profileImage}
           alt="Rachael"
           width={64}
           height={64}
-          className="absolute left-[19%] top-[24%] w-[62%] h-[62%] rounded-full object-cover border-2 border-[var(--ink)] transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] motion-safe:group-hover:scale-[1.12]"
+          className="absolute left-[19%] top-[24%] w-[62%] h-[62%] rounded-full object-cover border-2 border-[var(--ink)] transition-transform duration-500 ease-in-out motion-safe:group-hover:scale-[1.04]"
         />
         </div>
         <h1 className="whitespace-nowrap font-display leading-none text-[9vw] md:text-[clamp(26px,2.5vw,46px)]">
