@@ -49,7 +49,7 @@ function Home() {
           alt="Rachael"
           width={64}
           height={64}
-          className="mb-5 w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-[3px] border-[var(--ink)]"
+          className="mb-5 w-14 h-14 md:w-16 md:h-16 rounded-full object-cover border-2 border-[var(--ink)]"
         />
         <h1 className="whitespace-nowrap font-display leading-none text-[9vw] md:text-[clamp(26px,2.5vw,46px)]">
           Hiya, I&rsquo;m Rachael!
