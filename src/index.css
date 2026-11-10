@@ -31,13 +31,8 @@
   background: var(--c-yellow);
 }
 
-/*
- * Palettes. A is the default; ?palette=b or ?palette=c previews the others.
- * Slot names come from the original palette; the colours can be anything.
- */
-:root,
-[data-palette="a"] {
-  /* A: the original colours, softened, with aubergine instead of black */
+/* Palette: the original rachaelgrocott.com colours, softened, with aubergine instead of black */
+:root {
   --c-pink: #E8C1CA;
   --c-blue: #8FA8EC;
   --c-yellow: #F0D27F;
@@ -47,28 +42,4 @@
   --ink: #2B2340;
   --ink-soft: rgb(43 35 64 / 0.78);
   --paper: #FFFDF9;
-}
-[data-palette="b"] {
-  /* B: warm and punchy */
-  --c-pink: #FF8F70;
-  --c-blue: #BBA8F6;
-  --c-yellow: #FFD76E;
-  --c-green: #AECC9F;
-  --c-grey: #F3E7D9;
-  --c-accent: #FFBC93;
-  --ink: #2A1D18;
-  --ink-soft: rgb(42 29 24 / 0.78);
-  --paper: #FFF9F2;
-}
-[data-palette="c"] {
-  /* C: fresh and modern */
-  --c-pink: #FFAFD6;
-  --c-blue: #8C9DFF;
-  --c-yellow: #DDF26E;
-  --c-green: #A2E5CA;
-  --c-grey: #EEF0F6;
-  --c-accent: #FFC9A6;
-  --ink: #1B1F3B;
-  --ink-soft: rgb(27 31 59 / 0.78);
-  --paper: #FFFFFF;
 }
