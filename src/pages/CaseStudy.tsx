@@ -28,7 +28,7 @@ function Heading({ children }: { children: React.ReactNode }) {
 const prose =
   'mt-5 space-y-4 text-[17px] md:text-[18px] leading-[1.65] text-[var(--ink-soft)] [&_em]:text-[var(--ink)]';
 
-function BlockView({ block }: { block: Block }) {
+function BlockView({ block, bg }: { block: Block; bg: string }) {
   switch (block.type) {
     case 'text':
       return (
@@ -43,8 +43,13 @@ function BlockView({ block }: { block: Block }) {
         <figure className={wide}>
           {/* Columns sized by each image's shape, so a pair always comes out the same height */}
           <div
-            className="grid gap-3 md:[grid-template-columns:var(--cols)]"
-            style={{ '--cols': block.images.map((i) => `${i.w / i.h}fr`).join(' ') } as React.CSSProperties}
+            className={`grid md:[grid-template-columns:var(--cols)] ${block.frame ? 'gap-4 md:gap-6 p-5 md:p-12' : 'gap-3'}`}
+            style={
+              {
+                '--cols': block.images.map((i) => `${i.w / i.h}fr`).join(' '),
+                background: block.frame ? bg : undefined,
+              } as React.CSSProperties
+            }
           >
             {block.images.map((img) => (
               <img
@@ -54,7 +59,7 @@ function BlockView({ block }: { block: Block }) {
                 width={img.w}
                 height={img.h}
                 loading="lazy"
-                className="w-full h-auto"
+                className={`w-full h-auto ${block.frame ? 'border-2 border-[var(--ink)] shadow-[4px_4px_0_var(--ink)]' : ''}`}
               />
             ))}
           </div>
@@ -193,7 +198,7 @@ export function CaseStudy({ study }: { study: Study }) {
         </header>
 
         {study.blocks.map((b, i) => (
-          <BlockView key={i} block={b} />
+          <BlockView key={i} block={b} bg={study.bg} />
         ))}
 
         <footer className={`${text} pt-8 border-t border-[var(--ink)]/10 flex flex-wrap items-center justify-between gap-4`}>

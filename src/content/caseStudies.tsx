@@ -11,7 +11,7 @@ type Img = { src: string; alt: string; w: number; h: number };
 
 export type Block =
   | { type: 'text'; eyebrow: string; heading: string; body: React.ReactNode }
-  | { type: 'figure'; images: Img[]; caption?: string }
+  | { type: 'figure'; images: Img[]; caption?: string; /** screenshots: set on a mat in the project colour, with a stroke */ frame?: boolean }
   | { type: 'quote'; text: string }
   | { type: 'stats'; items: { value: string; label: string }[] }
   | { type: 'shows'; items: { title: string; body: string }[] }
@@ -70,6 +70,7 @@ export const caseStudies: CaseStudy[] = [
           sm('phone-2', 'Valspar Green Willow above Dulux Chalky Downs 5'),
           sm('phone-3', 'Valspar Kidney Bean above Farrow & Ball Middle Ground'),
         ],
+        frame: true,
         caption: 'Hit space, or tap New colours, for a fresh pairing. Every one is a real paint you can buy.',
       },
       {
@@ -110,6 +111,7 @@ export const caseStudies: CaseStudy[] = [
         images: [
           sm('chips', 'The first version, called chips, comparing Skimming Stone and Hague Blue with their codes and hex values'),
         ],
+        frame: true,
         caption: 'The first version, called chips. One prompt, already useful, and every colour in it invented.',
       },
       {
@@ -165,6 +167,7 @@ export const caseStudies: CaseStudy[] = [
         images: [
           { src: '/swatchmaker.webp', alt: 'A bathroom photo next to the paints it matched: La Torre, Follingsby and Pale Taupe', w: 1200, h: 657 },
         ],
+        frame: true,
         caption: 'Upload any picture and it finds the closest real paints.',
       },
       {
