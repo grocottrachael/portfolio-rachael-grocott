@@ -1,11 +1,13 @@
-import React from 'react';
-import { Github, Linkedin, Mail, ArrowUpRight } from 'lucide-react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, LayoutGroup } from 'motion/react';
+import { Github, Linkedin, Mail, ArrowUpRight, Plus, X } from 'lucide-react';
 
-const card = 'group relative rounded-xl overflow-hidden transition-all';
-const linkCard = `${card} hover:shadow-lg cursor-pointer`;
+const card = 'group relative rounded-xl overflow-hidden';
+const linkCard = `${card} transition-shadow hover:shadow-lg cursor-pointer`;
 const contact =
-  'col-span-2 bg-neutral-100 rounded-xl p-2.5 flex flex-col items-center justify-center gap-1 hover:bg-neutral-200 transition-all';
+  'col-span-2 bg-neutral-100 rounded-xl p-2.5 flex flex-col items-center justify-center gap-1 hover:bg-neutral-200 transition-colors';
+
+const spring = { type: 'spring', stiffness: 380, damping: 36 } as const;
 
 function Arrow() {
   return (
@@ -19,182 +21,430 @@ function External(props: React.AnchorHTMLAttributes<HTMLAnchorElement>) {
   return <a target="_blank" rel="noopener noreferrer" {...props} />;
 }
 
-export function BentoGrid() {
+function Tag({ children, dark }: { children: React.ReactNode; dark?: boolean }) {
   return (
-    <div className="w-full md:w-[50vw] mx-auto">
-      <div className="grid grid-cols-6 gap-3">
-        {/* SWATCHMAKER: featured */}
-        <External
-          href="https://swatchmaker.uk/"
-          className={`${linkCard} col-span-6 md:col-span-4 bg-neutral-100`}
+    <div
+      className={`px-2 py-0.5 rounded-full text-[11px] ${
+        dark ? 'bg-white/10 text-white/70' : 'bg-white/80 text-neutral-600'
+      }`}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* A row of images you can scroll sideways */
+function Gallery({ images }: { images: { src: string; alt: string }[] }) {
+  return (
+    <div className="-mx-4 px-4 flex gap-3 overflow-x-auto snap-x pb-2 [scrollbar-width:thin]">
+      {images.map((img) => (
+        <img
+          key={img.src}
+          src={img.src}
+          alt={img.alt}
+          loading="lazy"
+          className="h-64 md:h-72 w-auto flex-none snap-start rounded-md shadow-sm"
+        />
+      ))}
+    </div>
+  );
+}
+
+function VisitLink({ href, label, dark }: { href: string; label: string; dark?: boolean }) {
+  return (
+    <External
+      href={href}
+      className={`inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 text-[13px] font-medium transition-colors ${
+        dark ? 'bg-white text-neutral-900 hover:bg-neutral-200' : 'bg-neutral-900 text-white hover:bg-neutral-700'
+      }`}
+    >
+      {label} <ArrowUpRight className="w-3.5 h-3.5" aria-hidden />
+    </External>
+  );
+}
+
+type TileProps = {
+  id: string;
+  openId: string | null;
+  setOpenId: (id: string | null) => void;
+  /** Grid placement and colours when closed, e.g. "md:col-span-2 bg-…" */
+  className: string;
+  dark?: boolean;
+  title: string;
+  tag?: string;
+  summary: React.ReactNode;
+  /** Shown under the summary when closed (images etc.) */
+  preview?: React.ReactNode;
+  /** Shown when open */
+  details: React.ReactNode;
+};
+
+/*
+ * A card that opens up in place: it takes the full width of the grid and
+ * the other cards move out of the way. Each open card has its own URL hash
+ * (#swatchmaker etc.) so it can be shared.
+ */
+function Tile({ id, openId, setOpenId, className, dark, title, tag, summary, preview, details }: TileProps) {
+  const open = openId === id;
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    // Wait for the layout animation to settle before bringing the card into view.
+    const t = setTimeout(() => ref.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 350);
+    return () => clearTimeout(t);
+  }, [open]);
+
+  const toggle = () => setOpenId(open ? null : id);
+
+  return (
+    <motion.div
+      ref={ref}
+      id={id}
+      layout
+      transition={spring}
+      onClick={(e) => {
+        if ((e.target as HTMLElement).closest('a')) return;
+        toggle();
+      }}
+      className={`${linkCard} col-span-6 ${open ? 'md:col-span-6 md:row-span-1' : className} ${
+        dark ? 'text-white' : 'text-neutral-900'
+      } ${className.match(/bg-\S+/g)?.join(' ') ?? ''} ${className.match(/from-\S+|to-\S+/g)?.join(' ') ?? ''} p-4 flex flex-col`}
+      style={{ borderRadius: 12 }}
+    >
+      <motion.div layout="position" transition={spring}>
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={`${id}-details`}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggle();
+          }}
+          className="w-full text-left rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#FF4EA6]"
         >
-          <div className="h-full p-4 flex flex-col justify-between min-h-[180px] md:min-h-[200px]">
-            <div>
-              <div className="flex items-center gap-2 mb-1.5">
-                <h3 className="tracking-tight font-medium text-[15px]">SWATCHMAKER</h3>
-                <div className="px-2 py-0.5 rounded-full bg-white/80 text-[11px] text-neutral-600">
-                  Featured
-                </div>
-              </div>
-              <p className="text-[14px] text-neutral-600">
-                A passion project for people to see paint colours from all brands side by side.
-              </p>
-            </div>
-            <div className="grid grid-cols-3 gap-2 mt-3">
-              {[
-                ['006', 'Sulking Room Pink and Duck Green'],
-                ['008', "Charlotte's Locks and Hague Blue"],
-                ['019', 'Joanna, Ochre Glow and Preference Red'],
-              ].map(([n, colours], i) => (
-                <img
-                  key={n}
-                  src={`/swatchmaker-${n}.webp`}
-                  alt={`SWATCHMAKER palette: ${colours}`}
-                  width={540}
-                  height={720}
-                  loading="lazy"
-                  className="w-full rounded-md shadow-sm transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-1"
-                  style={{ transitionDelay: `${i * 60}ms` }}
+          <span className="flex items-center gap-2 mb-1 pr-8">
+            <span className="text-[15px] tracking-tight font-medium">{title}</span>
+            {tag && <Tag dark={dark}>{tag}</Tag>}
+          </span>
+          <span className={`block text-[14px] ${dark ? 'text-white/70' : 'text-neutral-600'}`}>{summary}</span>
+        </button>
+      </motion.div>
+
+      {!open && preview && (
+        <motion.div layout="position" transition={spring} className="mt-3">
+          {preview}
+        </motion.div>
+      )}
+
+      {open && (
+        <motion.div
+          id={`${id}-details`}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.25, delay: 0.12 }}
+          className={`mt-4 space-y-4 text-[15px] leading-relaxed ${dark ? 'text-white/80' : 'text-neutral-700'}`}
+        >
+          {details}
+        </motion.div>
+      )}
+
+      <motion.span
+        layout="position"
+        transition={spring}
+        aria-hidden
+        className={`absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center transition-opacity ${
+          open ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+        } ${dark ? 'bg-white/15 text-white' : 'bg-white/80 text-neutral-700'}`}
+      >
+        {open ? <X className="w-3.5 h-3.5" /> : <Plus className="w-3.5 h-3.5" />}
+      </motion.span>
+    </motion.div>
+  );
+}
+
+const swatchPreview = [
+  ['006', 'Sulking Room Pink and Duck Green'],
+  ['008', "Charlotte's Locks and Hague Blue"],
+  ['019', 'Joanna, Ochre Glow and Preference Red'],
+];
+const swatchMore = [
+  ['001', 'Thames Mud, The Tobacconist and Purple Brown'],
+  ['005', 'Bone, India Yellow and Stone Blue'],
+  ['010', 'Salvia and Sang de Boeuf'],
+  ['013', 'Pale Wedgwood, Mchanga and Bancha'],
+  ['016', 'Setting Plaster and Brinjal'],
+  ['018', 'Slaked Lime Mid and Green Smoke'],
+];
+const knotMore = [
+  ['01-tagline', 'Never get stuck reading a crochet pattern again'],
+  ['12-why', 'Why I built it: it started with (2sc, inc) x5'],
+  ['02-corner', 'What does this pattern line actually mean? Explained in plain words'],
+  ['05-uk-us', 'Your pattern says dc: UK and US terms explained'],
+  ['07-sizing', 'Stop counting brackets to find your size'],
+  ['08-yarn-sub', 'Substituting yarn: both of these are DK'],
+];
+
+function readHash() {
+  const h = window.location.hash.slice(1);
+  return h || null;
+}
+
+export function BentoGrid() {
+  const [openId, setOpenIdState] = useState<string | null>(() =>
+    typeof window === 'undefined' ? null : readHash(),
+  );
+
+  const setOpenId = (id: string | null) => {
+    setOpenIdState(id);
+    const url = id ? `#${id}` : window.location.pathname + window.location.search;
+    window.history.replaceState(null, '', url);
+  };
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpenId(null);
+    const onHash = () => setOpenIdState(readHash());
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('hashchange', onHash);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('hashchange', onHash);
+    };
+  }, []);
+
+  const tile = { openId, setOpenId };
+
+  return (
+    <div className="w-full">
+      <LayoutGroup>
+        <div className="grid grid-cols-6 gap-3">
+          <Tile
+            {...tile}
+            id="swatchmaker"
+            className="md:col-span-4 md:row-span-2 bg-neutral-100"
+            title="SWATCHMAKER"
+            tag="Featured"
+            summary="A passion project for people to see paint colours from all brands side by side."
+            preview={
+              <img
+                src="/swatchmaker.webp"
+                alt="SWATCHMAKER: a bathroom photo next to the paint colours La Torre, Follingsby and Pale Taupe"
+                width={1200}
+                height={657}
+                className="w-full rounded-lg shadow-sm transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-0.5"
+              />
+            }
+            details={
+              <>
+                <p className="max-w-[60ch]">
+                  Picking paint means juggling tester pots from a dozen brands. SWATCHMAKER puts colours from Farrow
+                  &amp; Ball, Little Greene, COAT, Lick, Paint &amp; Paper Library, Dulux and more side by side, so
+                  you can build a palette before you buy a thing. I designed and built it, and the palette posts for
+                  its socials are made by code too.
+                </p>
+                <Gallery
+                  images={[...swatchPreview, ...swatchMore].map(([n, colours]) => ({
+                    src: swatchMore.some(([m]) => m === n) ? `/more/swatchmaker-${n}.webp` : `/swatchmaker-${n}.webp`,
+                    alt: `SWATCHMAKER palette: ${colours}`,
+                  }))}
                 />
-              ))}
-            </div>
-            <Arrow />
-          </div>
-        </External>
-
-        {/* Knot a Problem */}
-        <External
-          href="https://knotaproblem.app/"
-          className={`${linkCard} col-span-6 md:col-span-2 md:row-span-2 bg-[#F3C5CD] p-4 flex flex-col`}
-        >
-          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Knot a Problem</h4>
-          <p className="text-[14px] text-neutral-700">
-            Never get stuck reading a crochet pattern again.
-          </p>
-          <ImageWithFallback
-            src="/knot-a-problem.webp"
-            alt="Knot a Problem social post: Put it down. Pick it up. Still on round 3. A granny square diagram that keeps your place."
-            width={640}
-            height={800}
-            loading="lazy"
-            className="w-full mt-3 rounded-md"
+                <VisitLink href="https://swatchmaker.uk/" label="Visit swatchmaker.uk" />
+              </>
+            }
           />
-          <Arrow />
-        </External>
 
-        {/* Graphy SDK: current role */}
-        <External
-          href="https://graphy.dev/"
-          className={`${linkCard} col-span-6 md:col-span-2 bg-gradient-to-br from-neutral-900 to-neutral-800 text-white p-4 flex flex-col justify-between min-h-[120px]`}
-        >
-          <div>
-            <h4 className="text-[15px] tracking-tight mb-1 font-medium">Graphy SDK</h4>
-            <p className="text-[14px] text-neutral-300">
-              Beautiful, editable charts for developers and their AI agents.
+          <Tile
+            {...tile}
+            id="graphy"
+            dark
+            className="md:col-span-2 bg-gradient-to-br from-neutral-900 to-neutral-800"
+            title="Graphy SDK"
+            summary={
+              <>
+                Beautiful, editable charts for developers and their AI agents. I also own the design of graphy.dev.
+                <span className="flex items-center gap-1.5 mt-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                  <span className="text-[12px] text-neutral-300">Working on this now</span>
+                </span>
+              </>
+            }
+            details={
+              <>
+                <p className="max-w-[60ch]">
+                  Graphy turns data into clear, beautiful stories. I&rsquo;m a Senior Product Designer on the SDK,
+                  which lets developers and their AI agents put editable charts into their own products. I design the
+                  developer experience, and I own the design of graphy.dev.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <VisitLink dark href="https://graphy.dev/" label="Visit graphy.dev" />
+                  <External
+                    href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
+                    className="inline-flex items-center gap-1 rounded-full px-3.5 py-1.5 text-[13px] font-medium bg-white/10 text-white hover:bg-white/20 transition-colors"
+                  >
+                    Latest Graphy work on LinkedIn <ArrowUpRight className="w-3.5 h-3.5" aria-hidden />
+                  </External>
+                </div>
+              </>
+            }
+          />
+
+          <Tile
+            {...tile}
+            id="dotties"
+            dark
+            className="md:col-span-2 bg-[#0A0A0A]"
+            title="Dotties"
+            tag="Made for work"
+            summary="I built this to help me at work. Turn any image into halftone dots, dithering or ASCII art."
+            preview={
+              <img
+                src="/dotties.webp"
+                alt="A halftone image made with Dotties: concentric rings of white dots on black"
+                width={600}
+                height={600}
+                loading="lazy"
+                className="w-full aspect-[16/9] object-cover rounded-md transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03]"
+              />
+            }
+            details={
+              <>
+                <p className="max-w-[60ch]">
+                  Upload an image and turn it into halftone dots, ordered dithering or ASCII. Choose circle or square
+                  dots, tune the size, spacing and contrast, pick your colours, then export a PNG or SVG.
+                </p>
+                <VisitLink dark href="https://dotties.app/" label="Visit dotties.app" />
+              </>
+            }
+          />
+
+          <Tile
+            {...tile}
+            id="knot-a-problem"
+            className="md:col-span-2 md:row-span-2 bg-[#F3C5CD]"
+            title="Knot a Problem"
+            summary="Never get stuck reading a crochet pattern again."
+            preview={
+              <img
+                src="/knot-a-problem.webp"
+                alt="Knot a Problem social post: Put it down. Pick it up. Still on round 3. A granny square diagram that keeps your place."
+                width={640}
+                height={800}
+                loading="lazy"
+                className="w-full rounded-md"
+              />
+            }
+            details={
+              <>
+                <p className="max-w-[60ch]">
+                  It started with my granny, who has crocheted for sixty years and couldn&rsquo;t remember what a
+                  pattern meant. Open the PDF the designer sent you, tap the row that has lost you, and get it back in
+                  plain words or drawn as a diagram. It keeps your place, knows UK from US terms, and does the sums
+                  when you change size or yarn. Accessibility is the spec, not a nice-to-have.
+                </p>
+                <Gallery
+                  images={[
+                    { src: '/knot-a-problem.webp', alt: 'Put it down. Pick it up. Still on round 3.' },
+                    ...knotMore.map(([n, alt]) => ({ src: `/more/knot-${n}.webp`, alt })),
+                  ]}
+                />
+                <VisitLink href="https://knotaproblem.app/" label="Visit knotaproblem.app" />
+              </>
+            }
+          />
+
+          <Tile
+            {...tile}
+            id="crumbs"
+            className="md:col-span-4 bg-[#D4EAE2] md:min-h-[160px]"
+            title="Crumbs"
+            tag="Just for us"
+            summary="A no-faff calorie diary for our household. Snap your plate and it works it out."
+            details={
+              <p className="max-w-[60ch]">
+                Snap your plate, a receipt or a nutrition label and Claude works it out, or scan a barcode. Everyone
+                gets their own diary, while the fridge, the shopping and saved meals are shared. It asks a quick
+                follow-up only when the answer changes the total, like whether there was oil in the pan. It&rsquo;s
+                self-hosted for our house, so there&rsquo;s nothing to visit.
+              </p>
+            }
+          />
+
+          <Tile
+            {...tile}
+            id="triangirls"
+            className="md:col-span-2 bg-neutral-50"
+            title="Triangirls"
+            tag="Founder"
+            summary="Founded and ran a 2000+ member strong community for women in tech, for years."
+            details={
+              <>
+                <p className="max-w-[60ch]">
+                  I founded Triangirls and ran it for years, growing it into a community of more than 2,000 women in
+                  tech.
+                </p>
+                <VisitLink href="https://x.com/triangirlsocial" label="Triangirls on X" />
+              </>
+            }
+          />
+
+          {/* Talks */}
+          <motion.div layout transition={spring} className={`${card} col-span-6 md:col-span-2 bg-neutral-50 p-4`}>
+            <h4 className="text-[15px] tracking-tight mb-1 font-medium">Talks & workshops</h4>
+            <p className="text-[14px] text-neutral-600">
+              I{'’'}ve spoken at loads of events, and I run sessions like{' '}
+              <em>How to give and receive feedback</em>.
             </p>
-          </div>
-          <div className="flex items-center gap-1.5 mt-3">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-[12px] text-neutral-300">Working on this now</span>
-          </div>
-          <Arrow />
-        </External>
+          </motion.div>
 
-        {/* Dotties */}
-        <External
-          href="https://dotties.app/"
-          className={`${linkCard} col-span-6 md:col-span-2 bg-[#0A0A0A] text-white p-4`}
-        >
-          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Dotties</h4>
-          <p className="text-[14px] text-neutral-400">
-            I built this to help me at work. Turn any image into halftone dots, dithering or ASCII art.
-          </p>
-          <Arrow />
-        </External>
+          {/* Latest work lives on LinkedIn */}
+          <motion.div layout transition={spring} className="col-span-6 md:col-span-4">
+            <External
+              href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
+              className={`${linkCard} block h-full bg-[#FFE3F1] p-4`}
+            >
+              <h4 className="text-[15px] tracking-tight mb-1 font-medium">My latest work</h4>
+              <p className="text-[14px] text-neutral-700">
+                I post what I{'’'}m working on as I go. LinkedIn is the place to see it.
+              </p>
+              <Arrow />
+            </External>
+          </motion.div>
 
-        {/* Crumbs: private and self-hosted, so no link */}
-        <div className={`${card} col-span-6 md:col-span-2 bg-[#D4EAE2] p-4`}>
-          <div className="flex items-center gap-2 mb-1">
-            <h4 className="text-[15px] tracking-tight font-medium">Crumbs</h4>
-            <div className="px-2 py-0.5 rounded-full bg-white/70 text-[11px] text-neutral-600">
-              Just for us
-            </div>
-          </div>
-          <p className="text-[14px] text-neutral-700">
-            A no-faff calorie diary for our household. Snap your plate and it works it out.
-          </p>
+          {/* Press */}
+          <motion.div layout transition={spring} className={`${card} col-span-6 md:col-span-2 bg-neutral-50 p-4`}>
+            <h4 className="text-[15px] tracking-tight mb-1 font-medium">Press</h4>
+            <p className="text-[14px] text-neutral-600">
+              Interviewed by VICE. Featured in Samsung{'’'}s Not a School.
+            </p>
+          </motion.div>
+
+          {/* Contact: kept together in one row */}
+          <motion.div layout transition={spring} className="col-span-6 grid grid-cols-6 gap-3">
+          <a href="mailto:rachaelgrocott@gmail.com" className={contact}>
+            <Mail className="w-4 h-4 text-neutral-700" />
+            <span className="text-[15px] font-medium text-neutral-600">Email</span>
+          </a>
+          <a
+            href="https://github.com/grocottrachael"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={contact}
+          >
+            <Github className="w-4 h-4 text-neutral-700" />
+            <span className="text-[15px] font-medium text-neutral-600">GitHub</span>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/rachaelgrocott/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={contact}
+          >
+            <Linkedin className="w-4 h-4 text-neutral-700" />
+            <span className="text-[15px] font-medium text-neutral-600">LinkedIn</span>
+          </a>
+          </motion.div>
         </div>
-
-        {/* Triangirls */}
-        <External
-          href="https://x.com/triangirlsocial"
-          className={`${linkCard} col-span-6 md:col-span-2 bg-neutral-50 p-4`}
-        >
-          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Triangirls</h4>
-          <p className="text-[14px] text-neutral-600">
-            Founded and ran a 2000+ member strong community for women in tech, for years.
-          </p>
-          <Arrow />
-        </External>
-
-        {/* graphy.dev: I own the website design */}
-        <External
-          href="https://graphy.dev/"
-          className={`${linkCard} col-span-6 md:col-span-2 bg-neutral-100 p-4`}
-        >
-          <div className="flex items-center gap-2 mb-1">
-            <h4 className="text-[15px] tracking-tight font-medium">graphy.dev</h4>
-            <div className="px-2 py-0.5 rounded-full bg-white/80 text-[11px] text-neutral-600">Website</div>
-          </div>
-          <p className="text-[14px] text-neutral-600">
-            I own the design of the Graphy developer website, as well as the product.
-          </p>
-          <Arrow />
-        </External>
-
-        {/* Latest work lives on LinkedIn */}
-        <External
-          href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
-          className={`${linkCard} col-span-6 md:col-span-2 bg-[#FFE3F1] p-4`}
-        >
-          <h4 className="text-[15px] tracking-tight mb-1 font-medium">My latest work</h4>
-          <p className="text-[14px] text-neutral-700">
-            I post what I{'\u2019'}m working on as I go. LinkedIn is the place to see it.
-          </p>
-          <Arrow />
-        </External>
-
-        {/* Talks */}
-        <div className={`${card} col-span-6 md:col-span-2 bg-neutral-50 p-4`}>
-          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Talks & workshops</h4>
-          <p className="text-[14px] text-neutral-600">
-            I{'\u2019'}ve spoken at loads of events, and I run sessions like{' '}
-            <em>How to give and receive feedback</em>.
-          </p>
-        </div>
-
-        {/* Press */}
-        <div className={`${card} col-span-6 md:col-span-2 bg-neutral-50 p-4`}>
-          <h4 className="text-[15px] tracking-tight mb-1 font-medium">Press</h4>
-          <p className="text-[14px] text-neutral-600">
-            Interviewed by VICE. Featured in Samsung{'\u2019'}s Not a School.
-          </p>
-        </div>
-
-        {/* Contact */}
-        <a href="mailto:rachaelgrocott@gmail.com" className={contact}>
-          <Mail className="w-4 h-4 text-neutral-700" />
-          <span className="text-[15px] font-medium text-neutral-600">Email</span>
-        </a>
-        <External href="https://github.com/grocottrachael" className={contact}>
-          <Github className="w-4 h-4 text-neutral-700" />
-          <span className="text-[15px] font-medium text-neutral-600">GitHub</span>
-        </External>
-        <External href="https://www.linkedin.com/in/rachaelgrocott/" className={contact}>
-          <Linkedin className="w-4 h-4 text-neutral-700" />
-          <span className="text-[15px] font-medium text-neutral-600">LinkedIn</span>
-        </External>
-      </div>
+      </LayoutGroup>
     </div>
   );
 }
