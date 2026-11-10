@@ -35,7 +35,7 @@ function Caption({ children }: { children: React.ReactNode }) {
   return <p className={`${measure} mt-3 text-[15px] leading-relaxed text-[var(--ink-soft)]`}>{children}</p>;
 }
 
-function Blocks({ block, bg, id }: { block: Block; bg: string; id?: string }) {
+function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: string; tight?: boolean }) {
   switch (block.type) {
     case 'chapter':
       return (
@@ -56,7 +56,8 @@ function Blocks({ block, bg, id }: { block: Block; bg: string; id?: string }) {
       );
     case 'figure':
       return (
-        <figure>
+        /* A picture straight after another picture sits close, so they read as one set */
+        <figure className={tight ? '!mt-4' : ''}>
           <div
             className="grid gap-2.5 md:gap-3 md:[grid-template-columns:var(--cols)]"
             style={{ '--cols': block.images.map((i) => `${i.w / i.h}fr`).join(' ') } as React.CSSProperties}
@@ -209,7 +210,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
           ) : (
             <>
               {study.blocks.map((b, i) => (
-                <Blocks key={i} block={b} bg={study.bg} id={ids[i]} />
+                <Blocks key={i} block={b} bg={study.bg} id={ids[i]} tight={b.type === 'figure' && study.blocks[i - 1]?.type === 'figure'} />
               ))}
             </>
           )}

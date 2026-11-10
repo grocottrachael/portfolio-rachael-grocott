@@ -538,7 +538,6 @@ export const caseStudies: CaseStudy[] = [
       {
         type: 'figure',
         images: [k('diagrams', 'Three stitch diagrams drawn from pattern text: a star, a granny square and flat rows')],
-        caption: 'Some things are easier to see than to read. Every diagram is drawn from the pattern’s words alone.',
       },
       {
         type: 'text',
