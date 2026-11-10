@@ -27,7 +27,7 @@ export function Experience() {
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
       <header className="p-2.5 md:p-3">
-        <div className="relative overflow-hidden px-5 py-8 md:py-14" style={{ background: C.blue }}>
+        <div className="relative overflow-hidden px-5 py-8 md:py-14" style={{ background: C.green }}>
           <div className="relative mx-auto max-w-[720px] flex flex-col gap-7">
             <Link to="/" className="self-start inline-flex items-center gap-1.5 text-[15px] font-bold hover:underline underline-offset-4">
               <ArrowLeft className="w-4 h-4" aria-hidden /> Rachael Grocott
@@ -53,7 +53,7 @@ export function Experience() {
       <main className="px-5 py-12 md:py-20">
         <div className="mx-auto max-w-[720px] space-y-16 md:space-y-20">
           <section>
-            {label(C.blue, 'Experience')}
+            {label(C.green, 'Experience')}
             <ol className="mt-5 border-t-[2px] border-[var(--ink)]">
               {roles.map((r) => (
                 <li key={r.company} className="py-5 border-b border-[var(--ink)]/15">
