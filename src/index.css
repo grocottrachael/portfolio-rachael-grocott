@@ -140,3 +140,23 @@
   30% { translate: 0 -3px; scale: 1.06; }
   60% { translate: 0 1px; scale: 0.98; }
 }
+
+/* Stickers that pop out of the flower: tucked away behind her until you hover or tap */
+.pop {
+  filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 3px 0 rgba(43, 35, 64, 0.18));
+  opacity: 0;
+  scale: 0.2;
+  translate: 40px 40px;
+  transition: opacity 200ms ease, scale 450ms cubic-bezier(.34, 1.56, .64, 1), translate 450ms cubic-bezier(.34, 1.56, .64, 1);
+  transition-delay: 0ms;
+}
+.group\/stickers:hover .pop,
+.group\/stickers.is-open .pop {
+  opacity: 1;
+  scale: 1;
+  translate: 0 0;
+  transition-delay: var(--d, 0ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pop { transition: opacity 200ms ease; translate: 0 0; scale: 1; }
+}

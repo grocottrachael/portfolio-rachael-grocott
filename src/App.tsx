@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 
 /* Solid brand marks (Simple Icons), rather than outline icons */
@@ -55,6 +56,7 @@ function Scallop({ color, className }: { color: string; className?: string }) {
 }
 
 function Home() {
+  const [stickers, setStickers] = useState(false);
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] md:flex">
       {/* Who I am: pinned on the left while the blocks scroll on the right */}
@@ -113,12 +115,20 @@ function Home() {
             <GithubMark /> GitHub
           </a>
         </div>
-        {/* A little pile of kitsch stickers in the corner, led by the flower with lashes. Each one wiggles when you poke it */}
-        <div className="absolute -right-8 -bottom-10 w-52 h-48 md:w-64 md:h-56" aria-hidden>
-          <Sparkle color={C.yellow} className="sticker absolute left-[6%] top-[4%] w-12 h-12 md:w-14 md:h-14 rotate-[8deg]" />
-          <Heart color={C.pink} className="sticker absolute left-[0%] top-[42%] w-14 h-14 md:w-16 md:h-16 -rotate-[16deg]" />
-          <Sparkle color={C.green} className="sticker absolute left-[34%] top-[18%] w-7 h-7 md:w-8 md:h-8 -rotate-[10deg]" />
-          <Flower color={C.blue} eyes className="sticker absolute right-0 bottom-0 w-36 h-36 md:w-44 md:h-44 -rotate-[14deg]" />
+        {/* The flower with lashes. Hover her (or tap on a phone) and her stickers pop out */}
+        <div
+          className={`group/stickers absolute -right-8 -bottom-10 w-52 h-48 md:w-64 md:h-56 pointer-events-none ${stickers ? 'is-open' : ''}`}
+          aria-hidden
+        >
+          <Sparkle color={C.yellow} className="pop [--d:60ms] absolute left-[6%] top-[4%] w-12 h-12 md:w-14 md:h-14 rotate-[8deg]" />
+          <Heart color={C.pink} className="pop [--d:0ms] absolute left-[0%] top-[42%] w-14 h-14 md:w-16 md:h-16 -rotate-[16deg]" />
+          <Sparkle color={C.green} className="pop [--d:120ms] absolute left-[34%] top-[18%] w-7 h-7 md:w-8 md:h-8 -rotate-[10deg]" />
+          <span
+            className="pointer-events-auto absolute right-0 bottom-0 w-36 h-36 md:w-44 md:h-44"
+            onClick={() => setStickers((v) => !v)}
+          >
+            <Flower color={C.blue} eyes className="sticker w-full h-full -rotate-[14deg]" />
+          </span>
         </div>
         </div>
       </aside>

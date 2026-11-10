@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight, Plus, X, ExternalLink } from 'lucide-react';
-import { C } from './Shapes';
+import { C, Heart, Sparkle } from './Shapes';
 import RoleCycle from './RoleCycle';
 import { Link, navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
@@ -50,6 +50,8 @@ type Project = {
   summary: string;
   /* fill: the picture fills the rest of the block (for the big block) */
   image?: { src: string; alt: string; className?: string; fill?: boolean };
+  /* A kitsch sticker stuck on the corner of the picture */
+  sticker?: React.ReactNode;
   /** shown above the title */
   logo?: React.ReactNode;
   /** on a wide block, show the logo big on the right instead of above the title */
@@ -68,6 +70,7 @@ type Project = {
 
 const projects: Project[] = [
   {
+    sticker: <Sparkle color={C.yellow} className="sticker absolute -top-5 -right-4 w-12 h-12 md:w-14 md:h-14 rotate-[10deg]" />,
     id: 'swatchmaker',
     title: 'SwatchMaker',
     madeFor: 'For anyone choosing paint',
@@ -90,6 +93,7 @@ const projects: Project[] = [
     link: { href: 'https://swatchmaker.uk/', label: 'Visit swatchmaker.uk' },
   },
   {
+    sticker: <Sparkle color={C.green} className="sticker absolute -bottom-4 -left-3 w-9 h-9 md:w-10 md:h-10 -rotate-[8deg]" />,
     id: 'graphy',
     title: 'Graphy SDK',
     madeFor: 'Currently working here',
@@ -128,6 +132,7 @@ const projects: Project[] = [
     linksOut: true,
   },
   {
+    sticker: <Heart color={C.pink} className="sticker absolute -top-5 -right-3 w-11 h-11 md:w-12 md:h-12 rotate-[12deg]" />,
     id: 'knot-a-problem',
     title: 'Knot a Problem',
     madeFor: 'For crocheters',
@@ -263,7 +268,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
       {p.logo && p.logoBelow && <div className="mt-auto pt-6">{p.logo}</div>}
 
       {p.image && (
-        <div className={`mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>
+        <div className={`relative mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>
           <img
             src={p.image.src}
             alt={p.image.alt}
@@ -272,6 +277,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
               p.image.className ?? ''
             }`}
           />
+          {p.sticker}
         </div>
       )}
 
