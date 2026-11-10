@@ -61,6 +61,8 @@ const sm = (name: string, alt: string): Img => ({ src: `/work/swatchmaker/${name
 
 const gSizes: Record<string, [number, number]> = {"annotate": [1560, 980], "theme-botanical": [1120, 760], "theme-chalkboard": [1120, 760], "theme-blueprint": [1120, 760], "theme-watercolor": [1120, 760], "theme-neo-brutalist": [1120, 760], "theme-comic": [1120, 760]};
 /* A Graphy image: every chart here is drawn with the real Graphy SDK, on the SDK's own public npm downloads */
+const crSizes: Record<string, [number, number]> = {"diary": [780, 1328], "type": [780, 986], "search": [780, 1328], "diary-tags": [780, 1328], "kitchen": [780, 1328], "progress-last": [780, 1328]};
+const cr = (name: string, alt: string): Img => ({ src: `/work/crumbs/${name}.webp`, alt, w: crSizes[name][0], h: crSizes[name][1] });
 const g = (name: string, alt: string): Img => ({ src: `/work/graphy/${name}.webp`, alt, w: gSizes[name][0], h: gSizes[name][1] });
 
 export const caseStudies: CaseStudy[] = [
@@ -706,6 +708,231 @@ export const caseStudies: CaseStudy[] = [
             <p>
               <strong>What’s next:</strong> launching it on social, then testing with more crocheters beyond my
               family.
+            </p>
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'crumbs',
+    v2: true,
+    teaser: 'A calorie diary that never makes you wait.',
+    title: 'Crumbs',
+    madeFor: 'For our household',
+    bg: C.green,
+    intro:
+      'I hate MyFitnessPal. Every time you add a food it plays a little animation that lasts about a second, which is fine once, and maddening when you’re logging a whole meal. So I built our own calorie diary: you snap your plate, a receipt or a label and Claude works it out, and everything in it is tuned to how we actually eat.',
+    facts: [
+      { label: 'My role', value: 'Design and build, solo' },
+      { label: 'Made for', value: 'Me and my other half' },
+      { label: 'Built with', value: 'Claude Code' },
+      { label: 'AI in the app', value: 'Claude, only when needed' },
+      { label: 'Food data', value: 'Open Food Facts UK' },
+    ],
+    tldr: {
+      points: [
+        { label: 'The problem', body: 'Every food tracker I tried made me wait on every add, didn’t know what we actually buy, and didn’t care about the things I care about.' },
+        { label: 'What I did', body: 'Designed and built our own: snap a plate and Claude works it out, nothing animates in your way, and it flags ultra-processed and high FODMAP food.' },
+        { label: 'What I learned', body: 'Using it every day shows you things no spec would. The logging sheet and the phone keyboard took four goes to get right, including putting it back how it was.' },
+        { label: 'The result', body: 'We log with it every day. It went from first version to on our phones in two days, and it’s had 49 updates since.' },
+      ],
+      stats: [
+        { value: '0', label: 'animations to wait for' },
+        { value: '2', label: 'days from first version to our phones' },
+        { value: '49', label: 'updates in seven weeks' },
+        { value: '1', label: 'tap to send a meal to my other half' },
+      ],
+    },
+    blocks: [
+      {
+        type: 'chapter',
+        label: 'The problem',
+        heading: 'Every add took a second I didn’t have',
+        body: (
+          <>
+            <p>
+              I’ve tracked what I eat on and off for years, and MyFitnessPal drives me up the wall. Every time you add
+              a food it plays an animation that lasts about a second, which doesn’t sound like much until you’re
+              logging a coffee, a crumpet and a yoghurt one after the other and sitting there waiting for it each
+              time.
+            </p>
+            <p>
+              It also doesn’t know anything about us. It doesn’t know which bread we buy, so every snap is a guess at
+              a generic version, and it doesn’t care about the things I care about, like how much ultra-processed food
+              I’m eating, or which foods are high FODMAP. And my other half hates tracking full stop, so getting him to
+              log anything was never going to happen.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'hmw',
+        items: [
+          'make logging three things as quick as logging one?',
+          'make a snapped plate accurate without weighing everything?',
+          'let someone who hates tracking still have a diary?',
+          'build it around how we eat, not how an app thinks we should?',
+        ],
+      },
+      {
+        type: 'chapter',
+        label: 'Software that works for you',
+        heading: 'Built for one house, on purpose',
+        body: (
+          <>
+            <p>
+              This is my favourite thing about building with AI: you can make software that works exactly how you
+              need it to, for an audience of two. I made the first version in a day, and it was on both our phones the
+              next, running on our own server with one shared passcode and everyone’s diary kept separate.
+            </p>
+            <p>
+              The whole app is built around getting food in quickly. You can snap it, type it like you’d say it
+              (“2 oreos and a babybel”), scan a barcode or search, and the things you have all the time sit right at
+              the top so they’re one tap away.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'figure',
+        images: [
+          cr('diary', 'The Crumbs diary: 1,061 of 1,900 kcal today, with protein, carbs and fat, and buttons to search, type or snap food'),
+          cr('type', 'The logging sheet: pick a meal, tap something you have again, or type something new and Work it out'),
+          cr('search', 'Search, with the foods you’ve had before at the top, each with a one-tap add button'),
+        ],
+        frame: true,
+        caption: 'The diary, the logging sheet and search. Nothing animates in your way, and your usuals are always one tap away.',
+      },
+      {
+        type: 'chapter',
+        label: 'Speed',
+        heading: 'Nothing waits',
+        body: (
+          <>
+            <p>
+              The rule I set myself was that the app should never make you wait for it. There are no animations
+              between you and the next food, and the screen updates the moment you tap rather than waiting for the
+              server to answer, so logging three things really is as quick as logging one.
+            </p>
+            <p>
+              It learns your habits as you go, so the foods you have most sit at the top, there’s a “same as
+              yesterday” for each meal, and you can build up a meal in a basket before adding it all at once, with the
+              things you usually have alongside it suggested first. In the evening it asks “forget anything?” and
+              lists the regulars that aren’t in yet, because the snack you forgot is usually the same snack.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'pivot',
+        before: {
+          label: 'First version',
+          title: 'Ask Claude about everything',
+          body: 'Every typed food went to Claude, even “banana”, so even the easy ones took a few seconds and cost a little each time.',
+        },
+        after: {
+          label: 'What I changed',
+          title: 'Only ask Claude when it’s needed',
+          body: 'Foods it already knows match instantly, packets come from Open Food Facts first, and Claude only steps in for photos and the genuinely new stuff.',
+        },
+      },
+      {
+        type: 'chapter',
+        label: 'Accuracy',
+        heading: 'It knows what’s in our fridge',
+        body: (
+          <>
+            <p>
+              The genius bit, if I say so myself, is the Kitchen. When we do the big shop I snap the receipt, and
+              Crumbs learns the exact products we buy, so when I snap my dinner later it knows it’s our bread and our
+              yoghurt, not a generic one. You can snap the fridge and the cupboards too, and then “What can I have?”
+              suggests meals from what’s actually in that fit what’s left of your day.
+            </p>
+            <p>
+              When you snap a plate, Claude only asks a follow-up when the answer changes the total, like whether there
+              was oil in the pan, rather than quizzing you about everything. And if you log something from a chain like
+              Greggs or Pret that isn’t in the food database, it looks up their official nutrition online instead of
+              guessing.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'figure',
+        images: [
+          cr('kitchen', 'The Kitchen tab: snap the fridge, add a big shop receipt, and saved meals and recipes'),
+          cr('diary-tags', 'Diary entries tagged UPF, with a running count of ultra-processed and high FODMAP food today'),
+          cr('progress-last', 'Progress: a week of bars under a 1,900 kcal target, averaging 1,590 a day, with a trend weight'),
+        ],
+        frame: true,
+        caption: 'The Kitchen knows what we buy, every food is quietly checked for ultra-processed and high FODMAP, and Progress shows the week.',
+      },
+      {
+        type: 'chapter',
+        label: 'Built for us',
+        heading: 'The things I care about, front and centre',
+        body: (
+          <>
+            <p>
+              Every food gets checked for whether it’s ultra-processed and whether it’s high FODMAP, and the diary
+              keeps a running count for the day against a limit I set. You can tap a tag to see why it was flagged,
+              and if it’s got one wrong you can overrule it, because a flag you can’t argue with stops being helpful
+              very quickly.
+            </p>
+            <p>
+              And for my other half, who would rather do literally anything than track, I can send a meal straight to
+              his diary in one tap when we’ve eaten the same thing. The fridge, the shopping and our saved meals are
+              shared, but our diaries are our own.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'quote',
+        text: 'Software that works exactly how you need it to, for an audience of two.',
+      },
+      {
+        type: 'chapter',
+        label: 'Iteration',
+        heading: 'Using it every day is the best testing there is',
+        body: (
+          <>
+            <p>
+              Because we use it every single day, every rough edge shows up fast. The logging sheet and the phone
+              keyboard took me four goes to get right: the text box kept disappearing behind the keyboard, then a tap
+              in it closed the sheet, and one of my “fixes” made it worse, so I put it back how it was and made it
+              taller instead. It’s not glamorous, but it’s the difference between an app you use and one you give up
+              on.
+            </p>
+            <p>
+              I learned to protect the data too. Losing someone’s diary is the worst thing this app could do, so it
+              refuses any save that would wipe your settings, keeps a daily backup, and lets you restore earlier
+              settings or download everything you’ve logged. And when Claude can’t answer, it says exactly why, rather
+              than a vague “something went wrong”.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'stats',
+        items: [
+          { value: '0', label: 'animations to wait for' },
+          { value: '2', label: 'days from first version to our phones' },
+          { value: '49', label: 'updates in seven weeks' },
+          { value: '1', label: 'tap to send a meal to my other half' },
+        ],
+      },
+      {
+        type: 'chapter',
+        label: 'What’s next',
+        heading: 'Room for a few more households',
+        body: (
+          <>
+            <p>
+              Crumbs can now invite other households, each completely private and running on their own Claude key, so
+              friends can have their own version without ever seeing ours. It’s still built for one house first, and
+              I’d like to keep it that way, because that’s exactly why it works.
             </p>
           </>
         ),
