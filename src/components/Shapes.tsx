@@ -91,20 +91,16 @@ function GooglyEyes({ cx, cy, r, look, blink }: { cx: number; cy: number; r: num
   );
 }
 
-/* The flower from the old site: five round petals */
+/* Rachael's flower: five round petals, one soft shape */
+const FLOWER =
+  'M235.739 105.777C242.383 95.157 246.223 82.6031 246.223 69.1522C246.223 30.9605 215.263 0 177.071 0C138.88 0 107.919 30.9605 107.919 69.1522C107.919 79.7207 110.29 89.7354 114.529 98.6936C102.384 88.1247 86.5156 81.7253 69.1522 81.7253C30.9605 81.7253 0 112.686 0 150.878C0 189.069 30.9605 220.03 69.1522 220.03C74.6174 220.03 79.9346 219.396 85.0341 218.197C60.2991 228.733 42.9583 253.265 42.9583 281.848C42.9583 320.039 73.9188 351 112.111 351C144.45 351 171.605 328.801 179.167 298.81C186.73 328.801 213.884 351 246.224 351C284.416 351 315.376 320.039 315.376 281.848C315.376 253.489 298.305 229.117 273.879 218.447C278.641 219.484 283.586 220.03 288.658 220.03C326.85 220.03 357.81 189.069 357.81 150.878C357.81 112.686 326.85 81.7253 288.658 81.7253C267.552 81.7253 248.654 91.1809 235.97 106.087L235.739 105.777Z';
+
 export function Flower({ color, eyes = false, className = '' }: { color: string; eyes?: boolean; className?: string }) {
   const { ref, look, blink } = useLook<SVGSVGElement>();
-  const petals = [0, 1, 2, 3, 4].map((i) => {
-    const a = (-90 + i * 72) * (Math.PI / 180);
-    return { x: 50 + Math.cos(a) * 24, y: 52 + Math.sin(a) * 24 };
-  });
   return (
-    <svg ref={ref} viewBox="0 0 100 100" className={className} aria-hidden>
-      {petals.map((p, i) => (
-        <circle key={i} cx={p.x} cy={p.y} r={21} fill={color} />
-      ))}
-      <circle cx={50} cy={52} r={24} fill={color} />
-      {eyes && <GooglyEyes cx={50} cy={52} r={8.5} look={look} blink={blink} />}
+    <svg ref={ref} viewBox="0 0 358 351" className={className} aria-hidden>
+      <path d={FLOWER} fill={color} fillRule="evenodd" clipRule="evenodd" />
+      {eyes && <GooglyEyes cx={179} cy={180} r={30} look={look} blink={blink} />}
     </svg>
   );
 }

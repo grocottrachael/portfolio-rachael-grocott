@@ -54,7 +54,7 @@ function Home() {
           alt="Rachael"
           width={64}
           height={64}
-          className="absolute left-[19%] top-[21%] w-[62%] h-[62%] rounded-full object-cover border-2 border-[var(--ink)]"
+          className="absolute left-[19%] top-[24%] w-[62%] h-[62%] rounded-full object-cover border-2 border-[var(--ink)]"
         />
         </div>
         <h1 className="whitespace-nowrap font-display leading-none text-[9vw] md:text-[clamp(26px,2.5vw,46px)]">
