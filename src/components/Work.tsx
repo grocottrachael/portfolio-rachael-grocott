@@ -412,15 +412,7 @@ export function Work() {
         <ShapeTile>
           <Eyes />
         </ShapeTile>
-        <InfoTile
-          bg={C.accent}
-          madeFor="For anyone curious"
-          title="My latest work"
-          href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
-          className="col-span-2 md:col-span-1"
-        >
-          I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
-        </InfoTile>
+        {tile('graphy')}
         {tile('knot-a-problem')}
         {tile('crumbs')}
         {tile('dotties')}
@@ -431,7 +423,15 @@ export function Work() {
         <InfoTile bg={C.pink} madeFor="In the press" title="VICE & Samsung" className="col-span-2 md:col-span-1">
           Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
         </InfoTile>
-        {tile('graphy')}
+        <InfoTile
+          bg={C.accent}
+          madeFor="For anyone curious"
+          title="My latest work"
+          href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
+          className="col-span-2 md:col-span-1"
+        >
+          I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
+        </InfoTile>
       </section>
       <AnimatePresence>
         {openProject && <ProjectPanel key={openProject.id} p={openProject} onClose={() => setOpenId(null)} />}
