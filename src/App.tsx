@@ -94,6 +94,8 @@ function Home() {
             <GithubMark /> GitHub
           </a>
         </div>
+        {/* A flower with lashes, peeking in from the corner */}
+        <Flower color={C.blue} eyes className="pointer-events-none absolute -right-8 -bottom-10 w-36 h-36 md:w-44 md:h-44" />
         </div>
       </aside>
 
