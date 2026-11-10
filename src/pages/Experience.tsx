@@ -1,6 +1,6 @@
 import { ArrowLeft, ArrowUpRight } from 'lucide-react';
 import { Link } from '../router';
-import { C, Flower } from '../components/Shapes';
+import { C } from '../components/Shapes';
 import { beyond, coreSkills, education, interests, roles, softSkills } from '../content/experience';
 
 /* Experience, in the case study format: a colour card at the top, then one reading column */
@@ -28,7 +28,6 @@ export function Experience() {
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
       <header className="p-2.5 md:p-3">
         <div className="relative overflow-hidden px-5 py-8 md:py-14" style={{ background: C.blue }}>
-          <Flower color={C.green} eyes className="pointer-events-none absolute -right-8 -bottom-10 w-40 h-40 md:w-56 md:h-56" />
           <div className="relative mx-auto max-w-[720px] flex flex-col gap-7">
             <Link to="/" className="self-start inline-flex items-center gap-1.5 text-[15px] font-bold hover:underline underline-offset-4">
               <ArrowLeft className="w-4 h-4" aria-hidden /> Rachael Grocott
