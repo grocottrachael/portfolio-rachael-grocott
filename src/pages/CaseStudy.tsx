@@ -59,7 +59,7 @@ function BlockView({ block, bg }: { block: Block; bg: string }) {
                 width={img.w}
                 height={img.h}
                 loading="lazy"
-                className={`w-full h-auto ${block.frame ? 'border-2 border-[var(--ink)] shadow-[4px_4px_0_var(--ink)]' : ''}`}
+                className={`w-full h-auto ${block.frame ? 'border-[3px] border-[var(--ink)] shadow-[4px_4px_0_var(--ink)]' : ''}`}
               />
             ))}
           </div>

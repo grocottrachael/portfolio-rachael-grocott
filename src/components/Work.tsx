@@ -75,7 +75,7 @@ const projects: Project[] = [
     image: {
       src: '/swatchmaker-tile.webp?v=2',
       alt: 'SwatchMaker matching paints to the Rivers wallpaper by Living Quarters: Lick Green 03, Dulux Bracken Salts 5 and Valspar Ode to Joy',
-      className: 'aspect-[4/3] object-cover border-2 border-[var(--ink)]',
+      className: 'aspect-[4/3] object-cover border-[3px] border-[var(--ink)]',
     },
     story: (
       <>
@@ -108,7 +108,7 @@ const projects: Project[] = [
     title: 'Dotties',
     madeFor: 'For work',
     bg: C.grey,
-    span: 'col-span-2 md:col-span-1',
+    span: 'col-span-1',
     summary: 'I needed it, so I built it. Images into halftone, dithering or ASCII.',
     story: (
       <>
@@ -129,7 +129,7 @@ const projects: Project[] = [
     image: {
       src: '/knot-diagram.webp',
       alt: 'A granny square drawn by Knot a Problem as a stitch diagram, round by round',
-      className: 'aspect-square object-cover bg-white border-2 border-[var(--ink)]',
+      className: 'aspect-square object-cover bg-white border-[3px] border-[var(--ink)]',
     },
     story: (
       <>
@@ -207,7 +207,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
           className={
             p.wordmark
               ? 'sr-only'
-              : 'block font-display leading-[1.05] text-[28px] md:text-[clamp(22px,1.8vw,32px)]'
+              : 'block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
           }
         >
           {p.title}
@@ -228,7 +228,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
           className={
             p.wordmark
               ? 'sr-only'
-              : 'block font-display leading-[1.05] text-[28px] md:text-[clamp(22px,1.8vw,32px)]'
+              : 'block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
           }
         >
           {p.title}
@@ -362,7 +362,7 @@ function InfoTile({
   const inner = (
     <>
       <For dark={dark}>{madeFor}</For>
-      <h3 className="mt-4 font-display leading-[1.05] text-[28px] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
+      <h3 className="mt-4 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
       <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
       {href && (
         <span className="chunky-icon absolute top-5 right-5">
@@ -445,13 +445,13 @@ export function Work() {
         >
           I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
         </InfoTile>
-        <InfoTile bg={C.pink} madeFor="For teams" title="Talks & workshops" className="col-span-2 md:col-span-1">
+        <InfoTile bg={C.pink} madeFor="For teams" title="Talks & workshops" className="col-span-1">
           I&rsquo;ve spoken at loads of events, and I run sessions like <em>How to give and receive feedback</em>.
         </InfoTile>
-        <InfoTile bg={C.green} madeFor="In the press" title="VICE & Samsung" className="col-span-2 md:col-span-1">
+        {tile('triangirls')}
+        <InfoTile bg={C.green} madeFor="In the press" title="VICE & Samsung" className="col-span-1">
           Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
         </InfoTile>
-        {tile('triangirls')}
         <InfoTile bg={C.yellow} madeFor="What I bring" title="Skills" className="col-span-2 md:col-span-3">
           <ul className="mt-1 flex flex-wrap gap-1.5 max-w-[900px]">
             {[
