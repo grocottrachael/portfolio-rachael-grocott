@@ -72,8 +72,20 @@ function GooglyEyes({ cx, cy, r, look, blink }: { cx: number; cy: number; r: num
   const gap = r * 1.02;
   const pr = r * 0.62;
   const move = r - pr - r * 0.08;
+  /* Three lashes on each eye, flicking up and out */
+  const lashes = (ex: number, side: 1 | -1) =>
+    [5, 30, 55].map((deg, i) => {
+      const a = ((deg * side - 90) * Math.PI) / 180;
+      const x1 = ex + Math.cos(a) * r * 0.98;
+      const y1 = cy + Math.sin(a) * r * 0.98;
+      const x2 = ex + Math.cos(a) * r * 1.5;
+      const y2 = cy + Math.sin(a) * r * 1.5;
+      return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={C.ink} strokeWidth={r * 0.16} strokeLinecap="round" />;
+    });
   return (
     <g>
+      {lashes(cx - gap, -1)}
+      {lashes(cx + gap, 1)}
       <circle cx={cx - gap} cy={cy} r={r} fill={C.paper} />
       <circle cx={cx + gap} cy={cy} r={r} fill={C.paper} />
       <g
