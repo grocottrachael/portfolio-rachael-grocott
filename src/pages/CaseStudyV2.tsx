@@ -95,13 +95,14 @@ function BlockView({ block, bg, chapter, joined }: { block: Block; bg: string; c
         </figure>
       );
     case 'hmw':
+      /* Flat colour blocks with a label, like the blocks on the home page */
       return (
         <section className={text}>
-          <ol className="space-y-3">
-            {block.items.map((q, i) => (
-              <li key={q} className="p-5 md:p-6 border-l-[6px] border-[var(--ink)]" style={{ background: tint(bg, 45) }}>
-                <span className="block text-[13px] font-bold text-[var(--ink-soft)]">How might we… {i + 1}</span>
-                <span className="mt-1 block font-display text-[21px] md:text-[24px] leading-[1.25]">{q}</span>
+          <ol className="grid sm:grid-cols-2 gap-2.5">
+            {block.items.map((q) => (
+              <li key={q} className="p-5 md:p-6 flex flex-col" style={{ background: bg }}>
+                <span className="chunky-tag self-start">How might we…</span>
+                <span className="mt-4 font-display text-[21px] md:text-[23px] leading-[1.2]">{q}</span>
               </li>
             ))}
           </ol>
@@ -324,7 +325,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
 
       {/* Next project, in its own colour */}
       <Link to={`/work/${next.id}`} className="group block px-5 md:px-8 py-12 md:py-16" style={{ background: next.bg }}>
-        <div className={`${wide} flex items-center justify-between gap-6`}>
+        <div className={`${text} flex items-center justify-between gap-6`}>
           <div>
             <p className="text-[14px] font-bold">Next case study</p>
             <p className="mt-1 font-display text-[36px] md:text-[56px] leading-none">{next.title}</p>
@@ -334,13 +335,16 @@ export function CaseStudyV2({ study }: { study: Study }) {
           </span>
         </div>
       </Link>
-      <footer className="px-5 md:px-8 py-8 flex flex-wrap items-center justify-between gap-4">
-        <Link to="/" className="chunky">
-          <ArrowLeft className="w-4 h-4" aria-hidden /> All work
-        </Link>
-        <a href="mailto:rachaelgrocott@gmail.com" className="chunky">
-          Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
-        </a>
+      {/* Same column as the text above, so every edge lines up */}
+      <footer className="px-5 md:px-8 py-10">
+        <div className={`${text} flex flex-wrap items-center justify-between gap-4`}>
+          <Link to="/" className="chunky">
+            <ArrowLeft className="w-4 h-4" aria-hidden /> All work
+          </Link>
+          <a href="mailto:rachaelgrocott@gmail.com" className="chunky">
+            Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
+          </a>
+        </div>
       </footer>
     </div>
   );
