@@ -68,17 +68,18 @@ export const caseStudies: CaseStudy[] = [
       {
         type: 'text',
         eyebrow: 'The problem',
-        heading: 'Patterns are written in a shorthand nobody remembers',
+        heading: 'There is no standard for a crochet pattern',
         body: (
           <>
             <p>
-              My granny has crocheted for sixty years and couldn&rsquo;t remember what an increase repeat meant. Then my
-              cousin started learning and got stuck on the stitches. Then I caught myself googling the same terms.
+              Every designer writes their own way. Their own abbreviations, UK or US terms (often without saying
+              which), every size crammed into brackets, repeats marked with stars, or brackets, or both. No two
+              patterns look alike, so you learn to read each one from scratch.
             </p>
             <p>
-              Patterns are dense with abbreviations, often in UK or US terms without saying which, with every size
-              crammed into brackets. Most people read them as a PDF on a phone, and lose their place the moment they
-              put it down.
+              My granny has crocheted for sixty years and couldn&rsquo;t remember what an increase repeat meant. Then my
+              cousin started learning and got stuck on the stitches. Then I caught myself googling the same terms.
+              And most people read all this as a PDF on a phone, losing their place the moment they put it down.
             </p>
           </>
         ),
@@ -98,6 +99,11 @@ export const caseStudies: CaseStudy[] = [
             <p>
               The whole app hangs off a single gesture: tap the row that has lost you. You get three choices and
               nothing else: save my place, see a diagram, or explain it.
+            </p>
+            <p>
+              And because no two patterns are written alike, Easy-read lays every one out the same way: the
+              designer&rsquo;s own words, set bigger and calmer, a row at a time, with only your size. Whoever wrote
+              it, it reads the same.
             </p>
             <p>
               I designed it for my granny first, which means for people nobody else serves: arthritis, low vision,
