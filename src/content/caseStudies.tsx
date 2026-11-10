@@ -431,7 +431,7 @@ export const caseStudies: CaseStudy[] = [
         },
         {
           label: 'What I learned',
-          body: 'My first idea, highlighting the confusing words, was the hardest gesture there is for the people I was designing for. Tapping a whole row became the heart of the app.',
+          body: 'My first idea, highlighting the confusing words, was too fiddly. Tapping a whole row was far easier, and became the heart of the app.',
         },
         {
           label: 'The result',
