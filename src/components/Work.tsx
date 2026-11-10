@@ -76,12 +76,13 @@ const projects: Project[] = [
     title: 'SwatchMaker',
     madeFor: 'For anyone choosing paint',
     bg: C.pink,
-    span: 'col-span-2 md:row-span-2',
+    span: 'col-span-2 md:col-span-4 md:row-span-2',
     summary: 'See paint colours from every brand side by side.',
     image: {
-      src: '/swatchmaker-tile.webp?v=2',
+      src: '/swatchmaker-tile-crop.webp',
       alt: 'SwatchMaker matching paints to the Rivers wallpaper by Living Quarters: Lick Green 03, Dulux Bracken Salts 5 and Valspar Ode to Joy',
-      className: 'aspect-[4/3] md:aspect-auto border-[3px] border-[var(--ink)]',
+      /* Cropped at the edge of a colour column, so nothing's cut mid-word and it fits the card's shape */
+      className: 'aspect-[14/15] md:aspect-auto border-[3px] border-[var(--ink)]',
       fill: true,
     },
     story: (
@@ -102,7 +103,7 @@ const projects: Project[] = [
     madeFor: 'Currently working here',
     live: true,
     bg: C.accent,
-    span: 'col-span-2 md:col-span-1',
+    span: 'col-span-2 md:col-span-2',
     summary: 'Editable charts for developers and their AI agents. I design the developer experience, and own the design of graphy.dev.',
     story: (
       <>
@@ -118,7 +119,7 @@ const projects: Project[] = [
     title: 'Dotties',
     madeFor: 'For work',
     bg: C.grey,
-    span: 'col-span-1',
+    span: 'col-span-1 md:col-span-2',
     summary: 'I needed it, so I built it. Images into halftone, dithering or ASCII.',
     story: (
       <>
@@ -135,7 +136,7 @@ const projects: Project[] = [
     title: 'Knot a Problem',
     madeFor: 'For crocheters',
     bg: C.yellow,
-    span: 'col-span-2 md:col-span-1 md:row-span-2',
+    span: 'col-span-2 md:col-span-2 md:row-span-2',
     summary: 'Never get stuck reading a crochet pattern again. It started with my granny.',
     image: {
       src: '/knot-diagram.webp',
@@ -157,7 +158,7 @@ const projects: Project[] = [
     title: 'Crumbs',
     madeFor: 'Just for me',
     bg: C.green,
-    span: 'col-span-2',
+    span: 'col-span-2 md:col-span-4',
     /* The app icon as a sticker you can move about, like the Graphy one */
     sticker: (
       <img
@@ -187,7 +188,7 @@ const projects: Project[] = [
     title: 'Triangirls',
     madeFor: 'For women in tech',
     bg: C.blue,
-    span: 'col-span-2 md:col-span-1',
+    span: 'col-span-1 md:col-span-3',
     summary: 'I founded and ran a 2,000+ member community, for years.',
     story: <>I founded Triangirls and ran it for years, growing it into a community of more than 2,000 women in tech.</>,
     link: { href: 'https://x.com/triangirlsocial', label: 'Triangirls on X' },
@@ -246,7 +247,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
           className={
             p.wordmark
               ? 'sr-only'
-              : 'block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
+              : 'block pr-12 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
           }
         >
           {p.title}
@@ -267,7 +268,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
           className={
             p.wordmark
               ? 'sr-only'
-              : 'block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
+              : 'block pr-12 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
           }
         >
           {p.title}
@@ -393,6 +394,7 @@ function InfoTile({
   title,
   children,
   href,
+  to,
   className = '',
 }: {
   bg: string;
@@ -401,14 +403,14 @@ function InfoTile({
   title: string;
   children: React.ReactNode;
   href?: string;
+  to?: string;
   className?: string;
 }) {
   const inner = (
     <>
-      {href && (
-        <HoverCta label="Opens in a new tab" icon={<ArrowUpRight className="w-3.5 h-3.5" />} />
-      )}
-      <h3 className="font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
+      {href && <HoverCta label="Opens in a new tab" icon={<ArrowUpRight className="w-3.5 h-3.5" />} />}
+      {to && <HoverCta label="See it on my Experience page" icon={<ArrowRight className="w-3.5 h-3.5" />} />}
+      <h3 className="pr-12 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
       <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
     </>
   );
@@ -419,6 +421,10 @@ function InfoTile({
         <External href={href} className={`${cls} h-full`} style={{ background: bg }}>
           {inner}
         </External>
+      ) : to ? (
+        <Link to={to} className={`${cls} h-full`} style={{ background: bg }}>
+          {inner}
+        </Link>
       ) : (
         <div className={`${cls} h-full`} style={{ background: bg }}>
           {inner}
@@ -474,17 +480,17 @@ export function Work() {
     <LayoutGroup>
       <section
         aria-label="Things I've made"
-        className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:[grid-template-rows:1fr_1fr] md:auto-rows-[minmax(10vw,auto)] gap-3 p-3 md:gap-5 md:p-5 md:pl-0"
+        className="grid grid-cols-2 md:grid-cols-6 grid-flow-row-dense md:[grid-template-rows:1fr_1fr] md:auto-rows-[minmax(10vw,auto)] gap-3 p-3 md:gap-5 md:p-5 md:pl-0"
       >
         {tile('swatchmaker')}
         {/* Experience: where hiring managers look first */}
         <Link
           to="/experience"
-          className="group relative overflow-hidden p-5 md:p-7 flex flex-col text-[var(--ink)] col-span-2 md:col-span-1 min-h-[220px]"
+          className="group relative overflow-hidden p-5 md:p-7 flex flex-col text-[var(--ink)] col-span-2 md:col-span-2 min-h-[220px]"
           style={{ background: C.green }}
         >
           <HoverCta label="See my experience" icon={<ArrowRight className="w-3.5 h-3.5" />} />
-          <span className="block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
+          <span className="block pr-12 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
             Experience
           </span>
           <span className="mt-3 block text-[16px] leading-snug text-[var(--ink-soft)]">13 years of product design, from agency to AI.</span>
@@ -500,16 +506,16 @@ export function Work() {
           madeFor="For anyone curious"
           title="My latest work"
           href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
-          className="col-span-2 md:col-span-1"
+          className="col-span-2 md:col-span-2"
         >
           I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
         </InfoTile>
-        <InfoTile bg={C.pink} madeFor="For teams" title="Talks & workshops" className="col-span-1">
-          I&rsquo;ve spoken at loads of events, and I run sessions like <em>How to give and receive feedback</em>.
-        </InfoTile>
+
         {tile('triangirls')}
-        <InfoTile bg={C.green} madeFor="In the press" title="VICE & Samsung" className="col-span-1">
-          Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
+        {/* Talks, workshops and press in one card, linking to that part of the Experience page */}
+        <InfoTile bg={C.pink} madeFor="For teams" title="Talks, workshops & press" to="/experience#community" className="col-span-2 md:col-span-3">
+          I run sessions like <em>How to give and receive feedback</em>, I&rsquo;ve spoken at loads of events, and
+          I&rsquo;ve been interviewed by VICE and featured in Samsung&rsquo;s Not a School.
         </InfoTile>
       </section>
       <AnimatePresence>

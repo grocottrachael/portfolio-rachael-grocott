@@ -183,3 +183,10 @@
     top: calc(28px + (clamp(22px, 1.8vw, 32px) * 1.05 - 36px) / 2);
   }
 }
+
+/* On phones, half-width cards have no room for the button beside the title */
+@media (max-width: 767px) {
+  .col-span-1 .hover-cta {
+    display: none;
+  }
+}

@@ -88,7 +88,7 @@ export function Experience() {
             <Chips list={softSkills} />
           </section>
 
-          <section>
+          <section id="community" className="scroll-mt-8">
             {label(C.pink, 'Beyond the day job')}
             <h2 className="mt-4 font-display text-[30px] md:text-[40px] leading-[1.08]">Community, talks and press</h2>
             <dl className="mt-6 space-y-6">

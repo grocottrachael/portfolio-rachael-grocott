@@ -123,6 +123,8 @@ function Home() {
             <GithubMark />
           </a>
         </div>
+        {/* A clipping frame, so the flower is cropped by the panel's edge instead of making it scroll */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
         {/* The flower with lashes. Hover her (or tap on a phone) and her stickers pop out */}
         <div
           className={`group/stickers absolute -right-8 -bottom-10 w-52 h-48 md:w-64 md:h-56 pointer-events-none ${stickers ? 'is-open' : ''}`}
@@ -136,6 +138,7 @@ function Home() {
           >
             <Flower color={C.blue} eyes className="sticker w-full h-full -rotate-[14deg]" />
           </span>
+        </div>
         </div>
         </div>
       </aside>
