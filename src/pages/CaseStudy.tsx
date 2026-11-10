@@ -19,7 +19,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 function Heading({ children }: { children: React.ReactNode }) {
   return (
-    <h2 className="mt-2 text-[26px] md:text-[30px] font-bold leading-[1.15] tracking-[-0.015em] text-balance">
+    <h2 className="mt-2 text-[26px] md:text-[32px] font-display leading-[1.15] text-balance">
       {children}
     </h2>
   );
@@ -73,7 +73,7 @@ function BlockView({ block, bg }: { block: Block; bg: string }) {
     case 'quote':
       return (
         <blockquote className={`${text} border-l-4 pl-6 md:pl-8`} style={{ borderColor: 'var(--c-yellow)' }}>
-          <p className="text-[26px] md:text-[34px] font-bold leading-[1.15] tracking-[-0.02em] text-balance">
+          <p className="text-[26px] md:text-[36px] font-display leading-[1.15] text-balance">
             &ldquo;{block.text}&rdquo;
           </p>
         </blockquote>
@@ -86,7 +86,7 @@ function BlockView({ block, bg }: { block: Block; bg: string }) {
               <div key={st.label} className="p-6 md:p-7" style={{ background: 'var(--c-yellow)' }}>
                 <dt className="sr-only">{st.label}</dt>
                 <dd>
-                  <span className="block font-black text-[48px] md:text-[60px] leading-none tracking-[-0.03em] tabular-nums">
+                  <span className="block font-display text-[48px] md:text-[60px] leading-none tabular-nums">
                     {st.value}
                   </span>
                   <span className="mt-2 block text-[15px] font-bold leading-snug">{st.label}</span>
@@ -171,7 +171,7 @@ export function CaseStudy({ study }: { study: Study }) {
           >
             {study.madeFor}
           </span>
-          <h1 className="mt-4 font-black leading-[1.05] tracking-[-0.025em] text-[36px] md:text-[48px]">
+          <h1 className="mt-4 font-display leading-[1.05] text-[36px] md:text-[48px]">
             {study.title}
           </h1>
           <p className="mt-5 text-[20px] md:text-[22px] leading-[1.45] font-medium text-[var(--ink-soft)] text-pretty">

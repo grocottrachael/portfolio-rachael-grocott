@@ -198,7 +198,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
           className={
             p.wordmark
               ? 'sr-only'
-              : 'block font-black leading-[1.05] tracking-[-0.02em] text-[28px] md:text-[clamp(22px,1.8vw,32px)]'
+              : 'block font-display leading-[1.05] text-[28px] md:text-[clamp(22px,1.8vw,32px)]'
           }
         >
           {p.title}
@@ -277,7 +277,7 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
         <For>{p.madeFor}</For>
         <h3
           id={`${p.id}-title`}
-          className="mt-4 pr-12 font-black leading-[1.05] tracking-[-0.02em] text-[32px] md:text-[40px]"
+          className="mt-4 pr-12 font-display leading-[1.05] text-[32px] md:text-[40px]"
         >
           {p.title}
         </h3>
@@ -327,7 +327,7 @@ function InfoTile({
   const inner = (
     <>
       <For dark={dark}>{madeFor}</For>
-      <h3 className="mt-4 font-black leading-[1.05] tracking-[-0.02em] text-[28px] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
+      <h3 className="mt-4 font-display leading-[1.05] text-[28px] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
       <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
       {href && (
         <span className="chunky-icon absolute top-5 right-5">

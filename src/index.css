@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,800,100,1&display=swap");
 @import "tailwindcss";
 
 /* Silka, from the original rachaelgrocott.com */
@@ -109,4 +110,13 @@
 .chunky-icon:hover {
   transform: translate(-1px, -1px);
   box-shadow: 4px 4px 0 var(--ink);
+}
+
+/* Headings: Fraunces, at its softest and with the wonky letters on */
+.font-display {
+  font-family: "Fraunces", Georgia, serif;
+  font-weight: 800;
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  letter-spacing: -0.01em;
 }
