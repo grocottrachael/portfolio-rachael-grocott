@@ -48,7 +48,7 @@ export type CaseStudy = {
   tldr?: { points: { label: string; body: React.ReactNode }[]; stats?: { value: string; label: string }[] };
 };
 
-const knotSizes: Record<string, [number, number]> = {"tap-a-row": [918, 922], "the-key": [918, 914], "plain-words": [1600, 636], "diagrams": [1600, 697], "your-place": [918, 646], "your-size": [1392, 694], "your-hook": [918, 798], "yarns": [920, 830]};
+const knotSizes: Record<string, [number, number]> = {"tap-a-row": [918, 922], "the-key": [918, 914], "plain-words": [1600, 636], "diagrams": [1600, 697], "your-place": [918, 703], "your-size": [1392, 707], "your-hook": [918, 811], "yarns": [920, 842]};
 /* A Knot a Problem image, with its size so pairs can be laid out at equal heights */
 const knotBg: Record<string, string> = {"diagrams": "#a6d4a7", "plain-words": "#f1d16c", "tap-a-row": "#f1d16c", "the-key": "#f1d16c", "yarns": "#899cee", "your-hook": "#8a9ded", "your-place": "#a6d4a7", "your-size": "#8a9ded"};
 const k = (name: string, alt: string): Img => ({ src: `/work/knot/${name}.webp`, alt, w: knotSizes[name][0], h: knotSizes[name][1], bg: knotBg[name] });

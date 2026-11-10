@@ -172,7 +172,7 @@ function Toggle({ tldr, setTldr }: { tldr: boolean; setTldr: (v: boolean) => voi
       on ? 'bg-[var(--ink)] text-[var(--paper)]' : 'bg-white text-[var(--ink)] hover:bg-[var(--ink)]/5'
     }`;
   return (
-    <div role="group" aria-label="How much to read" className="inline-flex border-[2px] border-[var(--ink)] shadow-[3px_3px_0_var(--ink)]">
+    <div role="group" aria-label="How much to read" className="inline-flex overflow-hidden rounded-full border-[2px] border-[var(--ink)] shadow-[3px_3px_0_var(--ink)]">
       <button type="button" aria-pressed={!tldr} onClick={() => setTldr(false)} className={btn(!tldr)}>
         Full story
       </button>

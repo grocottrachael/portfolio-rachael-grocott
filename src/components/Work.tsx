@@ -209,7 +209,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
         >
           {p.title}
         </span>
-        <span className={`${p.wordmark ? 'mt-1' : 'mt-3'} block text-[16px] leading-snug max-w-[36ch] ${soft}`}>{p.summary}</span>
+        <span className={`${p.wordmark ? 'mt-1' : 'mt-3'} block text-[16px] leading-snug ${p.logoRight ? "max-w-[36ch]" : "max-w-[52ch]"} ${soft}`}>{p.summary}</span>
       </a>
       ) : (
         <button
@@ -230,7 +230,7 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
         >
           {p.title}
         </span>
-        <span className={`${p.wordmark ? 'mt-1' : 'mt-3'} block text-[16px] leading-snug max-w-[36ch] ${soft}`}>{p.summary}</span>
+        <span className={`${p.wordmark ? 'mt-1' : 'mt-3'} block text-[16px] leading-snug ${p.logoRight ? "max-w-[36ch]" : "max-w-[52ch]"} ${soft}`}>{p.summary}</span>
       </button>
       )}
 

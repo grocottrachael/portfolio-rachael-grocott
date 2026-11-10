@@ -56,8 +56,9 @@
   background: #fff;
   color: var(--ink);
   border: 2px solid var(--ink);
-  box-shadow: 4px 4px 0 var(--ink);
-  padding: 0.7rem 1.15rem;
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--ink);
+  padding: 0.7rem 1.3rem;
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
@@ -67,7 +68,7 @@
 }
 .chunky:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 5px 5px 0 var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
 }
 .chunky:active {
   transform: translate(3px, 3px);
@@ -102,7 +103,8 @@
   background: #fff;
   color: var(--ink);
   border: 2px solid var(--ink);
-  box-shadow: 3px 3px 0 var(--ink);
+  border-radius: 999px;
+  box-shadow: 2px 2px 0 var(--ink);
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
 .group:hover .chunky-icon,
