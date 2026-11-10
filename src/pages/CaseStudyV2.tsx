@@ -1,25 +1,42 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Link } from '../router';
 import { caseStudies, type Block, type CaseStudy as Study, type Img } from '../content/caseStudies';
 
 /*
- * The case study template, v2.
- * - A colour block header: the story on the left, real screens on the right.
- * - A TL;DR switch, for whoever is reading fifty portfolios today.
- * - Numbered chapters with a big outlined number and a rule, and a sticky
- *   chapter list on wide screens.
- * - Pictures sit in full-width bands of the project colour.
+ * The case study, built on the home page's frame: the project pinned on the
+ * left in its own colour, and the story on the right as a grid of flat
+ * blocks with white gutters. Text blocks are warm grey, pictures sit in the
+ * project colour with the ink stroke, same as the home grid.
  */
 
-const text = 'mx-auto w-full max-w-[680px]';
-const wide = 'mx-auto w-full max-w-[1080px]';
+const grey = 'var(--c-grey)';
 const prose =
-  'space-y-4 text-[17px] md:text-[18px] leading-[1.65] text-[var(--ink-soft)] [&_em]:text-[var(--ink)] [&_strong]:text-[var(--ink)]';
+  'space-y-4 text-[17px] leading-[1.65] text-[var(--ink-soft)] max-w-[62ch] [&_em]:text-[var(--ink)] [&_strong]:text-[var(--ink)]';
+const pad = 'p-6 md:p-10';
 
-const tint = (bg: string, pct: number) => `color-mix(in srgb, ${bg} ${pct}%, white)`;
+/* A block in the grid. `full` spans both columns */
+function Tile({
+  bg = grey,
+  full = true,
+  className = '',
+  children,
+  id,
+}: {
+  bg?: string;
+  full?: boolean;
+  className?: string;
+  children: React.ReactNode;
+  id?: string;
+}) {
+  return (
+    <section id={id} className={`${full ? 'md:col-span-2' : ''} ${className}`} style={{ background: bg }}>
+      {children}
+    </section>
+  );
+}
 
-function Framed({ img, className = '' }: { img: Img; className?: string }) {
+function Picture({ img }: { img: Img }) {
   return (
     <img
       src={img.src}
@@ -27,204 +44,129 @@ function Framed({ img, className = '' }: { img: Img; className?: string }) {
       width={img.w}
       height={img.h}
       loading="lazy"
-      className={`w-full h-auto border-[3px] border-[var(--ink)] ${className}`}
+      className="w-full h-auto border-[3px] border-[var(--ink)]"
     />
   );
 }
 
-/* Images side by side at one shared height: each column is as wide as its picture's shape */
-function Row({ images }: { images: Img[] }) {
+/*
+ * A picture as a block. When the picture is already a coloured card (it has
+ * its own bg), it IS the block: no padding, no stroke, no box in a box.
+ * Otherwise it sits in a block of the project colour with the ink stroke.
+ */
+function PictureTile({ img, bg, full }: { img: Img; bg: string; full: boolean }) {
+  if (img.bg)
+    return (
+      <Tile bg={img.bg} full={full} className="flex items-center">
+        <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" className="w-full h-auto" />
+      </Tile>
+    );
   return (
-    <div
-      className="grid gap-5 md:gap-7 md:[grid-template-columns:var(--cols)]"
-      style={{ '--cols': images.map((i) => `${i.w / i.h}fr`).join(' ') } as React.CSSProperties}
-    >
-      {images.map((img) => (
-        <Framed key={img.src} img={img} />
-      ))}
-    </div>
+    <Tile bg={bg} full={full} className="p-6 md:p-10 flex items-center">
+      <Picture img={img} />
+    </Tile>
   );
 }
 
-type Chapter = { n: number; id: string; label: string };
-
-function ChapterOpener({ ch, heading, body, bg }: { ch: Chapter; heading: string; body?: React.ReactNode; bg: string }) {
-  return (
-    <section id={ch.id} className="scroll-mt-8">
-      <div className={text}>
-        <span className="chunky-tag" style={{ background: bg }}>
-          {ch.label}
-        </span>
-      </div>
-      <div className={`${text} mt-4`}>
-        <h2 className="font-display text-[30px] md:text-[42px] leading-[1.08] text-balance">{heading}</h2>
-        {body && <div className={`${prose} mt-6`}>{body}</div>}
-      </div>
-    </section>
-  );
+function Label({ children }: { children: React.ReactNode }) {
+  return <span className="chunky-tag self-start">{children}</span>;
 }
 
-function BlockView({ block, bg, chapter, joined }: { block: Block; bg: string; chapter?: Chapter; joined?: boolean }) {
+function Blocks({ block, bg, id }: { block: Block; bg: string; id?: string }) {
   switch (block.type) {
     case 'chapter':
-      return <ChapterOpener ch={chapter!} heading={block.heading} body={block.body} bg={bg} />;
+      return (
+        <Tile id={id} className={`${pad} scroll-mt-3`}>
+          <Label>{block.label}</Label>
+          <h2 className="mt-4 font-display text-[30px] md:text-[40px] leading-[1.08] text-balance max-w-[22ch]">
+            {block.heading}
+          </h2>
+          {block.body && <div className={`${prose} mt-5`}>{block.body}</div>}
+        </Tile>
+      );
     case 'text':
       return (
-        <section className={text}>
+        <Tile className={pad}>
           {block.heading && (
-            <h3 className="font-display text-[24px] md:text-[28px] leading-[1.15] text-balance mb-5">{block.heading}</h3>
+            <h3 className="font-display text-[24px] md:text-[28px] leading-[1.15] text-balance mb-4">{block.heading}</h3>
           )}
           <div className={prose}>{block.body}</div>
-        </section>
+        </Tile>
       );
     case 'figure':
-      /* Like the home grid: each picture in its own flat colour block, white gaps between */
       return (
-        <figure className={`${wide} ${joined ? '-mt-14 md:-mt-[5.5rem]' : ''}`}>
-          <div className={`grid gap-2.5 md:gap-3 ${block.images.length > 1 ? 'md:grid-cols-2' : ''}`}>
-            {block.images.map((img) => (
-              <div key={img.src} className="flex items-center justify-center p-6 md:p-12" style={{ background: bg }}>
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  width={img.w}
-                  height={img.h}
-                  loading="lazy"
-                  className="w-full h-auto border-[3px] border-[var(--ink)]"
-                />
-              </div>
-            ))}
-          </div>
+        <>
+          {block.images.map((img) => (
+            <PictureTile key={img.src} img={img} bg={bg} full={block.images.length === 1} />
+          ))}
           {block.caption && (
-            <figcaption className="mt-4 max-w-[680px] text-[15px] leading-relaxed text-[var(--ink-soft)]">{block.caption}</figcaption>
+            <p className="md:col-span-2 -mt-0.5 mb-4 px-1 text-[15px] leading-relaxed text-[var(--ink-soft)] max-w-[70ch]">
+              {block.caption}
+            </p>
           )}
-        </figure>
+        </>
       );
     case 'hmw':
-      /* Flat colour blocks with a label, like the blocks on the home page */
       return (
-        <section className={text}>
-          <ol className="grid sm:grid-cols-2 gap-2.5">
-            {block.items.map((q) => (
-              <li key={q} className="p-5 md:p-6 flex flex-col" style={{ background: bg }}>
-                <span className="chunky-tag self-start">How might we…</span>
-                <span className="mt-4 font-display text-[21px] md:text-[23px] leading-[1.2]">{q}</span>
-              </li>
-            ))}
-          </ol>
-        </section>
+        <>
+          {block.items.map((q) => (
+            <Tile key={q} bg={bg} full={false} className="p-6 md:p-10 flex flex-col">
+              <Label>How might we…</Label>
+              <p className="mt-4 font-display text-[22px] md:text-[26px] leading-[1.2]">{q}</p>
+            </Tile>
+          ))}
+        </>
       );
     case 'pivot':
       return (
-        <section className={wide}>
-          <div className="grid md:grid-cols-[1fr_auto_1fr] items-stretch gap-4">
-            <div className="p-6 md:p-8 bg-white border-[3px] border-dashed border-[var(--ink)]/30">
-              <p className="text-[13px] font-bold text-[var(--ink-soft)]">{block.before.label}</p>
-              <p className="mt-2 font-display text-[22px] md:text-[26px] leading-[1.2] text-[var(--ink)]/55">
-                {block.before.title}
-              </p>
-              <p className="mt-3 text-[16px] leading-[1.6] text-[var(--ink-soft)]">{block.before.body}</p>
-            </div>
-            <div className="flex items-center justify-center" aria-hidden>
-              <span className="chunky-icon rotate-90 md:rotate-0">
-                <ArrowRight className="w-4 h-4" />
-              </span>
-            </div>
-            <div className="p-6 md:p-8 border-[3px] border-[var(--ink)] shadow-[5px_5px_0_var(--ink)]" style={{ background: tint(bg, 60) }}>
-              <p className="text-[13px] font-bold text-[var(--ink)]/70">{block.after.label}</p>
-              <p className="mt-2 font-display text-[22px] md:text-[26px] leading-[1.2]">{block.after.title}</p>
-              <p className="mt-3 text-[16px] leading-[1.6] text-[var(--ink)]/80">{block.after.body}</p>
-            </div>
-          </div>
-        </section>
+        <>
+          <Tile full={false} className="p-6 md:p-10">
+            <Label>{block.before.label}</Label>
+            <p className="mt-4 font-display text-[22px] md:text-[26px] leading-[1.2] line-through decoration-2 decoration-[var(--ink)]/40">
+              {block.before.title}
+            </p>
+            <p className="mt-3 text-[16px] leading-[1.6] text-[var(--ink-soft)]">{block.before.body}</p>
+          </Tile>
+          <Tile bg={bg} full={false} className="p-6 md:p-10">
+            <Label>{block.after.label}</Label>
+            <p className="mt-4 font-display text-[22px] md:text-[26px] leading-[1.2]">{block.after.title}</p>
+            <p className="mt-3 text-[16px] leading-[1.6] text-[var(--ink)]/80">{block.after.body}</p>
+          </Tile>
+        </>
       );
     case 'quote':
       return (
-        <blockquote className={`${text} border-l-[6px] pl-6 md:pl-8`} style={{ borderColor: bg }}>
-          <p className="text-[28px] md:text-[40px] font-display leading-[1.12] text-balance">&ldquo;{block.text}&rdquo;</p>
-        </blockquote>
+        <Tile bg={bg} className="p-6 md:p-10">
+          <blockquote className="font-display text-[30px] md:text-[48px] leading-[1.08] text-balance max-w-[20ch]">
+            &ldquo;{block.text}&rdquo;
+          </blockquote>
+        </Tile>
       );
     case 'stats':
-      return <Stats items={block.items} bg={bg} />;
-    case 'gallery':
-      return (
-        <figure className="-mx-5 md:-mx-8 px-5 md:px-8 py-10 md:py-16" style={{ background: tint(bg, 45) }}>
-          <div className={wide}>
-            {block.heading && <h3 className="font-display text-[24px] md:text-[28px] leading-[1.15] mb-2">{block.heading}</h3>}
-            {block.body && <p className="text-[16px] text-[var(--ink-soft)] mb-8 max-w-[680px]">{block.body}</p>}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-5">
-              {block.images.map((g) => (
-                <Framed key={g.src} img={g} />
-              ))}
-            </div>
-          </div>
-        </figure>
-      );
+      return <StatTiles items={block.items} bg={bg} />;
     default:
       return null;
   }
 }
 
-function Stats({ items, bg }: { items: { value: string; label: string }[]; bg: string }) {
+function StatTiles({ items, bg }: { items: { value: string; label: string }[]; bg: string }) {
   return (
-    <section className={wide}>
-      <dl className="grid grid-cols-2 md:grid-cols-4 border-[3px] border-[var(--ink)] shadow-[5px_5px_0_var(--ink)]" style={{ background: bg }}>
-        {items.map((st, i) => (
-          <div
-            key={st.label}
-            className={`p-5 md:p-7 ${i % 2 ? 'border-l-[3px]' : ''} ${i > 1 ? 'border-t-[3px] md:border-t-0' : ''} ${i === 2 ? 'md:border-l-[3px]' : ''} border-[var(--ink)]`}
-          >
-            <dt className="sr-only">{st.label}</dt>
-            <dd>
-              <span className="block font-display text-[44px] md:text-[56px] leading-none tabular-nums">{st.value}</span>
-              <span className="mt-2 block text-[15px] font-bold leading-snug">{st.label}</span>
-            </dd>
-          </div>
-        ))}
-      </dl>
-    </section>
-  );
-}
-
-/* Chapter list on wide screens, with the chapter you're reading picked out */
-function ChapterNav({ chapters }: { chapters: Chapter[] }) {
-  const [active, setActive] = useState(chapters[0]?.id);
-  useEffect(() => {
-    const els = chapters.map((c) => document.getElementById(c.id)).filter(Boolean) as HTMLElement[];
-    const io = new IntersectionObserver(
-      (entries) => {
-        const seen = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-        if (seen[0]) setActive(seen[0].target.id);
-      },
-      { rootMargin: '0px 0px -70% 0px' }
-    );
-    els.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, [chapters]);
-  return (
-    <nav aria-label="Chapters" className="hidden 2xl:block fixed left-8 top-1/2 -translate-y-1/2 z-10">
-      <ol className="space-y-1.5">
-        {chapters.map((c) => (
-          <li key={c.id}>
-            <a
-              href={`#${c.id}`}
-              className={`flex items-baseline gap-2 text-[13px] font-bold transition-opacity ${
-                active === c.id ? 'opacity-100' : 'opacity-40 hover:opacity-70'
-              }`}
-            >
-              <span className="tabular-nums w-5">{String(c.n).padStart(2, '0')}</span>
-              {c.label}
-            </a>
-          </li>
-        ))}
-      </ol>
-    </nav>
+    <>
+      {items.map((st) => (
+        <Tile key={st.label} bg={bg} full={false} className="p-6 md:p-10">
+          <p className="font-display text-[52px] md:text-[64px] leading-none tabular-nums">{st.value}</p>
+          <p className="mt-2 text-[16px] font-bold">{st.label}</p>
+        </Tile>
+      ))}
+    </>
   );
 }
 
 function Toggle({ tldr, setTldr }: { tldr: boolean; setTldr: (v: boolean) => void }) {
   const btn = (on: boolean) =>
-    `px-4 py-2 text-[14px] font-bold transition-colors ${on ? 'bg-[var(--ink)] text-[var(--paper)]' : 'bg-white text-[var(--ink)] hover:bg-[var(--ink)]/5'}`;
+    `px-4 py-2 text-[14px] font-bold transition-colors ${
+      on ? 'bg-[var(--ink)] text-[var(--paper)]' : 'bg-white text-[var(--ink)] hover:bg-[var(--ink)]/5'
+    }`;
   return (
     <div role="group" aria-label="How much to read" className="inline-flex border-[2px] border-[var(--ink)] shadow-[3px_3px_0_var(--ink)]">
       <button type="button" aria-pressed={!tldr} onClick={() => setTldr(false)} className={btn(!tldr)}>
@@ -240,12 +182,10 @@ function Toggle({ tldr, setTldr }: { tldr: boolean; setTldr: (v: boolean) => voi
 export function CaseStudyV2({ study }: { study: Study }) {
   const [tldr, setTldr] = useState(false);
 
-  /* Number the chapters in the order they appear */
-  const chapters = useMemo(() => {
+  const ids = useMemo(() => {
     let n = 0;
-    return study.blocks.map((b) => (b.type === 'chapter' ? { n: ++n, id: `ch-${n}`, label: b.label } : null));
+    return study.blocks.map((b) => (b.type === 'chapter' ? `ch-${++n}` : undefined));
   }, [study]);
-  const chapterList = chapters.filter(Boolean) as Chapter[];
 
   const next = useMemo(() => {
     const i = caseStudies.findIndex((c) => c.id === study.id);
@@ -253,109 +193,93 @@ export function CaseStudyV2({ study }: { study: Study }) {
   }, [study]);
 
   return (
-    <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
-      {/* Colour block header */}
-      <div className="p-2.5 md:p-3">
-      <header style={{ background: study.bg }}>
-        <nav className="px-5 md:px-8 py-6">
-          <div className="mx-auto max-w-[1240px]">
-            <Link to="/" className="font-display text-[20px] hover:underline underline-offset-4" aria-label="Rachael Grocott, back to all work">
-              Rachael Grocott
-            </Link>
-          </div>
-        </nav>
-        <div className="px-5 md:px-8 pt-4 md:pt-8 pb-12 md:pb-16">
-          <div className="mx-auto max-w-[1240px] grid lg:grid-cols-[5fr_6fr] gap-10 lg:gap-14 items-center">
+    <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] md:flex">
+      {/* The project, pinned on the left like the intro on the home page */}
+      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen p-2.5 pb-0 md:p-3">
+        <div className="h-full md:overflow-y-auto px-5 md:px-[3vw] py-8 md:py-[5vh] flex flex-col gap-6" style={{ background: study.bg }}>
+          <Link to="/" className="self-start inline-flex items-center gap-1.5 text-[15px] font-bold hover:underline underline-offset-4">
+            <ArrowLeft className="w-4 h-4" aria-hidden /> Rachael Grocott
+          </Link>
+          <div className="md:my-auto flex flex-col gap-6">
             <div>
-              <span className="chunky-tag">{study.madeFor}</span>
-              <h1 className="mt-4 font-display leading-[1.02] text-[44px] md:text-[64px]">{study.title}</h1>
-              <p className="mt-5 text-[19px] md:text-[21px] leading-[1.45] font-medium text-pretty">{study.intro}</p>
-              <dl className="mt-8 border-t-[2px] border-[var(--ink)]">
-                {study.facts.map((f) => (
-                  <div key={f.label} className="grid grid-cols-[8.5rem_1fr] gap-3 py-2.5 border-b border-[var(--ink)]/20">
-                    <dt className="text-[15px] text-[var(--ink)]/70">{f.label}</dt>
-                    <dd className="text-[15px] font-bold">{f.value}</dd>
-                  </div>
-                ))}
-              </dl>
-              {study.link && (
-                <a href={study.link.href} target="_blank" rel="noopener noreferrer" className="chunky mt-8">
-                  {study.link.label} <ArrowUpRight className="w-4 h-4" aria-hidden />
-                </a>
-              )}
+              <Label>{study.madeFor}</Label>
+              <h1 className="mt-4 font-display leading-[1.02] text-[40px] md:text-[clamp(34px,3.4vw,56px)]">{study.title}</h1>
+              <p className="mt-4 text-[17px] md:text-[clamp(16px,1.15vw,19px)] leading-[1.5] font-medium">{study.intro}</p>
             </div>
-            {study.hero && (
-              /* One row, equal heights, edges lined up with the column */
-              <Row images={study.hero} />
-            )}
-          </div>
-        </div>
-      </header>
-      </div>
-
-      <div className="px-5 md:px-8 pt-10 flex justify-center">
-        <Toggle tldr={tldr} setTldr={setTldr} />
-      </div>
-
-      {tldr && study.tldr ? (
-        <article className="px-5 md:px-8 pt-10 pb-20 space-y-12">
-          <section className={text}>
-            <dl className="divide-y-[2px] divide-[var(--ink)]/10 border-y-[2px] border-[var(--ink)]/10">
-              {study.tldr.points.map((p) => (
-                <div key={p.label} className="py-6 grid md:grid-cols-[9rem_1fr] gap-2 md:gap-6">
-                  <dt className="font-display text-[20px]">{p.label}</dt>
-                  <dd className="text-[18px] leading-[1.55] text-[var(--ink-soft)]">{p.body}</dd>
+            <dl className="border-t-[2px] border-[var(--ink)]">
+              {study.facts.map((f) => (
+                <div key={f.label} className="grid grid-cols-[7.5rem_1fr] gap-3 py-2 border-b border-[var(--ink)]/20">
+                  <dt className="text-[14px] text-[var(--ink)]/70">{f.label}</dt>
+                  <dd className="text-[14px] font-bold">{f.value}</dd>
                 </div>
               ))}
             </dl>
-          </section>
-          {study.tldr.stats && <Stats items={study.tldr.stats} bg={study.bg} />}
-          <div className="flex justify-center">
-            <button type="button" className="chunky" onClick={() => { setTldr(false); window.scrollTo({ top: 0 }); }}>
-              Read the full story <ArrowRight className="w-4 h-4" aria-hidden />
-            </button>
+            <div className="flex flex-wrap items-center gap-3">
+              {study.tldr && <Toggle tldr={tldr} setTldr={setTldr} />}
+              {study.link && (
+                <a href={study.link.href} target="_blank" rel="noopener noreferrer" className="chunky">
+                  Visit <ArrowUpRight className="w-4 h-4" aria-hidden />
+                </a>
+              )}
+            </div>
           </div>
-        </article>
-      ) : (
-        <article className="px-5 md:px-8 pt-14 md:pt-20 pb-20 space-y-16 md:space-y-24">
-          <ChapterNav chapters={chapterList} />
-          {study.blocks.map((b, i) => (
-            <BlockView
-              key={i}
-              block={b}
-              bg={study.bg}
-              chapter={chapters[i] ?? undefined}
-              joined={b.type === 'figure' && study.blocks[i - 1]?.type === 'figure'}
-            />
-          ))}
-        </article>
-      )}
+        </div>
+      </aside>
 
-      {/* Next project, in its own colour */}
-      <div className="px-2.5 md:px-3">
-      <Link to={`/work/${next.id}`} className="group block px-5 md:px-8 py-12 md:py-16" style={{ background: next.bg }}>
-        <div className={`${text} flex items-center justify-between gap-6`}>
-          <div>
-            <p className="text-[14px] font-bold">Next case study</p>
-            <p className="mt-1 font-display text-[36px] md:text-[56px] leading-none">{next.title}</p>
-          </div>
-          <span className="chunky-icon transition-transform group-hover:translate-x-1" aria-hidden>
-            <ArrowRight className="w-5 h-5" />
-          </span>
-        </div>
-      </Link>
-      </div>
-      {/* Same column as the text above, so every edge lines up */}
-      <footer className="px-5 md:px-8 py-10">
-        <div className={`${text} flex flex-wrap items-center justify-between gap-4`}>
-          <Link to="/" className="chunky">
-            <ArrowLeft className="w-4 h-4" aria-hidden /> All work
+      {/* The story, as a grid of blocks */}
+      <main className="md:flex-1 min-w-0">
+        <div className="grid md:grid-cols-2 gap-2.5 p-2.5 md:gap-3 md:p-3 md:pl-0">
+          {tldr && study.tldr ? (
+            <>
+              {study.tldr.points.map((p) => (
+                <Tile key={p.label} full={false} className="p-6 md:p-10">
+                  <Label>{p.label}</Label>
+                  <p className="mt-4 text-[18px] leading-[1.55]">{p.body}</p>
+                </Tile>
+              ))}
+              {study.tldr.stats && <StatTiles items={study.tldr.stats} bg={study.bg} />}
+              {study.hero?.map((img) => (
+                <PictureTile key={img.src} img={img} bg={study.bg} full={false} />
+              ))}
+              <Tile className="p-6 md:p-10 flex justify-center">
+                <button type="button" className="chunky" onClick={() => { setTldr(false); window.scrollTo({ top: 0 }); }}>
+                  Read the full story <ArrowRight className="w-4 h-4" aria-hidden />
+                </button>
+              </Tile>
+            </>
+          ) : (
+            <>
+              {study.hero?.map((img) => (
+                <PictureTile key={img.src} img={img} bg={study.bg} full={false} />
+              ))}
+              {study.blocks.map((b, i) => (
+                <Blocks key={i} block={b} bg={study.bg} id={ids[i]} />
+              ))}
+            </>
+          )}
+
+          {/* Next project, in its own colour */}
+          <Link
+            to={`/work/${next.id}`}
+            className="group md:col-span-2 p-6 md:p-10 flex items-center justify-between gap-6"
+            style={{ background: next.bg }}
+          >
+            <div>
+              <Label>Next case study</Label>
+              <p className="mt-4 font-display text-[34px] md:text-[48px] leading-none">{next.title}</p>
+            </div>
+            <span className="chunky-icon transition-transform group-hover:translate-x-1" aria-hidden>
+              <ArrowRight className="w-4 h-4" />
+            </span>
           </Link>
-          <a href="mailto:rachaelgrocott@gmail.com" className="chunky">
-            Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
-          </a>
+          <Tile className="p-6 md:p-10 flex flex-wrap items-center justify-between gap-4">
+            <p className="font-display text-[22px]">Like what you see?</p>
+            <a href="mailto:rachaelgrocott@gmail.com" className="chunky">
+              Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
+            </a>
+          </Tile>
         </div>
-      </footer>
+      </main>
     </div>
   );
 }

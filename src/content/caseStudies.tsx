@@ -7,7 +7,8 @@ import { C } from '../components/Shapes';
  * so pictures can sit next to the part of the story they belong to.
  */
 
-export type Img = { src: string; alt: string; w: number; h: number };
+/* bg: the picture's own background colour, when it's already a coloured card that can be a block by itself */
+export type Img = { src: string; alt: string; w: number; h: number; bg?: string };
 
 export type Block =
   | { type: 'text'; eyebrow?: string; heading?: string; body: React.ReactNode }
@@ -46,7 +47,8 @@ export type CaseStudy = {
 
 const knotSizes: Record<string, [number, number]> = {"tap-a-row": [918, 922], "the-key": [918, 914], "plain-words": [1600, 636], "diagrams": [1600, 809], "your-place": [918, 646], "your-size": [1392, 694], "your-hook": [918, 798], "yarns": [920, 830]};
 /* A Knot a Problem image, with its size so pairs can be laid out at equal heights */
-const k = (name: string, alt: string): Img => ({ src: `/work/knot/${name}.webp`, alt, w: knotSizes[name][0], h: knotSizes[name][1] });
+const knotBg: Record<string, string> = {"diagrams": "#a6d4a7", "plain-words": "#f1d16c", "tap-a-row": "#f1d16c", "the-key": "#f1d16c", "yarns": "#899cee", "your-hook": "#8a9ded", "your-place": "#a6d4a7", "your-size": "#8a9ded"};
+const k = (name: string, alt: string): Img => ({ src: `/work/knot/${name}.webp`, alt, w: knotSizes[name][0], h: knotSizes[name][1], bg: knotBg[name] });
 
 
 const smSizes: Record<string, [number, number]> = {"chips": [1700, 1015], "phone-1": [780, 1520], "phone-2": [780, 1520], "phone-3": [780, 1520], "post-008": [720, 960], "post-012": [720, 960], "post-016": [720, 960], "post-019": [720, 960]};
