@@ -51,8 +51,8 @@ function Home() {
             polish them till they&rsquo;re <Pill bg={C.pink}>genuinely beautiful</Pill>.
           </p>
           <p className="mt-5 text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
-            I&rsquo;m all in on AI and use it to build my own products, start to finish. I founded Triangirls, I speak
-            at events, and I love rallying a team around a good idea.
+            Part designer, part engineer. I prototype and ship in code with AI, from the Graphy SDK to my own apps. I
+            founded Triangirls, I speak at events, and I love rallying a team around a good idea.
           </p>
         </div>
 
