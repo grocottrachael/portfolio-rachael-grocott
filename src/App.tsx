@@ -65,7 +65,7 @@ function Home() {
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)] md:flex">
       {/* Who I am: pinned on the left while the blocks scroll on the right */}
-      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen p-2.5 pb-0 md:p-3">
+      <aside className="md:w-[34%] md:flex-none md:sticky md:top-0 md:h-screen p-3 pb-0 md:p-5 md:pr-5">
         {/* A block of its own, so the white gutters run round it like the grid */}
         <div className="relative overflow-hidden h-full md:overflow-y-auto bg-[var(--c-grey)] px-5 md:px-[3vw] pt-10 pb-40 md:py-[6vh] flex flex-col gap-6 md:gap-7 md:justify-center">
         <div>

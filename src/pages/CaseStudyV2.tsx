@@ -199,7 +199,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
       {/* The project as one card at the top, like a block from the home grid. Scroll past it to read */}
-      <header className="p-2.5 md:p-3">
+      <header className="p-3 md:p-5">
         <div className="px-5 py-8 md:py-14" style={{ background: study.bg }}>
           <div className="mx-auto max-w-[720px] flex flex-col gap-7">
             <Link to="/" className="self-start inline-flex items-center gap-1.5 text-[15px] font-bold hover:underline underline-offset-4">
@@ -258,7 +258,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
       </main>
 
       {/* Next project: a full-width card in its own colour, like the one at the top */}
-      <div className="p-2.5 md:p-3 pt-0 md:pt-0">
+      <div className="p-3 md:p-5 pt-0 md:pt-0">
         <Link to={`/work/${next.id}`} className="group block px-5 py-8 md:py-12" style={{ background: next.bg }}>
           <div className="mx-auto max-w-[720px] flex items-center justify-between gap-6">
             <div>
