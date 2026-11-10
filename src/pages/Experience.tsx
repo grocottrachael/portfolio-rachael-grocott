@@ -33,7 +33,7 @@ export function Experience() {
               <ArrowLeft className="w-4 h-4" aria-hidden /> Rachael Grocott
             </Link>
             <div>
-              <span className="chunky-tag">For anyone hiring</span>
+              <span className="chunky-tag">For anyone interested</span>
               <h1 className="mt-4 font-display leading-[1.02] text-[40px] md:text-[60px]">Experience</h1>
               <p className="mt-4 max-w-[34ch] text-[18px] md:text-[20px] leading-[1.5] font-medium">
                 Thirteen years designing complex products, from trading platforms for banks to an SDK for AI agents.

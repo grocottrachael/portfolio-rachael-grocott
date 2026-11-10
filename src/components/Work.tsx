@@ -428,7 +428,7 @@ export function Work() {
           className="group relative overflow-hidden p-5 md:p-7 flex flex-col text-[var(--ink)] col-span-2 md:col-span-1 min-h-[220px]"
           style={{ background: C.green }}
         >
-          <span className="chunky-tag self-start">For anyone hiring</span>
+          <span className="chunky-tag self-start">For anyone interested</span>
           <span className="mt-4 block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
             Experience
           </span>
