@@ -90,7 +90,7 @@ export const caseStudies: CaseStudy[] = [
             </p>
             <p>
               Side by side, big, on your phone, you see the tone of a colour much more honestly, because it sits next
-              to another one. And a plain line like &ldquo;a warm grey with a hint of pink&rdquo; tells you what your
+              to another one. And a plain line like And a plain line like &ldquo;a warm grey with a hint of pink&rdquo; tells you what yourldquo;On the blue side of aquaAnd a plain line like &ldquo;a warm grey with a hint of pink&rdquo; tells you what yourrdquo; tells you what your
               eye might miss.
             </p>
           </>
