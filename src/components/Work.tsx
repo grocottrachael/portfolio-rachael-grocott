@@ -51,21 +51,16 @@ type Project = {
   link?: { href: string; label: string };
 };
 
-/* The Dotties logo, as drawn in the Dotties app: a framed, rotated 3x3 dot grid and the name in Jersey 20 */
+/* The Dotties mark, as drawn in the Dotties app: a framed, rotated 3x3 dot grid (the name is the tile title) */
 function DottiesLogo() {
   return (
-    <span className="inline-flex items-center gap-2.5" aria-label="Dotties">
-      <span className="relative w-9 h-9 border border-[var(--ink)]/15 bg-white/50" aria-hidden>
-        {['-left-px -top-px', '-right-px -top-px', '-left-px -bottom-px', '-right-px -bottom-px'].map((pos) => (
-          <span key={pos} className={`absolute w-1 h-1 bg-[var(--ink)]/40 ${pos}`} />
-        ))}
-        <svg viewBox="0 0 13 13" className="absolute inset-0 m-auto w-[13px] h-[13px] rotate-45">
-          {[0, 5, 10].flatMap((y) => [0, 5, 10].map((x) => <rect key={`${x}-${y}`} x={x} y={y} width="3" height="3" fill="var(--ink)" />))}
-        </svg>
-      </span>
-      <span className="text-[34px] leading-none" style={{ fontFamily: '"Jersey 20", sans-serif' }} aria-hidden>
-        Dotties
-      </span>
+    <span className="relative block w-11 h-11 border border-[var(--ink)]/15 bg-white/50" aria-hidden>
+      {['-left-px -top-px', '-right-px -top-px', '-left-px -bottom-px', '-right-px -bottom-px'].map((pos) => (
+        <span key={pos} className={`absolute w-1 h-1 bg-[var(--ink)]/40 ${pos}`} />
+      ))}
+      <svg viewBox="0 0 13 13" className="absolute inset-0 m-auto w-4 h-4 rotate-45">
+        {[0, 5, 10].flatMap((y) => [0, 5, 10].map((x) => <rect key={`${x}-${y}`} x={x} y={y} width="3" height="3" fill="var(--ink)" />))}
+      </svg>
     </span>
   );
 }
@@ -116,7 +111,6 @@ const projects: Project[] = [
     span: 'col-span-2 md:col-span-1',
     summary: 'I needed it, so I built it. Images into halftone, dithering or ASCII.',
     logo: <DottiesLogo />,
-    wordmark: true,
     story: (
       <>
         Upload an image and turn it into halftone dots, ordered dithering or ASCII. Choose circle or square dots, tune
