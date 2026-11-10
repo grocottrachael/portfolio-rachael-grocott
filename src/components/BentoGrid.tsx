@@ -33,19 +33,6 @@ function Tag({ children, dark }: { children: React.ReactNode; dark?: boolean }) 
   );
 }
 
-/* The inset panel that holds each card's content, like the mat around a print */
-function Frame({ children, dark, className = '' }: { children: React.ReactNode; dark?: boolean; className?: string }) {
-  return (
-    <div
-      className={`h-full rounded-lg p-2 ${
-        dark ? 'bg-white/[0.06] ring-1 ring-white/10' : 'bg-white/70 ring-1 ring-black/[0.06]'
-      } ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
-
 function VisitLink({ href, label, dark }: { href: string; label: string; dark?: boolean }) {
   return (
     <External
@@ -128,7 +115,7 @@ function Tile({ id, openId, setOpenId, className, dark, title, tag, summary, pre
       </motion.div>
 
       {!open && preview && (
-        <motion.div layout="position" transition={spring} className="mt-3 flex-1 flex flex-col [&>*]:flex-1">
+        <motion.div layout="position" transition={spring} className="mt-3">
           {preview}
         </motion.div>
       )}
@@ -195,37 +182,18 @@ export function BentoGrid() {
           <Tile
             {...tile}
             id="swatchmaker"
-            className="md:col-span-4 md:row-span-2 bg-[#EFE4DA]"
+            className="md:col-span-4 md:row-span-2 bg-neutral-100"
             title="SWATCHMAKER"
             tag="Featured"
             summary="A passion project for people to see paint colours from all brands side by side."
             preview={
-              <Frame className="flex flex-col justify-between gap-2">
-                <img
-                  src="/swatchmaker.webp"
-                  alt="SWATCHMAKER: a bathroom photo next to the paint colours La Torre, Follingsby and Pale Taupe"
-                  width={1200}
-                  height={657}
-                  className="w-full rounded-md"
-                />
-                <ul className="grid grid-cols-3 gap-2">
-                  {[
-                    ['COAT', 'La Torre', '#9A6A63'],
-                    ['Rust-Oleum', 'Follingsby', '#6B4C42'],
-                    ['Dulux', 'Pale Taupe', '#D1C8BF'],
-                  ].map(([brand, name, hex], i) => (
-                    <li
-                      key={name}
-                      className="rounded-md bg-white p-1.5 shadow-sm transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-1"
-                      style={{ transitionDelay: `${i * 60}ms` }}
-                    >
-                      <div className="h-12 rounded-[3px]" style={{ background: hex }} />
-                      <div className="mt-1.5 px-0.5 text-[10px] uppercase tracking-[0.08em] text-neutral-400">{brand}</div>
-                      <div className="px-0.5 font-serif text-[14px] leading-tight text-neutral-800">{name}</div>
-                    </li>
-                  ))}
-                </ul>
-              </Frame>
+              <img
+                src="/swatchmaker.webp"
+                alt="SWATCHMAKER: a bathroom photo next to the paint colours La Torre, Follingsby and Pale Taupe"
+                width={1200}
+                height={657}
+                className="w-full rounded-lg shadow-sm transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-0.5"
+              />
             }
             details={
               <div className="grid md:grid-cols-2 gap-6 items-start">
@@ -253,27 +221,14 @@ export function BentoGrid() {
             dark
             className="md:col-span-2 bg-gradient-to-br from-neutral-900 to-neutral-800"
             title="Graphy SDK"
-            summary="Beautiful, editable charts for developers and their AI agents."
-            preview={
-              <Frame dark className="text-[13px]">
-                <dl className="divide-y divide-white/10">
-                  <div className="flex justify-between gap-3 px-1.5 py-1.5">
-                    <dt className="text-white/50">Role</dt>
-                    <dd className="text-right">Senior Product Designer</dd>
-                  </div>
-                  <div className="flex justify-between gap-3 px-1.5 py-1.5">
-                    <dt className="text-white/50">Also</dt>
-                    <dd className="text-right">Design of graphy.dev</dd>
-                  </div>
-                  <div className="flex justify-between gap-3 px-1.5 py-1.5">
-                    <dt className="text-white/50">Status</dt>
-                    <dd className="flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                      Working on this now
-                    </dd>
-                  </div>
-                </dl>
-              </Frame>
+            summary={
+              <>
+                Beautiful, editable charts for developers and their AI agents. I also own the design of graphy.dev.
+                <span className="flex items-center gap-1.5 mt-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                  <span className="text-[12px] text-neutral-300">Working on this now</span>
+                </span>
+              </>
             }
             details={
               <>
@@ -304,16 +259,14 @@ export function BentoGrid() {
             tag="Made for work"
             summary="I built this to help me at work. Turn any image into halftone dots, dithering or ASCII art."
             preview={
-              <Frame dark className="flex items-center">
               <img
                 src="/dotties.webp"
                 alt="A halftone image made with Dotties: concentric rings of white dots on black"
                 width={600}
                 height={600}
                 loading="lazy"
-                className="w-full aspect-[16/9] object-cover rounded-md"
+                className="w-full aspect-[16/9] object-cover rounded-md transition-transform duration-500 ease-out motion-safe:group-hover:scale-[1.03]"
               />
-              </Frame>
             }
             details={
               <>
@@ -369,18 +322,6 @@ export function BentoGrid() {
             title="Crumbs"
             tag="Just for us"
             summary="A no-faff calorie diary for our household. Snap your plate and it works it out."
-            preview={
-              <Frame className="flex items-center gap-4 p-3">
-                <img src="/crumbs-icon.svg" alt="" width={56} height={56} className="w-14 h-14 flex-none rounded-xl" />
-                <ul className="flex flex-wrap gap-1.5 text-[12px] text-[#0F6B57]">
-                  {['Snap your plate', 'Scan a barcode', 'Read a receipt', 'A diary each', 'Shared fridge'].map((t) => (
-                    <li key={t} className="rounded-full bg-[#D4EAE2] px-2.5 py-1">
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </Frame>
-            }
             details={
               <p className="max-w-[60ch]">
                 Snap your plate, a receipt or a nutrition label and Claude works it out, or scan a barcode. Everyone
@@ -394,16 +335,10 @@ export function BentoGrid() {
           <Tile
             {...tile}
             id="triangirls"
-            className="md:col-span-2 bg-[#FFD6EA]"
+            className="md:col-span-2 bg-neutral-50"
             title="Triangirls"
             tag="Founder"
-            summary="Founded and ran a community for women in tech, for years."
-            preview={
-              <Frame className="flex flex-col justify-center px-3 py-3">
-                <span className="text-[40px] leading-none font-semibold tracking-tight text-[#E0187A]">2,000+</span>
-                <span className="mt-1 text-[13px] text-neutral-600">women in tech</span>
-              </Frame>
-            }
+            summary="Founded and ran a 2000+ member strong community for women in tech, for years."
             details={
               <>
                 <p className="max-w-[60ch]">
@@ -416,55 +351,34 @@ export function BentoGrid() {
           />
 
           {/* Talks */}
-          <motion.div
-            layout
-            transition={spring}
-            className={`${card} col-span-6 md:col-span-2 bg-[#E6E9FF] p-4 flex flex-col`}
-          >
+          <motion.div layout transition={spring} className={`${card} col-span-6 md:col-span-2 bg-neutral-50 p-4`}>
             <h4 className="text-[15px] tracking-tight mb-1 font-medium">Talks & workshops</h4>
-            <p className="text-[14px] text-neutral-600">I{'\u2019'}ve spoken at loads of events, and I run sessions like:</p>
-            <Frame className="mt-3 flex-1 flex flex-col justify-center px-3 py-3">
-              <span className="text-[11px] uppercase tracking-[0.12em] text-[#4B5BD6]">Workshop</span>
-              <span className="mt-1 text-[17px] leading-snug font-medium">How to give and receive feedback</span>
-            </Frame>
+            <p className="text-[14px] text-neutral-600">
+              I{'’'}ve spoken at loads of events, and I run sessions like{' '}
+              <em>How to give and receive feedback</em>.
+            </p>
           </motion.div>
 
           {/* Latest work lives on LinkedIn */}
           <motion.div layout transition={spring} className="col-span-6 md:col-span-4">
             <External
               href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
-              className={`${linkCard} h-full bg-[#DCE9F7] p-4 flex flex-col`}
+              className={`${linkCard} block h-full bg-[#FFE3F1] p-4`}
             >
               <h4 className="text-[15px] tracking-tight mb-1 font-medium">My latest work</h4>
               <p className="text-[14px] text-neutral-700">
-                I post what I{'\u2019'}m working on as I go. LinkedIn is the place to see it.
+                I post what I{'’'}m working on as I go. LinkedIn is the place to see it.
               </p>
-              <Frame className="mt-3 flex-1 flex items-center justify-between gap-3 px-3 py-3">
-                <span className="flex items-center gap-2 text-[14px] font-medium">
-                  <Linkedin className="w-4 h-4 text-[#0A66C2]" aria-hidden /> See my latest posts
-                </span>
-                <ArrowUpRight className="w-4 h-4 text-neutral-500 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
-              </Frame>
+              <Arrow />
             </External>
           </motion.div>
 
           {/* Press */}
-          <motion.div
-            layout
-            transition={spring}
-            className={`${card} col-span-6 md:col-span-2 bg-[#FFF0C9] p-4 flex flex-col`}
-          >
+          <motion.div layout transition={spring} className={`${card} col-span-6 md:col-span-2 bg-neutral-50 p-4`}>
             <h4 className="text-[15px] tracking-tight mb-1 font-medium">Press</h4>
-            <Frame className="mt-2 flex-1 flex flex-col justify-center divide-y divide-black/[0.06] px-3">
-              <div className="py-2">
-                <div className="text-[15px] font-semibold tracking-tight">VICE</div>
-                <div className="text-[13px] text-neutral-600">Interviewed</div>
-              </div>
-              <div className="py-2">
-                <div className="text-[15px] font-semibold tracking-tight">Samsung</div>
-                <div className="text-[13px] text-neutral-600">Featured in Not a School</div>
-              </div>
-            </Frame>
+            <p className="text-[14px] text-neutral-600">
+              Interviewed by VICE. Featured in Samsung{'’'}s Not a School.
+            </p>
           </motion.div>
 
           {/* Contact: kept together in one row */}
