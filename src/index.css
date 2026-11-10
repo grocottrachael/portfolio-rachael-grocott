@@ -108,10 +108,11 @@
   box-shadow: 0 2px 0 var(--ink);
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
-.group:hover .chunky-icon,
-.chunky-icon:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 0 var(--ink);
+/* Still on hover; pressed in on click, sinking onto its shadow */
+.group:active .chunky-icon,
+.chunky-icon:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 var(--ink);
 }
 
 /* Headings: Fraunces, at its softest and with the wonky letters on */

@@ -278,7 +278,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
               <p className="mt-1.5 font-display text-[26px] md:text-[32px] leading-none">{next.title}</p>
               {next.teaser && <p className="mt-2 text-[16px] md:text-[17px] leading-snug">{next.teaser}</p>}
             </div>
-            <span className="chunky-icon shrink-0 transition-transform group-hover:translate-x-1" aria-hidden>
+            <span className="chunky-icon shrink-0" aria-hidden>
               <ArrowRight className="w-4 h-4" />
             </span>
           </div>
