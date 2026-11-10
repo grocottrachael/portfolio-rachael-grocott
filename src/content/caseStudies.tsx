@@ -26,6 +26,7 @@ export type Block =
   | { type: 'quote'; text: string }
   | { type: 'stats'; items: { value: string; label: string }[] }
   | { type: 'liveCharts'; caption?: string }
+  | { type: 'liveEdit'; caption?: string }
   | { type: 'shows'; items: { title: string; body: string }[] }
   | { type: 'decisions'; eyebrow: string; heading: string; items: { title: string; body: React.ReactNode }[] }
   | { type: 'gallery'; eyebrow?: string; heading?: string; body?: React.ReactNode; images: Img[] };
@@ -55,7 +56,7 @@ const smSizes: Record<string, [number, number]> = {"chips": [1700, 1015], "phone
 /* A SwatchMaker image */
 const sm = (name: string, alt: string): Img => ({ src: `/work/swatchmaker/${name}.webp`, alt, w: smSizes[name][0], h: smSizes[name][1] });
 
-const gSizes: Record<string, [number, number]> = {"point-and-edit": [1600, 980], "annotate": [1560, 980], "theme-botanical": [1120, 760], "theme-chalkboard": [1120, 760], "theme-blueprint": [1120, 760], "theme-watercolor": [1120, 760], "theme-neo-brutalist": [1120, 760], "theme-comic": [1120, 760]};
+const gSizes: Record<string, [number, number]> = {"annotate": [1560, 980], "theme-botanical": [1120, 760], "theme-chalkboard": [1120, 760], "theme-blueprint": [1120, 760], "theme-watercolor": [1120, 760], "theme-neo-brutalist": [1120, 760], "theme-comic": [1120, 760]};
 /* A Graphy image: every chart here is drawn with the real Graphy SDK, on the SDK's own public npm downloads */
 const g = (name: string, alt: string): Img => ({ src: `/work/graphy/${name}.webp`, alt, w: gSizes[name][0], h: gSizes[name][1] });
 
@@ -140,10 +141,9 @@ export const caseStudies: CaseStudy[] = [
         },
       },
       {
-        type: 'figure',
-        images: [g('point-and-edit', 'A bar chart in edit mode: the bars are selected and a menu offers fill colour and bar thickness')],
-        caption: 'Point and edit: click the bars and their controls open right there. Every chart on this page is drawn with the real SDK, on its own public weekly downloads from npm.',
-        frame: true,
+        type: 'liveEdit',
+        caption:
+          'This is the real Graphy editor, running right here. Click a bar, an axis or the background and change it. Drawn on the SDK’s own public weekly downloads from npm.',
       },
       {
         type: 'chapter',
