@@ -47,9 +47,34 @@ type Project = {
   span: string;
   summary: string;
   image?: { src: string; alt: string; className?: string };
+  /** shown above the title */
+  logo?: React.ReactNode;
+  /** the logo spells out the name, so the big title is for screen readers only */
+  wordmark?: boolean;
+  /** a second pill next to "made for", e.g. "Current role" */
+  badge?: string;
   story: React.ReactNode;
   link?: { href: string; label: string };
 };
+
+/* The Dotties logo, as drawn in the Dotties app: a framed, rotated 3x3 dot grid and the name in Jersey 20 */
+function DottiesLogo() {
+  return (
+    <span className="inline-flex items-center gap-2.5" aria-label="Dotties">
+      <span className="relative w-9 h-9 border border-[var(--ink)]/15 bg-white/50" aria-hidden>
+        {['-left-px -top-px', '-right-px -top-px', '-left-px -bottom-px', '-right-px -bottom-px'].map((pos) => (
+          <span key={pos} className={`absolute w-1 h-1 bg-[var(--ink)]/40 ${pos}`} />
+        ))}
+        <svg viewBox="0 0 13 13" className="absolute inset-0 m-auto w-[13px] h-[13px] rotate-45">
+          {[0, 5, 10].flatMap((y) => [0, 5, 10].map((x) => <rect key={`${x}-${y}`} x={x} y={y} width="3" height="3" fill="var(--ink)" />))}
+        </svg>
+      </span>
+      <span className="text-[34px] leading-none" style={{ fontFamily: '"Jersey 20", sans-serif' }} aria-hidden>
+        Dotties
+      </span>
+    </span>
+  );
+}
 
 const projects: Project[] = [
   {
@@ -77,8 +102,16 @@ const projects: Project[] = [
     title: 'Graphy SDK',
     madeFor: 'For developers',
     bg: C.accent,
-    span: 'col-span-2 md:col-span-1',
-    summary: 'Beautiful, editable charts for developers and their AI agents. My day job.',
+    span: 'col-span-2 md:row-span-2',
+    badge: 'Current role',
+    logo: <img src="/graphy-logo.png" alt="" width={160} height={47} className="h-10 w-auto" />,
+    wordmark: true,
+    summary:
+      'Beautiful, editable charts for developers and their AI agents. I design the SDK’s developer experience, and I own the design of graphy.dev.',
+    image: {
+      src: '/graphy-charts.webp',
+      alt: 'Charts made with Graphy: a flow chart of regions, a daily steps bar chart with a callout, and a donut chart',
+    },
     story: (
       <>
         Graphy turns data into clear, beautiful stories. I&rsquo;m a Senior Product Designer on the SDK, which lets
@@ -95,11 +128,8 @@ const projects: Project[] = [
     bg: C.grey,
     span: 'col-span-2 md:col-span-1',
     summary: 'I needed it, so I built it. Images into halftone, dithering or ASCII.',
-    image: {
-      src: '/dotties.webp',
-      alt: 'A halftone image made with Dotties: concentric rings of white dots on black',
-      className: 'aspect-[4/3] object-cover',
-    },
+    logo: <DottiesLogo />,
+    wordmark: true,
     story: (
       <>
         Upload an image and turn it into halftone dots, ordered dithering or ASCII. Choose circle or square dots, tune
@@ -134,7 +164,8 @@ const projects: Project[] = [
     title: 'Crumbs',
     madeFor: 'Just for us',
     bg: C.green,
-    span: 'col-span-2',
+    span: 'col-span-2 md:col-span-1',
+    logo: <img src="/crumbs-icon.svg" alt="" width={44} height={44} className="h-11 w-11 rounded-[10px]" />,
     summary: 'A no-faff calorie diary for our household. Snap your plate and it works it out.',
     story: (
       <>
@@ -149,8 +180,10 @@ const projects: Project[] = [
     id: 'triangirls',
     title: 'Triangirls',
     madeFor: 'For women in tech',
-    bg: C.blue,
+    bg: C.green,
     span: 'col-span-2 md:col-span-1',
+    logo: <img src="/triangirls-logo.png" alt="" width={190} height={37} className="h-9 w-auto" />,
+    wordmark: true,
     summary: 'I founded and ran a 2,000+ member community, for years.',
     story: <>I founded Triangirls and ran it for years, growing it into a community of more than 2,000 women in tech.</>,
     link: { href: 'https://x.com/triangirlsocial', label: 'Triangirls on X' },
@@ -168,9 +201,16 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
       } ${p.span}`}
       style={{ background: p.bg }}
     >
-      <div className="pr-12">
+      <div className="pr-12 flex flex-wrap gap-1.5">
         <For dark={p.dark}>{p.madeFor}</For>
+        {p.badge && (
+          <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-[var(--ink)] text-[var(--paper)] px-3 py-1 text-[12px] font-bold uppercase tracking-[0.06em]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#5BE38B] motion-safe:animate-pulse" aria-hidden />
+            {p.badge}
+          </span>
+        )}
       </div>
+      {p.logo && <div className="mt-6">{p.logo}</div>}
       <button
         type="button"
         aria-haspopup="dialog"
@@ -180,10 +220,16 @@ function ProjectTile({ p, onOpen }: { p: Project; onOpen: () => void }) {
         }}
         className="mt-4 block w-full text-left focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-current"
       >
-        <span className="block font-black uppercase leading-[0.9] tracking-[-0.01em] text-[34px] md:text-[clamp(26px,2.3vw,42px)]">
+        <span
+          className={
+            p.wordmark
+              ? 'sr-only'
+              : 'block font-black uppercase leading-[0.9] tracking-[-0.01em] text-[34px] md:text-[clamp(26px,2.3vw,42px)]'
+          }
+        >
           {p.title}
         </span>
-        <span className={`mt-3 block text-[16px] leading-snug max-w-[36ch] ${soft}`}>{p.summary}</span>
+        <span className={`${p.wordmark ? 'mt-4' : 'mt-3'} block text-[16px] leading-snug max-w-[36ch] ${soft}`}>{p.summary}</span>
       </button>
 
       {p.image && (
@@ -368,19 +414,19 @@ export function Work() {
         aria-label="Things I've made"
         className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:auto-rows-[minmax(13vw,auto)] gap-2.5 p-2.5 md:gap-3 md:p-3 md:pl-0"
       >
-        {tile('swatchmaker')}
+        {tile('graphy')}
         <ShapeTile>
           <Eyes />
         </ShapeTile>
-        {tile('graphy')}
-        {tile('knot-a-problem')}
         {tile('crumbs')}
+        {tile('knot-a-problem')}
+        {tile('swatchmaker')}
         {tile('dotties')}
         {tile('triangirls')}
-        <InfoTile bg={C.pink} madeFor="For teams" title="Talks & workshops" className="col-span-2 md:col-span-1">
+        <InfoTile bg={C.yellow} madeFor="For teams" title="Talks & workshops" className="col-span-2 md:col-span-1">
           I&rsquo;ve spoken at loads of events, and I run sessions like <em>How to give and receive feedback</em>.
         </InfoTile>
-        <InfoTile bg={C.green} madeFor="In the press" title="VICE & Samsung" className="col-span-2 md:col-span-1">
+        <InfoTile bg={C.pink} madeFor="In the press" title="VICE & Samsung" className="col-span-2 md:col-span-1">
           Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
         </InfoTile>
         <InfoTile
@@ -388,7 +434,7 @@ export function Work() {
           madeFor="For anyone curious"
           title="My latest work"
           href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
-          className="col-span-2 md:col-span-1"
+          className="col-span-2"
         >
           I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
         </InfoTile>
