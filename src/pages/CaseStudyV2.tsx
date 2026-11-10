@@ -258,16 +258,15 @@ export function CaseStudyV2({ study }: { study: Study }) {
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
       {/* Colour block header */}
       <header style={{ background: study.bg }}>
-        <nav className="px-5 md:px-8 py-5 flex items-center justify-between">
-          <Link to="/" className="chunky">
-            <ArrowLeft className="w-4 h-4" aria-hidden /> All work
-          </Link>
-          <Link to="/" className="font-display text-[18px]">
-            Rachael Grocott
-          </Link>
+        <nav className="px-5 md:px-8 py-6">
+          <div className="mx-auto max-w-[1240px]">
+            <Link to="/" className="font-display text-[20px] hover:underline underline-offset-4" aria-label="Rachael Grocott, back to all work">
+              Rachael Grocott
+            </Link>
+          </div>
         </nav>
-        <div className="px-5 md:px-8 pt-6 md:pt-10 pb-12 md:pb-16">
-          <div className="mx-auto max-w-[1240px] grid lg:grid-cols-[5fr_6fr] gap-10 lg:gap-14 items-start">
+        <div className="px-5 md:px-8 pt-4 md:pt-8 pb-12 md:pb-16">
+          <div className="mx-auto max-w-[1240px] grid lg:grid-cols-[5fr_6fr] gap-10 lg:gap-14 items-center">
             <div>
               <span className="chunky-tag">{study.madeFor}</span>
               <h1 className="mt-4 font-display leading-[1.02] text-[44px] md:text-[64px]">{study.title}</h1>
@@ -287,11 +286,8 @@ export function CaseStudyV2({ study }: { study: Study }) {
               )}
             </div>
             {study.hero && (
-              <div className="grid grid-cols-2 gap-4 md:gap-6 items-start">
-                {study.hero.map((img, i) => (
-                  <Framed key={img.src} img={img} className={i % 2 ? 'lg:mt-16' : ''} />
-                ))}
-              </div>
+              /* One row, equal heights, edges lined up with the column */
+              <Row images={study.hero} />
             )}
           </div>
         </div>
