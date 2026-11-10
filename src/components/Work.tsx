@@ -79,11 +79,10 @@ const projects: Project[] = [
     span: 'col-span-2 md:col-span-4 md:row-span-2',
     summary: 'See paint colours from every brand side by side.',
     image: {
-      src: '/swatchmaker-tile-sq.webp',
-      alt: 'SwatchMaker matching paints to the Rivers wallpaper by Living Quarters: Lick Green 03, Dulux Bracken Salts 5 and Valspar Ode to Joy',
-      /* A square screenshot of the real app (all three colours), so it fits the card without cropping */
-      className: 'aspect-square md:aspect-auto border-[3px] border-[var(--ink)]',
-      fill: true,
+      src: '/swatchmaker-tile.webp?v=2',
+      alt: 'SwatchMaker showing a Living Quarters wallpaper next to three paint colours',
+      /* The whole app at its own 4:3 shape, nothing cropped */
+      className: 'border-[3px] border-[var(--ink)]',
     },
     story: (
       <>
@@ -96,15 +95,17 @@ const projects: Project[] = [
   },
   {
     sticker: (
-      <WordSticker lines={["Currently", "working here!"]} color={C.yellow} className="text-[30px] md:text-[clamp(28px,2.4vw,38px)] -rotate-[5deg] origin-bottom-left" />
+      <WordSticker lines={["Currently", "working here!"]} color={C.yellow} className="text-[26px] md:text-[clamp(17px,1.45vw,28px)] -rotate-[5deg] origin-bottom-left" />
     ),
+    /* Pinned to the bottom corner on desktop, so it doesn't make the card (and the row) taller */
+    stickerClass: 'self-start xl:absolute xl:left-7 xl:bottom-7 xl:mt-0 xl:pt-0',
     id: 'graphy',
     title: 'Graphy SDK',
     madeFor: 'Currently working here',
     live: true,
     bg: C.accent,
     span: 'col-span-2 md:col-span-2',
-    summary: 'Editable charts for developers and their AI agents. I design the developer experience, and own the design of graphy.dev.',
+    summary: 'Editable charts for developers and their AI agents. I design the developer experience.',
     story: (
       <>
         Graphy turns data into clear, beautiful stories. I&rsquo;m a Senior Product Designer on the SDK, which lets
@@ -247,7 +248,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
           className={
             p.wordmark
               ? 'sr-only'
-              : 'block pr-12 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
+              : 'block pr-12 md:pr-0 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
           }
         >
           {p.title}
@@ -268,7 +269,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
           className={
             p.wordmark
               ? 'sr-only'
-              : 'block pr-12 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
+              : 'block pr-12 md:pr-0 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
           }
         >
           {p.title}
@@ -364,7 +365,7 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
         <For>{p.madeFor}</For>
         <h3
           id={`${p.id}-title`}
-          className="mt-4 pr-12 font-display leading-[1.05] text-[32px] md:text-[40px]"
+          className="mt-4 pr-12 md:pr-0 font-display leading-[1.05] text-[32px] md:text-[40px]"
         >
           {p.title}
         </h3>
@@ -410,7 +411,7 @@ function InfoTile({
     <>
       {href && <HoverCta label="Opens in a new tab" icon={<ArrowUpRight className="w-3.5 h-3.5" />} />}
       {to && <HoverCta label="See it on my Experience page" icon={<ArrowRight className="w-3.5 h-3.5" />} />}
-      <h3 className="pr-12 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
+      <h3 className="pr-12 md:pr-0 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
       <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
     </>
   );
@@ -490,7 +491,7 @@ export function Work() {
           style={{ background: C.green }}
         >
           <HoverCta label="See my experience" icon={<ArrowRight className="w-3.5 h-3.5" />} />
-          <span className="block pr-12 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
+          <span className="block pr-12 md:pr-0 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
             Experience
           </span>
           <span className="mt-3 block text-[16px] leading-snug text-[var(--ink-soft)]">13 years of product design, from agency to AI.</span>
