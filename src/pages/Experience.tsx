@@ -104,11 +104,11 @@ export function Experience() {
 
           <section>
             {label(C.green, 'Education')}
-            <dl className="mt-5 space-y-4">
+            <dl className="mt-6 space-y-6">
               {education.map((e) => (
                 <div key={e.where}>
-                  <dt className="text-[18px] font-bold">{e.where}</dt>
-                  <dd className="text-[17px] text-[var(--ink-soft)]">{e.what}</dd>
+                  <dt className="font-display text-[22px] md:text-[24px] leading-[1.2]">{e.where}</dt>
+                  <dd className="mt-1.5 text-[17px] md:text-[18px] leading-[1.6] text-[var(--ink-soft)]">{e.what}</dd>
                 </div>
               ))}
             </dl>
