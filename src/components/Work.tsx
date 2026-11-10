@@ -102,16 +102,12 @@ const projects: Project[] = [
     title: 'Graphy SDK',
     madeFor: 'For developers',
     bg: C.accent,
-    span: 'col-span-2 md:row-span-2',
+    span: 'col-span-2',
     badge: 'Current role',
     logo: <img src="/graphy-logo.png" alt="" width={160} height={47} className="h-10 w-auto" />,
     wordmark: true,
     summary:
       'Beautiful, editable charts for developers and their AI agents. I design the SDK’s developer experience, and I own the design of graphy.dev.',
-    image: {
-      src: '/graphy-charts.webp',
-      alt: 'Charts made with Graphy: a flow chart of regions, a daily steps bar chart with a callout, and a donut chart',
-    },
     story: (
       <>
         Graphy turns data into clear, beautiful stories. I&rsquo;m a Senior Product Designer on the SDK, which lets
@@ -143,12 +139,8 @@ const projects: Project[] = [
     title: 'Knot a Problem',
     madeFor: 'For crocheters',
     bg: C.yellow,
-    span: 'col-span-2 md:col-span-1 md:row-span-2',
+    span: 'col-span-2 md:col-span-1',
     summary: 'Never get stuck reading a crochet pattern again. It started with my granny.',
-    image: {
-      src: '/knot-a-problem.webp',
-      alt: 'Knot a Problem social post: Put it down. Pick it up. Still on round 3.',
-    },
     story: (
       <>
         It started with my granny, who has crocheted for sixty years and couldn&rsquo;t remember what a pattern
@@ -418,9 +410,9 @@ export function Work() {
         <ShapeTile>
           <Eyes />
         </ShapeTile>
-        {tile('crumbs')}
-        {tile('knot-a-problem')}
         {tile('swatchmaker')}
+        {tile('knot-a-problem')}
+        {tile('crumbs')}
         {tile('dotties')}
         {tile('triangirls')}
         <InfoTile bg={C.yellow} madeFor="For teams" title="Talks & workshops" className="col-span-2 md:col-span-1">
