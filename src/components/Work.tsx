@@ -76,8 +76,8 @@ const projects: Project[] = [
     span: 'col-span-2 md:row-span-2',
     summary: 'See paint colours from every brand side by side.',
     image: {
-      src: '/swatchmaker-tile.webp',
-      alt: 'SWATCHMAKER: a bathroom photo next to the paint it matched, COAT La Torre',
+      src: '/swatchmaker-tile.webp?v=2',
+      alt: 'SwatchMaker matching paints to the Rivers wallpaper by Living Quarters: Lick Green 03, Dulux Bracken Salts 5 and Valspar Ode to Joy',
       className: 'aspect-[4/3] object-cover border-2 border-[var(--ink)]',
     },
     story: (

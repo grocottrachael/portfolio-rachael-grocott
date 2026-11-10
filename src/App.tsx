@@ -58,7 +58,7 @@ function Home() {
 
         <div>
           <p className="font-bold text-[24px] md:text-[clamp(19px,1.55vw,28px)] leading-[1.32] tracking-[-0.015em]">
-            I&rsquo;m a Senior Product Designer at <Pill bg={C.blue}>Graphy</Pill>. I make complex things simple, then
+            I&rsquo;m a Senior Product Designer at <Pill bg={C.accent}>Graphy</Pill>. I make complex things simple, then
             polish them till they&rsquo;re <Pill bg={C.yellow}>genuinely beautiful</Pill>.
           </p>
           <p className="mt-5 text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
