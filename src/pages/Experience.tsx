@@ -75,8 +75,12 @@ export function Experience() {
                     </p>
                   )}
                   {r.study && (
-                    <Link to={`/work/${r.study}`} className="chunky mt-4 inline-flex items-center gap-2">
-                      Read the case study <ArrowRight className="w-4 h-4" />
+                    /* A quiet text link, not a button: the page already has its own calls to action */
+                    <Link
+                      to={`/work/${r.study}`}
+                      className="group mt-3 inline-flex items-center gap-1.5 text-[16px] font-bold underline decoration-2 underline-offset-4 decoration-[var(--ink)]/30 hover:decoration-[var(--ink)]"
+                    >
+                      Read the case study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                     </Link>
                   )}
                 </li>
