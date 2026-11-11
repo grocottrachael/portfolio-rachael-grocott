@@ -20,6 +20,7 @@ export const roles: Role[] = [
     highlight: 'Took the design from web app to SDK',
     body: 'Leading design strategy in a high-growth startup, partnering with engineers and PMs to define and measure success, like adoption and retention. I drive iterative cycles, using performance data to change direction and make sure we’re solving the right problems.',
     current: true,
+    study: 'graphy',
   },
   {
     company: 'Trint',
