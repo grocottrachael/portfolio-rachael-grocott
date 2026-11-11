@@ -98,10 +98,10 @@ const projects: Project[] = [
   },
   {
     sticker: (
-      <WordSticker lines={["Currently", "working here!"]} color={C.yellow} className="text-[22px] md:text-[clamp(18px,1.6vw,34px)] 2xl:text-[clamp(22px,1.9vw,34px)] -rotate-[5deg] origin-bottom-left" />
+      <WordSticker lines={["Currently", "working here!"]} color={C.yellow} className="graphy-sticker -rotate-[5deg] origin-bottom-left" />
     ),
     /* Pinned to the bottom corner on desktop, so it doesn't make the card (and the row) taller */
-    stickerClass: 'self-start xl:absolute xl:left-7 xl:bottom-7 xl:mt-0 xl:pt-0',
+    stickerClass: 'self-start xl:absolute xl:left-6 xl:bottom-5 xl:mt-0 xl:pt-0',
     /* The words sit in from the corner, so the peel goes deeper to reach them */
     stickerPeel: 0.4,
     id: 'graphy',
@@ -213,9 +213,12 @@ const projects: Project[] = [
 function DragSticker({ cardRef, className, peel, children }: { cardRef: React.RefObject<HTMLElement | null>; className: string; peel?: number; children: React.ReactNode }) {
   /* Only draggable with a mouse or trackpad: on a phone, a thumb scrolling past would carry it off */
   const [canDrag] = useState(() => typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+  const [dragging, setDragging] = useState(false);
   return (
     <motion.div
       drag={canDrag}
+      onDragStart={() => setDragging(true)}
+      onDragEnd={() => setDragging(false)}
       dragConstraints={cardRef}
       dragElastic={0.15}
       dragMomentum={false}
@@ -225,7 +228,7 @@ function DragSticker({ cardRef, className, peel, children }: { cardRef: React.Re
       className={`z-20 ${canDrag ? 'cursor-grab active:cursor-grabbing touch-none' : ''} ${className}`}
       title={canDrag ? 'Pick me up' : undefined}
     >
-      <Peel amount={peel}>{children}</Peel>
+      <Peel amount={peel} flat={dragging}>{children}</Peel>
     </motion.div>
   );
 }
