@@ -26,6 +26,12 @@ function Picture({ img, bg }: { img: Img; bg: string }) {
   /* A picture that's already a coloured card stands alone; anything else gets the ink stroke on the project colour */
   if (img.bg)
     return <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" className="w-full h-auto block" />;
+  if (img.cutout)
+    return (
+      <div className="p-4 md:p-8 h-full flex items-center" style={{ background: bg }}>
+        <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" className="w-full h-auto" />
+      </div>
+    );
   return (
     <div className="p-2.5 sm:p-4 md:p-6 h-full flex items-center" style={{ background: bg }}>
       <img src={img.src} alt={img.alt} width={img.w} height={img.h} loading="lazy" className="w-full h-auto border-[3px] border-[var(--ink)]" />

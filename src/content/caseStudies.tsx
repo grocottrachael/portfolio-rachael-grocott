@@ -8,7 +8,8 @@ import { C } from '../components/Shapes';
  */
 
 /* bg: the picture's own background colour, when it's already a coloured card that can be a block by itself */
-export type Img = { src: string; alt: string; w: number; h: number; bg?: string };
+/* cutout: a transparent picture with its own shadow, set on the mat without the ink stroke */
+export type Img = { src: string; alt: string; w: number; h: number; bg?: string; cutout?: boolean };
 
 export type Block =
   | { type: 'text'; eyebrow?: string; heading?: string; body: React.ReactNode }
@@ -1252,6 +1253,11 @@ export const caseStudies: CaseStudy[] = [
         ),
       },
       {
+        type: 'figure',
+        images: [{ src: '/work/geckoboard/sketches.webp', alt: 'Hand-drawn dashboard sketches: one big number, line charts, gauges, and groups labelled Monthly and Weekly', w: 1592, h: 1274, cutout: true }],
+        caption: 'Some of the sketches. The same ideas kept coming up: one big number, related things together.',
+      },
+      {
         type: 'cards',
         items: [
           { title: 'Group related metrics' },
@@ -1283,6 +1289,11 @@ export const caseStudies: CaseStudy[] = [
             </p>
           </>
         ),
+      },
+      {
+        type: 'figure',
+        images: [{ src: '/work/geckoboard/prototypes.webp', alt: 'Our prototype site: a long list of interactive prototypes, like drag to add metrics, merge and split groups and focused group, next to screenshots of them', w: 2000, h: 1499, cutout: true }],
+        caption: 'Our prototype site. Over 20 interactive prototypes, from drag to add metrics to merging and splitting groups.',
       },
       {
         type: 'cards',
