@@ -5,6 +5,7 @@ import { C, Heart, WordSticker } from './Shapes';
 import RoleCycle from './RoleCycle';
 import { Link, navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
+import Peel from './Peel';
 
 const spring = { type: 'spring', stiffness: 380, damping: 38 } as const;
 
@@ -54,6 +55,8 @@ type Project = {
   sticker?: React.ReactNode;
   /* Where the sticker sits, if not bottom left */
   stickerClass?: string;
+  /* how deep the sticker peels on hover, as a share of its shorter side */
+  stickerPeel?: number;
   /** shown above the title */
   logo?: React.ReactNode;
   /** on a wide block, show the logo big on the right instead of above the title */
@@ -99,6 +102,8 @@ const projects: Project[] = [
     ),
     /* Pinned to the bottom corner on desktop, so it doesn't make the card (and the row) taller */
     stickerClass: 'self-start xl:absolute xl:left-7 xl:bottom-7 xl:mt-0 xl:pt-0',
+    /* The words sit in from the corner, so the peel goes deeper to reach them */
+    stickerPeel: 0.4,
     id: 'graphy',
     title: 'Graphy SDK',
     madeFor: 'Currently working here',
@@ -133,6 +138,8 @@ const projects: Project[] = [
   },
   {
     sticker: <Heart color={C.pink} className="sticker block w-11 h-11 md:w-12 md:h-12 rotate-[12deg]" />,
+    /* A heart's corner is empty, so it peels deeper to catch the curve */
+    stickerPeel: 0.42,
     stickerClass: 'absolute -top-5 -right-3',
     id: 'knot-a-problem',
     title: 'Knot a Problem',
@@ -203,7 +210,7 @@ const projects: Project[] = [
  * which have no hover): read the case study, open a site, or find out more.
  */
 /* A sticker you can pick up and move around its card. It lifts when you hover or grab it */
-function DragSticker({ cardRef, className, children }: { cardRef: React.RefObject<HTMLElement | null>; className: string; children: React.ReactNode }) {
+function DragSticker({ cardRef, className, peel, children }: { cardRef: React.RefObject<HTMLElement | null>; className: string; peel?: number; children: React.ReactNode }) {
   /* Only draggable with a mouse or trackpad: on a phone, a thumb scrolling past would carry it off */
   const [canDrag] = useState(() => typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
   return (
@@ -218,7 +225,7 @@ function DragSticker({ cardRef, className, children }: { cardRef: React.RefObjec
       className={`z-20 ${canDrag ? 'cursor-grab active:cursor-grabbing touch-none' : ''} ${className}`}
       title={canDrag ? 'Pick me up' : undefined}
     >
-      {children}
+      <Peel amount={peel}>{children}</Peel>
     </motion.div>
   );
 }
@@ -303,7 +310,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
       <HoverCta {...cta} />
       {p.logo && p.logoBelow && <div className="mt-auto pt-6">{p.logo}</div>}
       {/* A sticker you can pick up and move around the card */}
-      {!p.image && p.sticker && <DragSticker cardRef={cardRef} className={`relative mt-auto pt-6 ${p.stickerClass ?? 'self-start'}`}>{p.sticker}</DragSticker>}
+      {!p.image && p.sticker && <DragSticker cardRef={cardRef} peel={p.stickerPeel} className={`relative mt-auto pt-6 ${p.stickerClass ?? 'self-start'}`}>{p.sticker}</DragSticker>}
 
       {p.image && (
         <div className={`relative mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>
@@ -315,7 +322,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
               p.image.className ?? ''
             }`}
           />
-          {p.sticker && <DragSticker cardRef={cardRef} className={p.stickerClass ?? 'absolute -top-5 -right-3'}>{p.sticker}</DragSticker>}
+          {p.sticker && <DragSticker cardRef={cardRef} peel={p.stickerPeel} className={p.stickerClass ?? 'absolute -top-5 -right-3'}>{p.sticker}</DragSticker>}
         </div>
       )}
 
