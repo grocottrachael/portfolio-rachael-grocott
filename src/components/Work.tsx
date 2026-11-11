@@ -204,17 +204,19 @@ const projects: Project[] = [
  */
 /* A sticker you can pick up and move around its card. It lifts when you hover or grab it */
 function DragSticker({ cardRef, className, children }: { cardRef: React.RefObject<HTMLElement | null>; className: string; children: React.ReactNode }) {
+  /* Only draggable with a mouse or trackpad: on a phone, a thumb scrolling past would carry it off */
+  const [canDrag] = useState(() => typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
   return (
     <motion.div
-      drag
+      drag={canDrag}
       dragConstraints={cardRef}
       dragElastic={0.15}
       dragMomentum={false}
       whileHover={{ scale: 1.04, rotate: -2 }}
       whileDrag={{ scale: 1.08, rotate: 3, filter: 'drop-shadow(0 10px 8px rgba(43,35,64,0.25))' }}
       onClick={(e) => e.stopPropagation()}
-      className={`z-20 cursor-grab active:cursor-grabbing touch-none ${className}`}
-      title="Pick me up"
+      className={`z-20 ${canDrag ? 'cursor-grab active:cursor-grabbing touch-none' : ''} ${className}`}
+      title={canDrag ? 'Pick me up' : undefined}
     >
       {children}
     </motion.div>
