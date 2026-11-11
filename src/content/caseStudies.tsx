@@ -31,6 +31,13 @@ export type Block =
   | { type: 'liveArrow'; caption?: string }
   | { type: 'shows'; items: { title: string; body: string }[] }
   | { type: 'decisions'; eyebrow: string; heading: string; items: { title: string; body: React.ReactNode }[] }
+  /* A workshop board redrawn in the site's style: themes, each with its sticky notes */
+  | { type: 'notes'; groups: { label: string; notes: string[] }[]; caption?: string }
+  /* A set of flat cards, numbered or not: principles, questions, findings */
+  | { type: 'cards'; items: { title: string; body?: React.ReactNode; tag?: string }[]; numbered?: boolean; caption?: string }
+  /* Geckoboard: a customer dashboard from before, redrawn with made-up data */
+  | { type: 'dashBefore'; caption?: string }
+  | { type: 'dashAfter'; caption?: string }
   | { type: 'gallery'; eyebrow?: string; heading?: string; body?: React.ReactNode; images: Img[] };
 
 export type CaseStudy = {
@@ -976,6 +983,359 @@ export const caseStudies: CaseStudy[] = [
             </p>
           </>
         ),
+      },
+    ],
+  },
+  {
+    id: 'trint',
+    v2: true,
+    teaser: 'Design principles, crits and a mobile design sprint: helping a design team work better together.',
+    title: 'Trint',
+    madeFor: 'Senior Product Designer',
+    bg: C.blue,
+    intro:
+      'Trint turns speech into text for journalists and content creators. I joined as a Senior Product Designer, and alongside the design work I helped change how we worked as a design team: principles we wrote together, regular crits, and a design sprint to rethink the mobile app.',
+    facts: [
+      { label: 'Role', value: 'Senior Product Designer' },
+      { label: 'At Trint', value: 'Dec 2020 – Apr 2021' },
+      { label: 'Squads', value: 'Mobile, growth, onboarding and enterprise' },
+      { label: 'I introduced', value: 'Design principles, crits and Shape Up' },
+    ],
+    tldr: {
+      points: [
+        { label: 'The context', body: 'Designers sat inside squads, and I ended up working across all of them. Each one had its own idea of what good looked like.' },
+        { label: 'What I did', body: 'Ran a workshop where the team wrote our design principles together, and set up crits with a simple template anyone could run.' },
+        { label: 'The big project', body: 'Led the mobile squad through a design sprint. Podcasters told us they hated posting on social, so we designed an app that pulls the best moments out of a recording and turns them into posts.' },
+        { label: 'The result', body: 'A shared language for design decisions, and a regular habit of feedback that stuck after I left.' },
+      ],
+    },
+    blocks: [
+      {
+        type: 'chapter',
+        label: 'The context',
+        heading: 'A design team spread across every squad',
+        body: (
+          <>
+            <p>
+              Designers at Trint sat inside squads: mobile, growth, onboarding and enterprise. Before long I was working across all of them, which gave me a great view of the whole product. It also showed me how differently each squad made decisions, and how rarely we designers got to see each other&rsquo;s work.
+            </p>
+            <p>So alongside the design work, I set out to give us a shared idea of what good looked like, and a regular place to give each other feedback.</p>
+          </>
+        ),
+      },
+      {
+        type: 'pivot',
+        before: { label: 'When I joined', title: 'Every squad for itself', body: 'Each squad had its own idea of good design, and feedback happened when it happened.' },
+        after: { label: 'What I changed', title: 'Shared principles, regular crits', body: 'Principles we wrote together, and crits with a format anyone could run.' },
+      },
+      {
+        type: 'chapter',
+        label: 'Design principles',
+        heading: 'What good looks like, decided together',
+        body: (
+          <>
+            <p>
+              I didn&rsquo;t want to write principles on my own and hand them over, because nobody uses principles they didn&rsquo;t help make. So I ran a workshop. Everyone added sticky notes about what they thought good design at Trint meant, and then we grouped them into themes.
+            </p>
+            <p>
+              Before we started, we agreed what makes a good principle. It&rsquo;s memorable, it helps you say no, it isn&rsquo;t a truism (&ldquo;make users happy&rdquo;), and it applies to everything we make.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'notes',
+        caption: 'Some of the themes from the workshop board, redrawn.',
+        groups: [
+          { label: 'Cognitive load', notes: ['Do more with less', 'Simple to use', 'Recognition, not recall', 'One thing to do at a time'] },
+          { label: 'Focus on user needs', notes: ['Ask why first', 'Design for real needs, based on research', 'Add value, not features', 'Design with data'] },
+          { label: 'Testing', notes: ['Test early, test often', 'Hypothesise and validate', 'We assume, test and iterate'] },
+          { label: 'Launch early and iterate', notes: ['Good enough', 'Shipped is better than perfect'] },
+          { label: 'Accessibility', notes: ['An inclusive culture, reflected in our designs', 'Solve for the majority'] },
+          { label: 'Content and copy', notes: ['Copy is UX', 'Design tells stories'] },
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'The five principles we landed on',
+        body: <p>The aim was to build confidence in our decisions, keep the product consistent across squads, and (hopefully) cut down the debates.</p>,
+      },
+      {
+        type: 'cards',
+        numbered: true,
+        items: [
+          { title: 'Focus on our users’ needs', body: 'We design for real needs, based on research and data. We deliver value, not features, and we always ask why.' },
+          { title: 'Reduce cognitive load', body: 'Trint is intuitive, not learned. We never overwhelm people with choice: we like constraints, and we do more with less.' },
+          { title: 'Optimise for efficiency', body: 'Easy for beginners, and lets experts work even faster. We always design to make people’s jobs easier.' },
+          { title: 'Design for anyone', body: 'Trint is accessible and inclusive, because that’s better for everyone.' },
+          { title: 'Iterate and validate', body: 'We assume, test and iterate based on feedback. Shipped is better than perfect.' },
+        ],
+      },
+      {
+        type: 'chapter',
+        label: 'Design crits',
+        heading: 'Feedback with a format',
+        body: (
+          <p>
+            I also set up regular design crits, with a template so anyone could run one. Before you share, you answer four questions, so everyone knows what kind of feedback you need. The level of detail you show sets the feedback you get: it&rsquo;s hard to talk about the experience when everyone&rsquo;s looking at the colours.
+          </p>
+        ),
+      },
+      {
+        type: 'cards',
+        items: [
+          { title: 'What are you showing?', body: 'For example, a new recording screen for mobile.' },
+          { title: 'What problem or opportunity is it addressing?', body: 'And is there a number on it, like more people starting a free trial?' },
+          { title: 'What stage is it at?', body: 'Concept and UX, or solution and UI.' },
+          { title: 'What feedback do you want?', body: 'Which idea is most likely to work, or accessibility, visual balance, or use of the design system.' },
+        ],
+      },
+      {
+        type: 'text',
+        body: (
+          <p>
+            Everyone had a role. A facilitator kept the discussion on topic, summarised the feedback and made sure everyone had their say. Feedback went on sticky notes, right on the screenshots. And we invited the right people: whoever was signing off the project, the core team and other designers, but not too many. My favourite tip from the template was this one.
+          </p>
+        ),
+      },
+      { type: 'quote', text: 'Walk in with a strong opinion, loosely held.' },
+      {
+        type: 'chapter',
+        label: 'The biggest project',
+        heading: 'Rethinking the mobile app',
+        body: (
+          <>
+            <p>
+              The brief was refreshingly honest: we have an app, it isn&rsquo;t good, redo it. I led the mobile squad through a Google design sprint, grounding our choices in user research and the business numbers.
+            </p>
+            <p>
+              We talked to content creators, mostly podcasters, and the same problem came up again and again. They hated posting on social. After recording an episode, finding the right snippets to share took ages. So we designed an app that pulls the best moments out of a recording and turns them into posts for every social channel. It was such a good one to work on.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'hmw',
+        items: ['help creators find the best moments in a recording, without listening back?', 'turn one recording into posts for every social channel?'],
+      },
+      {
+        type: 'pivot',
+        before: { label: 'The old app', title: 'Transcription on your phone', body: 'An app that did what the website did, just smaller.' },
+        after: { label: 'What we designed', title: 'From recording to social posts', body: 'Pull out the best moments, then make content for every channel, in one place.' },
+      },
+      {
+        type: 'chapter',
+        label: 'The result',
+        heading: 'A team that designs together',
+        body: (
+          <p>
+            The principles and crits stuck. We had a shared language for design decisions, fewer debates, and a regular habit of showing work early. I was only at Trint for a few months before I joined Graphy, and I&rsquo;m proud of how much changed in that time.
+          </p>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'geckoboard',
+    v2: true,
+    teaser: 'Grouping for TV dashboards: updating a 12-year-old interface so key metrics are unmissable.',
+    title: 'Geckoboard',
+    madeFor: 'My first project there',
+    bg: C.pink,
+    intro:
+      'Geckoboard puts a team’s key metrics on an office TV or big-screen monitor in minutes. My first project there was updating a 12-year-old interface, so the dashboards people made were easier to read, at a glance and from across the room.',
+    facts: [
+      { label: 'At Geckoboard', value: 'Aug 2018 – Dec 2020' },
+      { label: 'The team', value: 'A product owner, a front-end engineer and me' },
+      { label: 'I did', value: 'Research, prototyping, testing, UX and UI design' },
+    ],
+    tldr: {
+      points: [
+        { label: 'The problem', body: 'Customers’ dashboards were hard to read: up to 36 widgets all the same size, no sense of what belonged together, and lots of repeated text.' },
+        { label: 'What I did', body: 'Talked to around 20 customers, proved the product itself was the problem, sketched with senior colleagues, and designed grouping.' },
+        { label: 'How I work', body: 'Fast prototypes with our front-end engineer, testing a lot, and all three of us taking turns to lead sessions.' },
+        { label: 'The result', body: 'Grouping shipped as part of a full company rebrand. Making a group was easy, and ungrouping was a one-time learn.' },
+      ],
+      stats: [
+        { value: '~20', label: 'customer calls' },
+        { value: '36', label: 'widgets on one dashboard, all the same size' },
+        { value: '12', label: 'years old: the interface we updated' },
+        { value: '3', label: 'of us on the team' },
+      ],
+    },
+    blocks: [
+      {
+        type: 'chapter',
+        label: 'The problem',
+        heading: 'Dashboards that were hard to read',
+        body: (
+          <p>
+            We wanted our customers to make great dashboards: ones that look good, show what&rsquo;s related and what matters most, and that anyone walking past the TV can understand. A lot of them didn&rsquo;t.
+          </p>
+        ),
+      },
+      {
+        type: 'dashBefore',
+        caption: 'A typical customer dashboard from before, redrawn with made-up names and numbers. Every widget is the same size, the same people appear twice, and nothing shows what belongs together.',
+      },
+      {
+        type: 'chapter',
+        label: 'Research',
+        heading: 'Twenty customers talked me through their dashboards',
+        body: (
+          <>
+            <p>
+              I had calls with around 20 customers and asked them to talk me through their dashboard and why they&rsquo;d made each decision. It led to lots of questions. What did they think I&rsquo;d see as most important? Was it clear those two were related? And general understanding too, like a red colour scheme when red is our warning state.
+            </p>
+            <p>
+              I also went through our bank of customer screenshots, and put everything into AirTable so I could rank the problems and cross-reference them.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'cards',
+        caption: 'How I reviewed each dashboard in AirTable, redrawn: notes, then the common issue it showed.',
+        items: [
+          { title: 'A sales team’s dashboard', body: 'How useful is the stages widget? What’s “unaccounted”? Why are there numbers in all four corners?', tag: 'Space not used well' },
+          { title: 'A founder’s overview', body: 'The least important content is top left, the most valuable spot on the screen.', tag: 'Not the best visualisation' },
+          { title: 'A marketing dashboard', body: 'They’ve tried to separate their groups visually, but it just doesn’t look nice.', tag: 'Same data shown twice' },
+          { title: 'A support team’s calls', body: 'Would an 8-column grid have been better? A table might have suited calls by country.', tag: 'Not the best visualisation' },
+        ],
+      },
+      {
+        type: 'text',
+        heading: 'The biggest problems, by how often they came up',
+        body: <p>Ranked by how many dashboards had each one.</p>,
+      },
+      {
+        type: 'cards',
+        numbered: true,
+        items: [
+          { title: 'No sense of relationships', body: 'Nothing showed which metrics belonged together.' },
+          { title: 'Cognitive overload', body: 'Some dashboards had up to 36 widgets, all the same size. It was hard to know where to look, or what mattered.' },
+          { title: 'Repeated text in titles', body: 'The same descriptions and dates, over and over.' },
+          { title: 'Numbers not using their space', body: 'Lots of empty space, on a screen where space is precious.' },
+          { title: 'Misaligned numbers', body: 'Hard to compare and scan metrics.' },
+        ],
+      },
+      {
+        type: 'chapter',
+        label: 'Testing the problem',
+        heading: 'Could we fix it without building anything?',
+        body: (
+          <>
+            <p>
+              Before going any further, my product manager and I took some of the worst dashboards and tried to make them better using the product as it was. We wanted to be sure the problem was the product, not how we were teaching people to use it. Maybe we didn&rsquo;t need to build anything new, and could guide people to better dashboards instead.
+            </p>
+            <p>
+              We could make them a little better. One support team&rsquo;s dashboard came out much tidier, rearranged into Today, Weekly and Monthly columns. But it was still really hard to see relationships, and there was still lots of repetition. If we, the dashboard design professionals, couldn&rsquo;t make something we thought was great, we needed to make bigger changes.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'pivot',
+        before: { label: 'One option', title: 'Teach people to make better dashboards', body: 'Guides and education, with no changes to the product.' },
+        after: { label: 'What we learned', title: 'Change the product', body: 'Even we couldn’t make a great dashboard with the tools as they were.' },
+      },
+      {
+        type: 'chapter',
+        label: 'Sketching',
+        heading: 'Sketching with the people who knew more than me',
+        body: (
+          <>
+            <p>
+              This was my first project at Geckoboard. I had lots of ideas, but senior stakeholders and longer-standing colleagues knew far more about the domain and the tech. So I invited them to sketch their ideas with me, and after the first round a clear pattern came out.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'cards',
+        items: [
+          { title: 'Group related metrics' },
+          { title: 'The most important metrics bigger, and higher up' },
+          { title: 'Uniform, scannable metrics' },
+          { title: 'Bigger visualisations, readable from across the room' },
+        ],
+      },
+      {
+        type: 'text',
+        body: (
+          <p>
+            I turned the sketches into a rough but ideal end result, using the data from one of our customers&rsquo; dashboards. It was clear grouping was the big win, because it solves several problems at once: it shows relationships, cuts repeated text in titles, and lowers the cognitive load.
+          </p>
+        ),
+      },
+      { type: 'hmw', items: ['show which metrics belong together, at a glance and from across the room?'] },
+      {
+        type: 'chapter',
+        label: 'Prototyping',
+        heading: 'Testing a lot, as a team of three',
+        body: (
+          <>
+            <p>
+              Once we were sure about grouping, we started prototyping and testing the best way to build a grouped dashboard. I worked closely with our front-end engineer: we made fast prototypes, tested them, and changed them quickly. I even helped build some of the React components (very slowly!) and paired on the changes we needed.
+            </p>
+            <p>
+              We were such a small team that we were testing a lot, and we took it in turns to lead the sessions. That meant all of us saw the pain points first-hand and came to the same conclusions together.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'cards',
+        caption: 'What testing taught us.',
+        items: [
+          { title: 'Grouping was too heavy-handed', body: 'We were testing with customers used to a dashboard without groups. Groups needed to be a layer on top, so you could still make a dashboard without any.' },
+          { title: 'Moving a group, or what’s inside it?', body: 'People couldn’t tell when they’d move the whole group and when they’d move the widgets in it.' },
+          { title: 'Locking groups didn’t help', body: 'We tried locking and unlocking groups, but it was too confusing.' },
+          { title: 'Our favourite: a sidebar that changes with you', body: 'It showed options for the whole dashboard, a group, or one widget, depending on what you were focused on.' },
+        ],
+      },
+      {
+        type: 'chapter',
+        label: 'Shipping it',
+        heading: 'A problem: no sidebar',
+        body: (
+          <>
+            <p>
+              The sidebar wasn&rsquo;t going to make the first version. After a change in teams, our VP of Product took over and wanted to go ahead without it. That meant relying on hover and selected states to show people where they were, and I had to quickly design a version that worked as well as it could.
+            </p>
+            <p>
+              That worried me, because the sidebar had done so well in testing. But early testing went well. Nobody struggled to make a group: you just drag one widget on top of another. Ungrouping was a bit harder the first time, but everyone got there, and it&rsquo;s a one-time learn.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'pivot',
+        before: { label: 'What tested best', title: 'A sidebar that changes with context', body: 'Options for the dashboard, a group or a widget, depending on your focus.' },
+        after: { label: 'What we shipped first', title: 'Hover and selected states', body: 'Drag a widget onto another to group them, with clear states to show where you are.' },
+      },
+      {
+        type: 'chapter',
+        label: 'Result and reflection',
+        heading: 'A big reveal, not small steps',
+        body: (
+          <>
+            <p>
+              This was a long-running project. I don&rsquo;t think anyone had quite grasped the technical side before we set out, and we learned a lot along the way. Since then, I always get engineers digging into the technical side as early as I can.
+            </p>
+            <p>
+              Then came another curveball: a full company rebrand. My plans for an MVP and small, steady changes made way for one big reveal, so grouping launched with the new brand. Ta-da!
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'dashAfter',
+        caption: 'After: a grouped dashboard in the new brand, redrawn. Related metrics sit together under one title and time period, and the most important number is the biggest thing on the screen.',
+      },
+      {
+        type: 'dashBefore',
+        caption: 'And how they looked before.',
       },
     ],
   },

@@ -5,6 +5,8 @@ import { Link } from '../router';
 const LiveCharts = lazy(() => import('../components/LiveCharts'));
 const LiveEdit = lazy(() => import('../components/LiveEdit'));
 const ClaudeMock = lazy(() => import('../components/ClaudeMock'));
+const DashBefore = lazy(() => import('../components/DashBefore'));
+const DashAfter = lazy(() => import('../components/DashBefore').then((m) => ({ default: m.DashAfter })));
 import { caseStudies, type Block, type CaseStudy as Study, type Img } from '../content/caseStudies';
 
 /*
@@ -125,6 +127,72 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
             <span className="px-1 box-decoration-clone">&ldquo;{block.text}&rdquo;</span>
           </span>
         </blockquote>
+      );
+    case 'notes':
+      return (
+        <figure>
+          <div className="p-5 md:p-8 grid sm:grid-cols-2 gap-6 md:gap-8" style={{ background: bg }}>
+            {block.groups.map((g, gi) => (
+              <div key={g.label}>
+                <span className="chunky-tag bg-white">{g.label}</span>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {g.notes.map((n, ni) => (
+                    <li
+                      key={n}
+                      className="w-[calc(50%-4px)] md:w-[118px] min-h-[84px] p-2.5 bg-[var(--paper)] border-2 border-[var(--ink)] shadow-[0_2px_0_var(--ink)] text-[14px] leading-[1.3] font-medium"
+                      style={{ rotate: `${[-2, 1.5, -1, 2, -1.5][(gi + ni) % 5]}deg` }}
+                    >
+                      {n}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          {block.caption && <Caption>{block.caption}</Caption>}
+        </figure>
+      );
+    case 'cards':
+      return (
+        <figure>
+          <ol className="grid sm:grid-cols-2 gap-2.5 md:gap-3">
+            {block.items.map((it, i) => (
+              <li key={it.title} className="p-5 md:p-6 bg-[var(--c-grey)]">
+                {block.numbered && (
+                  <span className="inline-grid place-items-center w-8 h-8 rounded-full border-2 border-[var(--ink)] font-bold text-[14px] mb-3" style={{ background: bg }}>
+                    {i + 1}
+                  </span>
+                )}
+                <p className="font-display text-[21px] leading-[1.2]">{it.title}</p>
+                {it.body && <div className="mt-2 text-[16px] leading-[1.55] text-[var(--ink-soft)]">{it.body}</div>}
+                {it.tag && <span className="chunky-tag mt-3 !text-[13px]" style={{ background: bg }}>{it.tag}</span>}
+              </li>
+            ))}
+          </ol>
+          {block.caption && <Caption>{block.caption}</Caption>}
+        </figure>
+      );
+    case 'dashBefore':
+      return (
+        <figure>
+          <div className="p-2.5 sm:p-4 md:p-6" style={{ background: bg }}>
+            <Suspense fallback={<div className="aspect-[2/1]" />}>
+              <DashBefore />
+            </Suspense>
+          </div>
+          {block.caption && <Caption>{block.caption}</Caption>}
+        </figure>
+      );
+    case 'dashAfter':
+      return (
+        <figure>
+          <div className="p-2.5 sm:p-4 md:p-6" style={{ background: bg }}>
+            <Suspense fallback={<div className="aspect-[2/1]" />}>
+              <DashAfter />
+            </Suspense>
+          </div>
+          {block.caption && <Caption>{block.caption}</Caption>}
+        </figure>
       );
     case 'stats':
       return <Stats items={block.items} bg={bg} />;

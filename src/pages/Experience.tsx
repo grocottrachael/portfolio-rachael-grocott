@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Link } from '../router';
 import { C } from '../components/Shapes';
 import { beyond, coreSkills, education, interests, roles, softSkills } from '../content/experience';
@@ -73,6 +73,11 @@ export function Experience() {
                     <p className="mt-2 text-[15px] text-[var(--ink-soft)]">
                       <span className="font-bold text-[var(--ink)]">Introduced:</span> {r.introduced.join(' · ')}
                     </p>
+                  )}
+                  {r.study && (
+                    <Link to={`/work/${r.study}`} className="chunky mt-4 inline-flex items-center gap-2">
+                      Read the case study <ArrowRight className="w-4 h-4" />
+                    </Link>
                   )}
                 </li>
               ))}
