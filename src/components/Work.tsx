@@ -6,6 +6,7 @@ import RoleCycle from './RoleCycle';
 import { Link, navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
 import Peel from './Peel';
+import SwatchMakerScene from './SwatchMakerScene';
 
 const spring = { type: 'spring', stiffness: 380, damping: 38 } as const;
 
@@ -50,7 +51,8 @@ type Project = {
   span: string;
   summary: string;
   /* fill: the picture fills the rest of the block (for the big block) */
-  image?: { src: string; alt: string; className?: string; fill?: boolean };
+  /* scene: a picture drawn in code, shown in place of the image at the image's shape */
+  image?: { src: string; alt: string; className?: string; fill?: boolean; scene?: React.ReactNode };
   /* A kitsch sticker stuck on the corner of the picture */
   sticker?: React.ReactNode;
   /* Where the sticker sits, if not bottom left */
@@ -84,8 +86,8 @@ const projects: Project[] = [
     image: {
       src: '/swatchmaker-tile.webp?v=2',
       alt: 'SwatchMaker showing a Living Quarters wallpaper next to three paint colours',
-      /* The whole app at its own 4:3 shape, nothing cropped */
-      className: 'border-[3px] border-[var(--ink)]',
+      /* The app rebuilt in code at the old screenshot's 4:3 shape, in a white frame */
+      scene: <SwatchMakerScene />,
     },
     story: (
       <>
@@ -317,14 +319,18 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
 
       {p.image && (
         <div className={`relative mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>
-          <img
-            src={p.image.src}
-            alt={p.image.alt}
-            loading="lazy"
-            className={`w-full ${p.image.fill ? 'h-full object-cover object-top' : ''} ${
-              p.image.className ?? ''
-            }`}
-          />
+          {p.image.scene ? (
+            <div className="w-full aspect-[4/3]">{p.image.scene}</div>
+          ) : (
+            <img
+              src={p.image.src}
+              alt={p.image.alt}
+              loading="lazy"
+              className={`w-full ${p.image.fill ? 'h-full object-cover object-top' : ''} ${
+                p.image.className ?? ''
+              }`}
+            />
+          )}
           {p.sticker && <DragSticker cardRef={cardRef} peel={p.stickerPeel} className={p.stickerClass ?? 'absolute -top-5 -right-3'}>{p.sticker}</DragSticker>}
         </div>
       )}
@@ -392,13 +398,16 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
             <p className="text-[18px] leading-relaxed text-[var(--ink-soft)]">{p.story}</p>
             {p.link && <Visit href={p.link.href} label={p.link.label} />}
           </div>
-          {p.image && (
-            <img
-              src={p.image.src}
-              alt={p.image.alt}
-              className={`w-full md:max-w-sm md:justify-self-end ${p.image.className ?? ''}`}
-            />
-          )}
+          {p.image &&
+            (p.image.scene ? (
+              <div className="w-full md:max-w-sm md:justify-self-end aspect-[4/3]">{p.image.scene}</div>
+            ) : (
+              <img
+                src={p.image.src}
+                alt={p.image.alt}
+                className={`w-full md:max-w-sm md:justify-self-end ${p.image.className ?? ''}`}
+              />
+            ))}
         </div>
       </motion.div>
     </motion.div>
