@@ -152,7 +152,8 @@ const projects: Project[] = [
     image: {
       src: '/knot-diagram.webp',
       alt: 'A granny square drawn by Knot a Problem as a stitch diagram, round by round',
-      className: 'aspect-square object-cover bg-white border-[3px] border-[var(--ink)]',
+      /* No border: a white square sits cleanly on the yellow */
+      className: 'aspect-square object-cover bg-white',
     },
     story: (
       <>
