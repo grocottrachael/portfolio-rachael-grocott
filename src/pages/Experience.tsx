@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Link } from '../router';
 import { C } from '../components/Shapes';
+import CompanyLogo from '../components/CompanyLogo';
 import { beyond, coreSkills, education, interests, roles, softSkills } from '../content/experience';
 
 /* Experience, in the case study format: a colour card at the top, then one reading column */
@@ -56,7 +57,9 @@ export function Experience() {
             {label(C.green, 'Experience')}
             <ol className="mt-5 border-t-[2px] border-[var(--ink)]">
               {roles.map((r) => (
-                <li key={r.company} className="py-5 border-b border-[var(--ink)]/15">
+                <li key={r.company} className="py-5 border-b border-[var(--ink)]/15 flex gap-4">
+                  <CompanyLogo company={r.company} className="w-11 h-11 md:w-12 md:h-12 mt-0.5" />
+                  <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <span className="text-[19px] font-bold">{r.company}</span>
                     <span className="text-[16px] text-[var(--ink-soft)]">{r.what}</span>
@@ -83,6 +86,7 @@ export function Experience() {
                       Read the case study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                     </Link>
                   )}
+                  </div>
                 </li>
               ))}
             </ol>
