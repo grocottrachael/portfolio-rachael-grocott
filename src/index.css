@@ -228,10 +228,11 @@
   --d: calc(var(--peel) * 1.4142);
   transition: --peel 260ms cubic-bezier(0.3, 0.7, 0.4, 1);
 }
+/* While the pointer moves over it, the peel follows quickly; letting go eases it back down */
+.peel.is-tracking {
+  transition-duration: 90ms;
+}
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .peel:hover {
-    --peel: var(--peel-max);
-  }
   .peel .sticker:hover {
     animation: none;
   }
