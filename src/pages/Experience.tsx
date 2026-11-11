@@ -57,11 +57,13 @@ export function Experience() {
             {label(C.green, 'Experience')}
             <ol className="mt-5 border-t-[2px] border-[var(--ink)]">
               {roles.map((r) => (
-                <li key={r.company} className="py-5 border-b border-[var(--ink)]/15 flex gap-4">
-                  <CompanyLogo company={r.company} className="w-11 h-11 md:w-12 md:h-12 mt-0.5" />
-                  <div className="min-w-0 flex-1">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <span className="text-[19px] font-bold">{r.company}</span>
+                <li key={r.company} className="py-5 border-b border-[var(--ink)]/15">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    {/* The logo sits in line with the company name, so the text below keeps the page's left edge */}
+                    <span className="inline-flex items-center gap-2.5">
+                      <CompanyLogo company={r.company} className="w-8 h-8 !rounded-lg" />
+                      <span className="text-[19px] font-bold">{r.company}</span>
+                    </span>
                     <span className="text-[16px] text-[var(--ink-soft)]">{r.what}</span>
                     <span aria-hidden className="hidden sm:block flex-1 min-w-6" />
                     <span className="text-[15px] text-[var(--ink-soft)] tabular-nums inline-flex items-center gap-1.5 whitespace-nowrap">
@@ -86,7 +88,6 @@ export function Experience() {
                       Read the case study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                     </Link>
                   )}
-                  </div>
                 </li>
               ))}
             </ol>
