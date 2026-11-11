@@ -126,7 +126,7 @@
 
 /* Corner stickers: a white sticker edge, and a little wiggle when poked */
 .sticker {
-  filter: drop-shadow(0 0 0 #fff) drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 3px 0 rgba(43, 35, 64, 0.18));
+  filter: drop-shadow(0 0 0 #fff) drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 1px 1.5px rgba(43, 35, 64, 0.2));
   transition: transform 400ms ease-in-out;
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -142,7 +142,7 @@
 
 /* Stickers that pop out of the flower: tucked away behind her until you hover or tap */
 .pop {
-  filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 3px 0 rgba(43, 35, 64, 0.18));
+  filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 1px 1.5px rgba(43, 35, 64, 0.2));
   opacity: 0;
   scale: 0.2;
   translate: 40px 40px;
@@ -172,7 +172,7 @@
   /* Lines tucked close and a fat white edge, so the sticker is one white shape with no gaps */
   line-height: 0.9;
   filter: drop-shadow(5px 0 0 #fff) drop-shadow(-5px 0 0 #fff) drop-shadow(0 5px 0 #fff) drop-shadow(0 -5px 0 #fff)
-    drop-shadow(3px 3px 0 #fff) drop-shadow(-3px -3px 0 #fff) drop-shadow(0 3px 0 rgba(43, 35, 64, 0.18));
+    drop-shadow(3px 3px 0 #fff) drop-shadow(-3px -3px 0 #fff) drop-shadow(0 1px 1.5px rgba(43, 35, 64, 0.2));
 }
 
 /* Card hover button: centred on the first line of the card title (padding + half the line, minus half the 36px button) */
@@ -216,3 +216,59 @@
 .vez73g2 {
   border-width: 2px !important;
 }
+
+/* Peeling stickers: see Peel.tsx. --peel is how far the fold sits from the peeling corner */
+@property --peel {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+.peel {
+  --peel: 0px;
+  --d: calc(var(--peel) * 1.4142);
+  transition: --peel 260ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+/* While the pointer moves over it, the peel follows quickly; letting go eases it back down */
+.peel.is-tracking {
+  transition-duration: 90ms;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .peel .sticker:hover {
+    animation: none;
+  }
+}
+/* Picked up, it lies flat */
+.peel.is-flat,
+.peel:active {
+  --peel: 0px !important;
+}
+/*
+ * Each corner: the gradient angle that points at it, and the mirror over its fold line.
+ * Folds along x + y = c mirror (x, y) to (c - y, c - x); folds along x - y = c mirror to (y + c, x - c).
+ */
+.peel[data-corner='br'] { --ang: 135deg; --s: -1; --tx: calc(var(--w) + var(--h) - var(--d)); --ty: var(--tx); --sx: -2px; --sy: -2px; }
+.peel[data-corner='tl'] { --ang: 315deg; --s: -1; --tx: var(--d); --ty: var(--tx); --sx: 2px; --sy: 2px; }
+.peel[data-corner='tr'] { --ang: 45deg; --s: 1; --tx: calc(var(--w) - var(--d)); --ty: calc(var(--d) - var(--w)); --sx: -2px; --sy: 2px; }
+.peel[data-corner='bl'] { --ang: 225deg; --s: 1; --tx: calc(var(--d) - var(--h)); --ty: calc(var(--h) - var(--d)); --sx: 2px; --sy: -2px; }
+.peel-front {
+  mask-image: linear-gradient(var(--ang), #000 calc(100% - var(--peel)), transparent calc(100% - var(--peel)));
+}
+.peel-flap {
+  transform-origin: 0 0;
+  transform: translate(var(--tx), var(--ty)) matrix(0, var(--s), var(--s), 0, 0, 0);
+  mask-image: linear-gradient(var(--ang), transparent calc(100% - var(--peel)), #000 calc(100% - var(--peel)));
+  filter: drop-shadow(var(--sx) var(--sy) 3px rgba(43, 35, 64, 0.22));
+}
+/* The sticker's back: plain white paper */
+.peel-back {
+  filter: brightness(0) invert(0.96);
+}
+
+/* The "Currently working here!" sticker: as big as the Graphy card has room for at each width */
+.graphy-sticker { font-size: 22px; }
+@media (min-width: 768px) { .graphy-sticker { font-size: clamp(20px, 1.85vw, 38px); } }
+/* Side by side, the card is narrow and its text runs to four lines */
+@media (min-width: 1280px) { .graphy-sticker { font-size: clamp(18px, 1.68vw, 34px); } }
+@media (min-width: 1480px) { .graphy-sticker { font-size: clamp(22px, 1.95vw, 40px); } }
+@media (min-width: 1536px) { .graphy-sticker { font-size: clamp(24px, 2.15vw, 40px); } }
+

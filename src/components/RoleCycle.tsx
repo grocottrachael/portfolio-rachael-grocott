@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { roles } from '../content/experience';
+import CompanyLogo from './CompanyLogo';
 
 /*
  * The Experience block's picture: one role at a time, sliding right to left
@@ -9,11 +10,6 @@ import { roles } from '../content/experience';
  * on the latest role if you've asked for less motion.
  */
 
-const logos: Record<string, string> = {
-  Graphy: '/logos/graphy.png',
-  Trint: '/logos/trint.png',
-  Geckoboard: '/logos/geckoboard.png',
-};
 
 const years = (d: string) => d.replace(/[A-Z][a-z]{2} /g, '');
 
@@ -45,23 +41,7 @@ export default function RoleCycle() {
             transition={{ duration: 0.45, ease: [0.65, 0, 0.35, 1] }}
             className="flex items-center gap-3"
           >
-                        {/* Logos sit in a little rounded square with the ink stroke, like the rest of the site */}
-            <span className="shrink-0 grid place-items-center w-[52px] h-[52px] rounded-xl border-2 border-[var(--ink)] bg-white overflow-hidden">
-              {logos[r.company] ? (
-                <img
-                  src={logos[r.company]}
-                  alt=""
-                  className={
-                    r.company === 'Graphy'
-                      ? 'w-full h-full object-contain p-2'
-                      : /* Trint's logo is a circle, so it's zoomed until it fills the square */
-                        `w-full h-full object-cover ${r.company === 'Trint' ? 'scale-[1.42]' : ''}`
-                  }
-                />
-              ) : (
-                <span className="font-display text-[20px]">{r.company[0]}</span>
-              )}
-            </span>
+            <CompanyLogo company={r.company} />
             <span className="min-w-0">
               <span className="block font-display text-[22px] leading-[1.15]">
                 {r.company}

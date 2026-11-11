@@ -5,6 +5,7 @@ import { C, Heart, WordSticker } from './Shapes';
 import RoleCycle from './RoleCycle';
 import { Link, navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
+import Peel from './Peel';
 
 const spring = { type: 'spring', stiffness: 380, damping: 38 } as const;
 
@@ -49,11 +50,14 @@ type Project = {
   span: string;
   summary: string;
   /* fill: the picture fills the rest of the block (for the big block) */
-  image?: { src: string; alt: string; className?: string; fill?: boolean };
+  /* scene: a picture drawn in code, shown in place of the image at the image's shape */
+  image?: { src: string; alt: string; className?: string; fill?: boolean; scene?: React.ReactNode };
   /* A kitsch sticker stuck on the corner of the picture */
   sticker?: React.ReactNode;
   /* Where the sticker sits, if not bottom left */
   stickerClass?: string;
+  /* how deep the sticker peels on hover, as a share of its shorter side */
+  stickerPeel?: number;
   /** shown above the title */
   logo?: React.ReactNode;
   /** on a wide block, show the logo big on the right instead of above the title */
@@ -79,10 +83,10 @@ const projects: Project[] = [
     span: 'col-span-2 md:col-span-4 md:row-span-2',
     summary: 'See paint colours from every brand side by side.',
     image: {
-      src: '/swatchmaker-tile.webp?v=2',
-      alt: 'SwatchMaker showing a Living Quarters wallpaper next to three paint colours',
-      /* The whole app at its own 4:3 shape, nothing cropped */
-      className: 'border-[3px] border-[var(--ink)]',
+      src: '/work/swatchmaker/card.webp',
+      alt: 'SwatchMaker showing a Living Quarters wallpaper next to three paint colours: Lick Green 03, Dulux Bracken Salts 5 and Valspar Ode to Joy',
+      /* A sharp, high-resolution picture of the app at 4:3, with its own white frame */
+      className: 'aspect-[4/3]',
     },
     story: (
       <>
@@ -95,10 +99,12 @@ const projects: Project[] = [
   },
   {
     sticker: (
-      <WordSticker lines={["Currently", "working here!"]} color={C.yellow} className="text-[22px] md:text-[clamp(18px,1.6vw,34px)] 2xl:text-[clamp(22px,1.9vw,34px)] -rotate-[5deg] origin-bottom-left" />
+      <WordSticker lines={["Currently", "working here!"]} color={C.yellow} className="graphy-sticker -rotate-[5deg] origin-bottom-left" />
     ),
     /* Pinned to the bottom corner on desktop, so it doesn't make the card (and the row) taller */
-    stickerClass: 'self-start xl:absolute xl:left-7 xl:bottom-7 xl:mt-0 xl:pt-0',
+    stickerClass: 'self-start xl:absolute xl:left-6 xl:bottom-5 xl:mt-0 xl:pt-0',
+    /* The words sit in from the corner, so the peel goes deeper to reach them */
+    stickerPeel: 0.4,
     id: 'graphy',
     title: 'Graphy SDK',
     madeFor: 'Currently working here',
@@ -133,6 +139,8 @@ const projects: Project[] = [
   },
   {
     sticker: <Heart color={C.pink} className="sticker block w-11 h-11 md:w-12 md:h-12 rotate-[12deg]" />,
+    /* A heart's corner is empty, so it peels deeper to catch the curve */
+    stickerPeel: 0.42,
     stickerClass: 'absolute -top-5 -right-3',
     id: 'knot-a-problem',
     title: 'Knot a Problem',
@@ -143,7 +151,8 @@ const projects: Project[] = [
     image: {
       src: '/knot-diagram.webp',
       alt: 'A granny square drawn by Knot a Problem as a stitch diagram, round by round',
-      className: 'aspect-square object-cover bg-white border-[3px] border-[var(--ink)]',
+      /* No border: a white square sits cleanly on the yellow */
+      className: 'aspect-square object-cover bg-white',
     },
     story: (
       <>
@@ -203,12 +212,15 @@ const projects: Project[] = [
  * which have no hover): read the case study, open a site, or find out more.
  */
 /* A sticker you can pick up and move around its card. It lifts when you hover or grab it */
-function DragSticker({ cardRef, className, children }: { cardRef: React.RefObject<HTMLElement | null>; className: string; children: React.ReactNode }) {
+function DragSticker({ cardRef, className, peel, children }: { cardRef: React.RefObject<HTMLElement | null>; className: string; peel?: number; children: React.ReactNode }) {
   /* Only draggable with a mouse or trackpad: on a phone, a thumb scrolling past would carry it off */
   const [canDrag] = useState(() => typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches);
+  const [dragging, setDragging] = useState(false);
   return (
     <motion.div
       drag={canDrag}
+      onDragStart={() => setDragging(true)}
+      onDragEnd={() => setDragging(false)}
       dragConstraints={cardRef}
       dragElastic={0.15}
       dragMomentum={false}
@@ -218,7 +230,7 @@ function DragSticker({ cardRef, className, children }: { cardRef: React.RefObjec
       className={`z-20 ${canDrag ? 'cursor-grab active:cursor-grabbing touch-none' : ''} ${className}`}
       title={canDrag ? 'Pick me up' : undefined}
     >
-      {children}
+      <Peel amount={peel} flat={dragging}>{children}</Peel>
     </motion.div>
   );
 }
@@ -303,19 +315,23 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
       <HoverCta {...cta} />
       {p.logo && p.logoBelow && <div className="mt-auto pt-6">{p.logo}</div>}
       {/* A sticker you can pick up and move around the card */}
-      {!p.image && p.sticker && <DragSticker cardRef={cardRef} className={`relative mt-auto pt-6 ${p.stickerClass ?? 'self-start'}`}>{p.sticker}</DragSticker>}
+      {!p.image && p.sticker && <DragSticker cardRef={cardRef} peel={p.stickerPeel} className={`relative mt-auto pt-6 ${p.stickerClass ?? 'self-start'}`}>{p.sticker}</DragSticker>}
 
       {p.image && (
         <div className={`relative mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>
-          <img
-            src={p.image.src}
-            alt={p.image.alt}
-            loading="lazy"
-            className={`w-full ${p.image.fill ? 'h-full object-cover object-top' : ''} ${
-              p.image.className ?? ''
-            }`}
-          />
-          {p.sticker && <DragSticker cardRef={cardRef} className={p.stickerClass ?? 'absolute -top-5 -right-3'}>{p.sticker}</DragSticker>}
+          {p.image.scene ? (
+            <div className="w-full aspect-[4/3]">{p.image.scene}</div>
+          ) : (
+            <img
+              src={p.image.src}
+              alt={p.image.alt}
+              loading="lazy"
+              className={`w-full ${p.image.fill ? 'h-full object-cover object-top' : ''} ${
+                p.image.className ?? ''
+              }`}
+            />
+          )}
+          {p.sticker && <DragSticker cardRef={cardRef} peel={p.stickerPeel} className={p.stickerClass ?? 'absolute -top-5 -right-3'}>{p.sticker}</DragSticker>}
         </div>
       )}
 
@@ -382,13 +398,16 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
             <p className="text-[18px] leading-relaxed text-[var(--ink-soft)]">{p.story}</p>
             {p.link && <Visit href={p.link.href} label={p.link.label} />}
           </div>
-          {p.image && (
-            <img
-              src={p.image.src}
-              alt={p.image.alt}
-              className={`w-full md:max-w-sm md:justify-self-end ${p.image.className ?? ''}`}
-            />
-          )}
+          {p.image &&
+            (p.image.scene ? (
+              <div className="w-full md:max-w-sm md:justify-self-end aspect-[4/3]">{p.image.scene}</div>
+            ) : (
+              <img
+                src={p.image.src}
+                alt={p.image.alt}
+                className={`w-full md:max-w-sm md:justify-self-end ${p.image.className ?? ''}`}
+              />
+            ))}
         </div>
       </motion.div>
     </motion.div>

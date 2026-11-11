@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Link } from '../router';
 import { C } from '../components/Shapes';
+import CompanyLogo from '../components/CompanyLogo';
 import { beyond, coreSkills, education, interests, roles, softSkills } from '../content/experience';
 
 /* Experience, in the case study format: a colour card at the top, then one reading column */
@@ -57,8 +58,12 @@ export function Experience() {
             <ol className="mt-5 border-t-[2px] border-[var(--ink)]">
               {roles.map((r) => (
                 <li key={r.company} className="py-5 border-b border-[var(--ink)]/15">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <span className="text-[19px] font-bold">{r.company}</span>
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    {/* The logo sits in line with the company name, so the text below keeps the page's left edge */}
+                    <span className="inline-flex items-center gap-2.5">
+                      <CompanyLogo company={r.company} className="w-8 h-8 !rounded-lg" />
+                      <span className="text-[19px] font-bold">{r.company}</span>
+                    </span>
                     <span className="text-[16px] text-[var(--ink-soft)]">{r.what}</span>
                     <span aria-hidden className="hidden sm:block flex-1 min-w-6" />
                     <span className="text-[15px] text-[var(--ink-soft)] tabular-nums inline-flex items-center gap-1.5 whitespace-nowrap">
