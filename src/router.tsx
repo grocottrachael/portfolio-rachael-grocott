@@ -6,10 +6,14 @@ import React, { useEffect, useState } from 'react';
  */
 
 export function navigate(to: string) {
-  if (to === window.location.pathname) return;
+  const [path, hash] = to.split('#');
+  if (path === window.location.pathname && !hash) return;
   window.history.pushState(null, '', to);
   window.dispatchEvent(new PopStateEvent('popstate'));
+  if (!hash) return window.scrollTo(0, 0);
+  /* A link to part of a page: wait for the page to render, then scroll to that part */
   window.scrollTo(0, 0);
+  setTimeout(() => document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' }), 60);
 }
 
 export function usePath() {

@@ -4,6 +4,7 @@ import { Link } from '../router';
 /* The Graphy SDK only loads on the page that uses it */
 const LiveCharts = lazy(() => import('../components/LiveCharts'));
 const LiveEdit = lazy(() => import('../components/LiveEdit'));
+const ClaudeMock = lazy(() => import('../components/ClaudeMock'));
 import { caseStudies, type Block, type CaseStudy as Study, type Img } from '../content/caseStudies';
 
 /*
@@ -110,13 +111,18 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
       );
     case 'quote':
       return (
-        <blockquote className={`${measure} font-display text-[30px] md:text-[42px] leading-[1.1] text-balance`}>
-          {/* A different colour from the project's, so the quote doesn't read as another label */}
+        <blockquote className={`${measure} relative font-display text-[30px] md:text-[42px] leading-[1.1] text-balance`}>
+          {/* A different colour from the project's, so the quote doesn't read as another label.
+              The highlight and the words are two layers, so each line's highlight can't cover the tails of the line above */}
           <span
-            className="px-1 box-decoration-clone"
+            aria-hidden
+            className="px-1 box-decoration-clone text-transparent"
             style={{ background: bg === 'var(--c-pink)' ? 'var(--c-blue)' : 'var(--c-pink)' }}
           >
             &ldquo;{block.text}&rdquo;
+          </span>
+          <span className="absolute inset-0">
+            <span className="px-1 box-decoration-clone">&ldquo;{block.text}&rdquo;</span>
           </span>
         </blockquote>
       );
@@ -128,6 +134,28 @@ function Blocks({ block, bg, id, tight }: { block: Block; bg: string; id?: strin
           <div className="p-5 md:p-8" style={{ background: bg }}>
             <Suspense fallback={<div className="h-[460px]" />}>
               <LiveEdit />
+            </Suspense>
+          </div>
+          {block.caption && <Caption>{block.caption}</Caption>}
+        </figure>
+      );
+    case 'liveArrow':
+      return (
+        <figure>
+          <div className="p-5 md:p-8" style={{ background: bg }}>
+            <Suspense fallback={<div className="h-[460px]" />}>
+              <LiveEdit mode="annotate" />
+            </Suspense>
+          </div>
+          {block.caption && <Caption>{block.caption}</Caption>}
+        </figure>
+      );
+    case 'claudeMock':
+      return (
+        <figure>
+          <div className="p-5 md:p-8" style={{ background: bg }}>
+            <Suspense fallback={<div className="h-[480px]" />}>
+              <ClaudeMock />
             </Suspense>
           </div>
           {block.caption && <Caption>{block.caption}</Caption>}
@@ -199,7 +227,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
       {/* The project as one card at the top, like a block from the home grid. Scroll past it to read */}
-      <header className="p-2.5 md:p-3">
+      <header className="p-3 md:p-5">
         <div className="px-5 py-8 md:py-14" style={{ background: study.bg }}>
           <div className="mx-auto max-w-[720px] flex flex-col gap-7">
             <Link to="/" className="self-start inline-flex items-center gap-1.5 text-[15px] font-bold hover:underline underline-offset-4">
@@ -258,7 +286,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
       </main>
 
       {/* Next project: a full-width card in its own colour, like the one at the top */}
-      <div className="p-2.5 md:p-3 pt-0 md:pt-0">
+      <div className="p-3 md:p-5 pt-0 md:pt-0">
         <Link to={`/work/${next.id}`} className="group block px-5 py-8 md:py-12" style={{ background: next.bg }}>
           <div className="mx-auto max-w-[720px] flex items-center justify-between gap-6">
             <div>
@@ -266,7 +294,7 @@ export function CaseStudyV2({ study }: { study: Study }) {
               <p className="mt-1.5 font-display text-[26px] md:text-[32px] leading-none">{next.title}</p>
               {next.teaser && <p className="mt-2 text-[16px] md:text-[17px] leading-snug">{next.teaser}</p>}
             </div>
-            <span className="chunky-icon shrink-0 transition-transform group-hover:translate-x-1" aria-hidden>
+            <span className="chunky-icon shrink-0" aria-hidden>
               <ArrowRight className="w-4 h-4" />
             </span>
           </div>

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,800,100,1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,800,100,1&family=Cherry+Bomb+One&display=swap");
 @import "tailwindcss";
 
 /* Silka, from the original rachaelgrocott.com */
@@ -59,10 +59,8 @@
   border-radius: 999px;
   box-shadow: 0 3px 0 var(--ink);
   padding: 0.7rem 1.3rem;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   line-height: 1;
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
@@ -110,10 +108,11 @@
   box-shadow: 0 2px 0 var(--ink);
   transition: transform 120ms ease, box-shadow 120ms ease;
 }
-.group:hover .chunky-icon,
-.chunky-icon:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 0 var(--ink);
+/* Still on hover; pressed in on click, sinking onto its shadow */
+.group:active .chunky-icon,
+.chunky-icon:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 var(--ink);
 }
 
 /* Headings: Fraunces, at its softest and with the wonky letters on */
@@ -123,4 +122,97 @@
   font-optical-sizing: auto;
   font-variation-settings: "SOFT" 100, "WONK" 1;
   letter-spacing: -0.01em;
+}
+
+/* Corner stickers: a white sticker edge, and a little wiggle when poked */
+.sticker {
+  filter: drop-shadow(0 0 0 #fff) drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 3px 0 rgba(43, 35, 64, 0.18));
+  transition: transform 400ms ease-in-out;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sticker:hover {
+    animation: wiggle 500ms ease-in-out;
+  }
+}
+@keyframes wiggle {
+  0%, 100% { translate: 0 0; scale: 1; }
+  30% { translate: 0 -3px; scale: 1.06; }
+  60% { translate: 0 1px; scale: 0.98; }
+}
+
+/* Stickers that pop out of the flower: tucked away behind her until you hover or tap */
+.pop {
+  filter: drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 3px 0 rgba(43, 35, 64, 0.18));
+  opacity: 0;
+  scale: 0.2;
+  translate: 40px 40px;
+  transition: opacity 200ms ease, scale 450ms cubic-bezier(.34, 1.56, .64, 1), translate 450ms cubic-bezier(.34, 1.56, .64, 1);
+  transition-delay: 0ms;
+}
+.group\/stickers:hover .pop,
+.group\/stickers.is-open .pop {
+  opacity: 1;
+  scale: 1;
+  translate: 0 0;
+  transition-delay: var(--d, 0ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pop { transition: opacity 200ms ease; translate: 0 0; scale: 1; }
+}
+
+/* Bubble letters: thick ink outline drawn behind the fill, so the letters stay fat */
+.bubble-letters {
+  /* Proper bubble writing, only used on stickers */
+  font-family: "Cherry Bomb One", "Fraunces", sans-serif !important;
+  font-weight: 400;
+  font-variation-settings: normal;
+  -webkit-text-stroke: 5px var(--ink);
+  paint-order: stroke fill;
+  letter-spacing: 0.02em;
+  /* Lines tucked close and a fat white edge, so the sticker is one white shape with no gaps */
+  line-height: 0.9;
+  filter: drop-shadow(5px 0 0 #fff) drop-shadow(-5px 0 0 #fff) drop-shadow(0 5px 0 #fff) drop-shadow(0 -5px 0 #fff)
+    drop-shadow(3px 3px 0 #fff) drop-shadow(-3px -3px 0 #fff) drop-shadow(0 3px 0 rgba(43, 35, 64, 0.18));
+}
+
+/* Card hover button: centred on the first line of the card title (padding + half the line, minus half the 36px button) */
+.hover-cta {
+  top: calc(20px + (clamp(22px, 6.4vw, 28px) * 1.05 - 36px) / 2);
+}
+@media (min-width: 768px) {
+  .hover-cta {
+    top: calc(28px + (clamp(22px, 1.8vw, 32px) * 1.05 - 36px) / 2);
+  }
+}
+
+/* On phones, half-width cards have no room for the button beside the title */
+@media (max-width: 767px) {
+  .col-span-1 .hover-cta {
+    display: none;
+  }
+}
+
+/*
+ * The Graphy editor's popovers and toolbars, dressed like the rest of the site:
+ * white with an ink border, a hard drop shadow, Silka text and Fraunces titles.
+ */
+:root {
+  --graphy-editor-surface: #fff;
+  --graphy-editor-text: var(--ink);
+  --graphy-editor-accent: var(--ink);
+  --graphy-editor-border: var(--ink);
+  --graphy-editor-font-family: "Silka", system-ui, sans-serif;
+  --graphy-font-family: "Silka", system-ui, sans-serif;
+  --graphy-editor-menu-radius: 18px;
+  --graphy-editor-menu-shadow: 0 4px 0 var(--ink);
+  --graphy-editor-menu-title-font: 800 18px/1.2 "Fraunces", Georgia, serif;
+  --graphy-editor-tooltip-background: var(--ink);
+  --graphy-toolbar-button-background-color-hovered: var(--c-grey);
+  --graphy-toolbar-button-background-color-selected: var(--c-accent);
+}
+/* The SDK draws these with a 1px border; ours are 2px. (Class names from @graphysdk/react-renderer's editable.css) */
+.kwvn4c1,
+.vez73g1,
+.vez73g2 {
+  border-width: 2px !important;
 }

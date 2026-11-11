@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { GraphProvider, GraphRenderer, createSpec, pipe, geom, scale, config, styles, style } from '@graphysdk/react';
+import { GraphProvider, GraphRenderer, createSpec, pipe, geom, scale, config, styles, style, annotation } from '@graphysdk/react';
 
 /*
  * Real Graphy charts, drawn live by the Graphy SDK, styled to this site.
@@ -30,7 +30,10 @@ const house = styles({
     style.headline.item.number({ fontFamily: 'Fraunces, Georgia, serif', fontWeight: 800, textColor: ink }),
     style.geom.bar({ fill: '#C3B3EE', stroke: ink, strokeWidth: 2, cornerRadius: 0 }),
     style.geom.area({ fill: '#C3B3EE', stroke: ink, strokeWidth: 2.5 }),
-    style.gridLine({ stroke: '#E4DED6' }),
+    style.gridLine({ stroke: '#E4DED6', dashArray: [] }),
+    style.panelBorder({ strokeWidth: 0 }),
+    style.tickLabel({ fontFamily: 'Silka, system-ui, sans-serif', fontWeight: 500, textColor: 'rgba(43, 35, 64, 0.7)', textOutlineWidth: 0 }),
+    style.axisLabel({ fontFamily: 'Silka, system-ui, sans-serif', fontWeight: 500, textColor: '#2B2340' }),
   ],
 });
 
@@ -71,6 +74,45 @@ export default function LiveCharts() {
     <div className="grid gap-5">
       <Chart kind="weekly" />
       <Chart kind="total" />
+    </div>
+  );
+}
+
+/*
+ * The difference arrow, drawn live by the SDK in the same style as the
+ * editable chart: it works out the change from 25 Oct to 1 Nov itself.
+ */
+const arrowSpec = pipe(
+  createSpec({ x: 'week', y: 'downloads' }),
+  geom.bar(),
+  scale.x(),
+  scale.y(),
+  annotation.differenceArrow({
+    start: { anchorValue: '2026-10-25' },
+    end: { anchorValue: '2026-11-01' },
+    label: 'relativeDifference',
+  }),
+  config({ content: { title: 'Graphy React SDK downloads', showTitle: true, subtitle: 'Weekly downloads from npm', showSubtitle: true } }),
+  styles({
+    defaults: [
+      style.graph({ fill: '#FFFDF9', textColor: ink, fontFamily: 'Silka, system-ui, sans-serif', cornerRadius: 0 }),
+      style.heading({ fontFamily: 'Fraunces, Georgia, serif', fontWeight: 800, textColor: ink }),
+      style.geom.bar({ fill: '#C3B3EE', stroke: ink, strokeWidth: 2, cornerRadius: 0 }),
+      style.gridLine({ stroke: '#E4DED6', dashArray: [] }),
+    style.panelBorder({ strokeWidth: 0 }),
+    style.tickLabel({ fontFamily: 'Silka, system-ui, sans-serif', fontWeight: 500, textColor: 'rgba(43, 35, 64, 0.7)', textOutlineWidth: 0 }),
+    style.axisLabel({ fontFamily: 'Silka, system-ui, sans-serif', fontWeight: 500, textColor: '#2B2340' }),
+      style.annotation.differenceArrow({ stroke: ink, strokeWidth: 2 }),
+    ],
+  })
+);
+
+export function LiveArrow() {
+  return (
+    <div className="h-[460px] border-[3px] border-[var(--ink)] bg-[var(--paper)]">
+      <GraphProvider spec={arrowSpec} data={toData(weekly, 'Downloads')}>
+        <GraphRenderer />
+      </GraphProvider>
     </div>
   );
 }

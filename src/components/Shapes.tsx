@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 /* Colours from the original rachaelgrocott.com, and its eyes, redrawn as SVG */
 
@@ -199,6 +199,135 @@ export function Eyes() {
         <ellipse cx="38.5" cy="50" rx="10" ry="13" fill={C.ink} />
         <ellipse cx="61.5" cy="50" rx="10" ry="13" fill={C.ink} />
       </g>
+    </svg>
+  );
+}
+
+/* Kitsch stickers for the corner pile: a puffy heart and a four-point sparkle */
+export function Heart({ color, className = '' }: { color: string; className?: string }) {
+  return (
+    <svg viewBox="0 0 100 92" className={className} aria-hidden>
+      <path
+        d="M50 88 C20 66 4 50 4 30 C4 14 16 4 30 4 C40 4 46 9 50 17 C54 9 60 4 70 4 C84 4 96 14 96 30 C96 50 80 66 50 88 Z"
+        fill={color}
+      />
+      {/* a little shine */}
+      <path d="M22 26 C24 18 30 14 36 14" fill="none" stroke="#fff" strokeWidth="6" strokeLinecap="round" opacity="0.8" />
+    </svg>
+  );
+}
+
+export function Sparkle({ color, className = '' }: { color: string; className?: string }) {
+  return (
+    <svg viewBox="0 0 100 100" className={className} aria-hidden>
+      <path d="M50 2 C54 34 66 46 98 50 C66 54 54 66 50 98 C46 66 34 54 2 50 C34 46 46 34 50 2 Z" fill={color} />
+    </svg>
+  );
+}
+
+/*
+ * Bubble-letter sticker, drawn as SVG so every outline has round joins:
+ * a fat white sticker edge, then the ink outline, then the colour fill.
+ * The box is measured from the text itself, so it always fits.
+ */
+export function WordSticker({ lines, color, className = '' }: { lines: string[]; color: string; className?: string }) {
+  const ref = useRef<SVGTextElement>(null);
+  const fid = `fat-${useId().replace(/:/g, '')}`;
+  const [box, setBox] = useState({ x: 0, y: -40, w: 300, h: 90 });
+  const size = 40;
+  const lead = 36;
+  useEffect(() => {
+    const fit = () => {
+      const b = ref.current?.getBBox();
+      if (b && b.width) setBox({ x: b.x - 16, y: b.y - 16, w: b.width + 32, h: b.height + 36 });
+    };
+    fit();
+    document.fonts?.ready.then(fit);
+  }, [lines.join('|')]);
+  const text = (props: React.SVGProps<SVGTextElement>, measure = false) => (
+    <text
+      ref={measure ? ref : undefined}
+      fontFamily='"Cherry Bomb One", Fraunces, sans-serif'
+      fontSize={size}
+      strokeLinejoin="round"
+      strokeLinecap="round"
+      {...props}
+    >
+      {lines.map((l, n) => (
+        <tspan key={n} x={0} y={n * lead}>
+          {l}
+        </tspan>
+      ))}
+    </text>
+  );
+  return (
+    <svg
+      viewBox={`${box.x} ${box.y} ${box.w} ${box.h}`}
+      className={className}
+      style={{ width: `${box.w / size}em`, height: `${box.h / size}em`, overflow: 'visible' }}
+      role="img"
+      aria-label={lines.join(' ')}
+    >
+      {/*
+        Browsers leave little gaps in thick outlines inside small holes (the o, e and g),
+        so under the outline there's a solid ink shape grown out from the letters with a
+        blur, which fills those holes and stays round.
+      */}
+      <defs>
+        <filter id={fid} x="-10%" y="-30%" width="120%" height="160%" colorInterpolationFilters="sRGB">
+          <feGaussianBlur in="SourceAlpha" stdDeviation="2.2" />
+          <feComponentTransfer result="grown">
+            <feFuncA type="linear" slope="40" intercept="-1" />
+          </feComponentTransfer>
+          <feFlood floodColor="#2B2340" />
+          <feComposite in2="grown" operator="in" />
+        </filter>
+      </defs>
+      {/* soft shadow, white sticker edge, ink outline, fill */}
+      {text({ fill: 'rgba(43,35,64,0.18)', stroke: 'rgba(43,35,64,0.18)', strokeWidth: 26, transform: 'translate(0 4)' })}
+      {text({ fill: '#fff', stroke: '#fff', strokeWidth: 26 })}
+      {text({ fill: 'var(--ink)', filter: `url(#${fid})` })}
+      {text({ fill: color, stroke: 'var(--ink)', strokeWidth: 9, paintOrder: 'stroke fill' }, true)}
+    </svg>
+  );
+}
+
+/* A speech bubble that says hiya */
+export function HiyaBubble({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 120 92" className={className} aria-hidden>
+      <path
+        d="M60 6 C92 6 114 22 114 42 C114 62 92 76 62 76 C54 76 47 75 41 73 L20 86 L26 66 C14 59 6 51 6 42 C6 22 28 6 60 6 Z"
+        fill="var(--c-yellow)"
+        stroke="var(--ink)"
+        strokeWidth="4"
+        strokeLinejoin="round"
+      />
+      <text
+        x="60"
+        y="51"
+        textAnchor="middle"
+        fontFamily="Fraunces, Georgia, serif"
+        fontWeight="800"
+        fontSize="30"
+        fill="var(--ink)"
+        style={{ fontVariationSettings: '"SOFT" 100, "WONK" 1' }}
+      >
+        hiya!
+      </text>
+    </svg>
+  );
+}
+
+/* A paint swatch chip, for SwatchMaker */
+export function SwatchChip({ className = '' }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 64 84" className={className} aria-hidden>
+      <rect x="3" y="3" width="58" height="78" rx="6" fill="#fff" stroke="var(--ink)" strokeWidth="3" />
+      <rect x="9" y="9" width="46" height="18" rx="2" fill="#7E8F7B" />
+      <rect x="9" y="30" width="46" height="18" rx="2" fill="#C9B79C" />
+      <rect x="9" y="51" width="46" height="18" rx="2" fill="#E8C1CA" />
+      <rect x="9" y="73" width="26" height="3" rx="1.5" fill="var(--ink)" opacity="0.5" />
     </svg>
   );
 }

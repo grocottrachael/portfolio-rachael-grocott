@@ -27,14 +27,14 @@ export function Experience() {
   return (
     <div className="min-h-screen bg-[var(--paper)] text-[var(--ink)]">
       <header className="p-2.5 md:p-3">
-        <div className="relative overflow-hidden px-5 py-8 md:py-14" style={{ background: C.blue }}>
+        <div className="relative overflow-hidden px-5 py-8 md:py-14" style={{ background: C.green }}>
           <div className="relative mx-auto max-w-[720px] flex flex-col gap-7">
             <Link to="/" className="self-start inline-flex items-center gap-1.5 text-[15px] font-bold hover:underline underline-offset-4">
               <ArrowLeft className="w-4 h-4" aria-hidden /> Rachael Grocott
             </Link>
             <div>
               <h1 className=" font-display leading-[1.02] text-[40px] md:text-[60px]">Experience</h1>
-              <p className="mt-4 max-w-[34ch] text-[18px] md:text-[20px] leading-[1.5] font-medium">
+              <p className="mt-4 max-w-[52ch] text-[18px] md:text-[20px] leading-[1.5] font-medium">
                 Thirteen years designing complex products, from trading platforms for banks to an SDK for AI agents.
               </p>
             </div>
@@ -53,16 +53,15 @@ export function Experience() {
       <main className="px-5 py-12 md:py-20">
         <div className="mx-auto max-w-[720px] space-y-16 md:space-y-20">
           <section>
-            {label(C.blue, 'Experience')}
+            {label(C.green, 'Experience')}
             <ol className="mt-5 border-t-[2px] border-[var(--ink)]">
               {roles.map((r) => (
                 <li key={r.company} className="py-5 border-b border-[var(--ink)]/15">
                   <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
                     <span className="text-[19px] font-bold">{r.company}</span>
                     <span className="text-[16px] text-[var(--ink-soft)]">{r.what}</span>
-                    <span aria-hidden className="hidden sm:block flex-1 min-w-6 border-b-2 border-dotted border-[var(--ink)]/25 translate-y-[-4px]" />
+                    <span aria-hidden className="hidden sm:block flex-1 min-w-6" />
                     <span className="text-[15px] text-[var(--ink-soft)] tabular-nums inline-flex items-center gap-1.5 whitespace-nowrap">
-                      {r.current && <span className="w-2 h-2 rounded-full bg-[#2FBF71]" aria-hidden />}
                       {r.dates}
                     </span>
                   </div>
@@ -88,7 +87,7 @@ export function Experience() {
             <Chips list={softSkills} />
           </section>
 
-          <section>
+          <section id="community" className="scroll-mt-8">
             {label(C.pink, 'Beyond the day job')}
             <h2 className="mt-4 font-display text-[30px] md:text-[40px] leading-[1.08]">Community, talks and press</h2>
             <dl className="mt-6 space-y-6">

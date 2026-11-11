@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, LayoutGroup, AnimatePresence } from 'motion/react';
 import { ArrowRight, ArrowUpRight, Plus, X, ExternalLink } from 'lucide-react';
-import { C } from './Shapes';
+import { C, Heart, WordSticker } from './Shapes';
 import RoleCycle from './RoleCycle';
 import { Link, navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
@@ -50,6 +50,10 @@ type Project = {
   summary: string;
   /* fill: the picture fills the rest of the block (for the big block) */
   image?: { src: string; alt: string; className?: string; fill?: boolean };
+  /* A kitsch sticker stuck on the corner of the picture */
+  sticker?: React.ReactNode;
+  /* Where the sticker sits, if not bottom left */
+  stickerClass?: string;
   /** shown above the title */
   logo?: React.ReactNode;
   /** on a wide block, show the logo big on the right instead of above the title */
@@ -72,13 +76,13 @@ const projects: Project[] = [
     title: 'SwatchMaker',
     madeFor: 'For anyone choosing paint',
     bg: C.pink,
-    span: 'col-span-2 md:row-span-2',
+    span: 'col-span-2 md:col-span-4 md:row-span-2',
     summary: 'See paint colours from every brand side by side.',
     image: {
       src: '/swatchmaker-tile.webp?v=2',
-      alt: 'SwatchMaker matching paints to the Rivers wallpaper by Living Quarters: Lick Green 03, Dulux Bracken Salts 5 and Valspar Ode to Joy',
-      className: 'aspect-[4/3] md:aspect-auto border-[3px] border-[var(--ink)]',
-      fill: true,
+      alt: 'SwatchMaker showing a Living Quarters wallpaper next to three paint colours',
+      /* The whole app at its own 4:3 shape, nothing cropped */
+      className: 'border-[3px] border-[var(--ink)]',
     },
     story: (
       <>
@@ -90,18 +94,18 @@ const projects: Project[] = [
     link: { href: 'https://swatchmaker.uk/', label: 'Visit swatchmaker.uk' },
   },
   {
+    sticker: (
+      <WordSticker lines={["Currently", "working here!"]} color={C.yellow} className="text-[22px] md:text-[clamp(18px,1.6vw,34px)] 2xl:text-[clamp(22px,1.9vw,34px)] -rotate-[5deg] origin-bottom-left" />
+    ),
+    /* Pinned to the bottom corner on desktop, so it doesn't make the card (and the row) taller */
+    stickerClass: 'self-start xl:absolute xl:left-7 xl:bottom-7 xl:mt-0 xl:pt-0',
     id: 'graphy',
     title: 'Graphy SDK',
     madeFor: 'Currently working here',
     live: true,
     bg: C.accent,
-    span: 'col-span-2 md:col-span-1',
-    summary: 'Editable charts for developers and their AI agents. I design the developer experience, and own the design of graphy.dev.',
-    image: {
-      src: '/work/graphy/theme-botanical.webp',
-      alt: 'A chart drawn with the Graphy SDK in its Botanical theme: bars as leaf blades on grained paper',
-      className: 'border-[3px] border-[var(--ink)]',
-    },
+    span: 'col-span-2 md:col-span-2',
+    summary: 'Editable charts for developers and their AI agents. I design the developer experience.',
     story: (
       <>
         Graphy turns data into clear, beautiful stories. I&rsquo;m a Senior Product Designer on the SDK, which lets
@@ -116,7 +120,7 @@ const projects: Project[] = [
     title: 'Dotties',
     madeFor: 'For work',
     bg: C.grey,
-    span: 'col-span-1',
+    span: 'col-span-1 md:col-span-2',
     summary: 'I needed it, so I built it. Images into halftone, dithering or ASCII.',
     story: (
       <>
@@ -128,11 +132,13 @@ const projects: Project[] = [
     linksOut: true,
   },
   {
+    sticker: <Heart color={C.pink} className="sticker block w-11 h-11 md:w-12 md:h-12 rotate-[12deg]" />,
+    stickerClass: 'absolute -top-5 -right-3',
     id: 'knot-a-problem',
     title: 'Knot a Problem',
     madeFor: 'For crocheters',
     bg: C.yellow,
-    span: 'col-span-2 md:col-span-1 md:row-span-2',
+    span: 'col-span-2 md:col-span-2 md:row-span-2',
     summary: 'Never get stuck reading a crochet pattern again. It started with my granny.',
     image: {
       src: '/knot-diagram.webp',
@@ -152,10 +158,22 @@ const projects: Project[] = [
   {
     id: 'crumbs',
     title: 'Crumbs',
-    madeFor: 'Just for me',
+    madeFor: 'For our household',
     bg: C.green,
-    span: 'col-span-2',
-    logo: <img src="/crumbs-icon.svg" alt="" width={44} height={44} className="h-11 w-11 rounded-[10px]" />,
+    span: 'col-span-2 md:col-span-4',
+    /* The app icon as a sticker you can move about, like the Graphy one */
+    sticker: (
+      <img
+        src="/crumbs-icon.svg"
+        alt=""
+        width={112}
+        height={112}
+        draggable={false}
+        className="sticker w-[clamp(60px,5vw,84px)] h-auto rounded-[22%] rotate-[6deg]"
+      />
+    ),
+    stickerClass: 'self-end md:absolute md:right-7 md:bottom-7 md:mt-0 md:pt-0',
+    /* keeps the text narrow so it clears the sticker */
     logoRight: true,
     summary: 'A no-faff calorie diary for our household. Snap your plate and it works it out.',
     story: (
@@ -172,7 +190,7 @@ const projects: Project[] = [
     title: 'Triangirls',
     madeFor: 'For women in tech',
     bg: C.blue,
-    span: 'col-span-2 md:col-span-1',
+    span: 'col-span-1 md:col-span-3',
     summary: 'I founded and ran a 2,000+ member community, for years.',
     story: <>I founded Triangirls and ran it for years, growing it into a community of more than 2,000 women in tech.</>,
     link: { href: 'https://x.com/triangirlsocial', label: 'Triangirls on X' },
@@ -184,14 +202,33 @@ const projects: Project[] = [
  * What a block does, shown when you hover it (and always on touch screens,
  * which have no hover): read the case study, open a site, or find out more.
  */
+/* A sticker you can pick up and move around its card. It lifts when you hover or grab it */
+function DragSticker({ cardRef, className, children }: { cardRef: React.RefObject<HTMLElement | null>; className: string; children: React.ReactNode }) {
+  return (
+    <motion.div
+      drag
+      dragConstraints={cardRef}
+      dragElastic={0.15}
+      dragMomentum={false}
+      whileHover={{ scale: 1.04, rotate: -2 }}
+      whileDrag={{ scale: 1.08, rotate: 3, filter: 'drop-shadow(0 10px 8px rgba(43,35,64,0.25))' }}
+      onClick={(e) => e.stopPropagation()}
+      className={`z-20 cursor-grab active:cursor-grabbing touch-none ${className}`}
+      title="Pick me up"
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export function HoverCta({ label, icon }: { label: string; icon: React.ReactNode }) {
+  /* Just a round button with the icon: arrow for a case study, + for more, a corner arrow for a new tab */
   return (
     <span
+      title={label}
       aria-hidden
-      className="pointer-events-none absolute top-4 right-4 md:top-5 md:right-5 z-10 inline-flex items-center gap-1.5 rounded-full border-2 border-[var(--ink)] bg-white px-2 [@media(hover:hover)]:px-3 py-1.5 text-[13px] font-bold text-[var(--ink)] shadow-[0_2px_0_var(--ink)] transition-all duration-200 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:translate-y-1 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:translate-y-0 [@media(hover:hover)]:group-focus-within:opacity-100 [@media(hover:hover)]:group-focus-within:translate-y-0"
+      className="hover-cta pointer-events-none absolute right-4 md:right-5 z-10 grid place-items-center w-9 h-9 rounded-full border-2 border-[var(--ink)] bg-white text-[var(--ink)] shadow-[0_2px_0_var(--ink)] group-active:translate-y-0.5 group-active:shadow-none transition-all duration-200 ease-in-out [&_svg]:w-4 [&_svg]:h-4 [@media(hover:hover)]:opacity-0 [@media(hover:hover)]:scale-75 [@media(hover:hover)]:group-hover:opacity-100 [@media(hover:hover)]:group-hover:scale-100 [@media(hover:hover)]:group-focus-within:opacity-100 [@media(hover:hover)]:group-focus-within:scale-100"
     >
-      {/* On touch screens there's no room for words next to the title, so just the icon */}
-      <span className="hidden [@media(hover:hover)]:inline">{label}</span>
       {icon}
     </span>
   );
@@ -199,8 +236,10 @@ export function HoverCta({ label, icon }: { label: string; icon: React.ReactNode
 
 function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: { label: string; icon: React.ReactNode } }) {
   const soft = p.dark ? 'text-white/70' : 'text-[var(--ink-soft)]';
+  const cardRef = useRef<HTMLElement>(null);
   return (
     <article
+      ref={cardRef}
       id={p.id}
       onClick={onOpen}
       className={`group relative cursor-pointer overflow-hidden p-5 md:p-7 flex flex-col transition-[filter] hover:brightness-[1.03] ${
@@ -212,7 +251,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
       {p.logo && p.logoRight && (
         <div
           aria-hidden
-          className="hidden md:block absolute right-[20%] top-1/2 -translate-y-1/2 w-[clamp(88px,8vw,130px)] [&_img]:w-full [&_img]:h-auto [&_img]:rounded-[22%]"
+          className="hidden md:block absolute right-7 bottom-7 w-[clamp(80px,6.5vw,112px)] [&_img]:w-full [&_img]:h-auto [&_img]:rounded-[22%]"
         >
           {p.logo}
         </div>
@@ -229,7 +268,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
           className={
             p.wordmark
               ? 'sr-only'
-              : 'block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
+              : 'block pr-12 md:pr-0 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
           }
         >
           {p.title}
@@ -250,7 +289,7 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
           className={
             p.wordmark
               ? 'sr-only'
-              : 'block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
+              : 'block pr-12 md:pr-0 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]'
           }
         >
           {p.title}
@@ -261,17 +300,20 @@ function ProjectTile({ p, onOpen, cta }: { p: Project; onOpen: () => void; cta: 
 
       <HoverCta {...cta} />
       {p.logo && p.logoBelow && <div className="mt-auto pt-6">{p.logo}</div>}
+      {/* A sticker you can pick up and move around the card */}
+      {!p.image && p.sticker && <DragSticker cardRef={cardRef} className={`relative mt-auto pt-6 ${p.stickerClass ?? 'self-start'}`}>{p.sticker}</DragSticker>}
 
       {p.image && (
-        <div className={`mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>
+        <div className={`relative mt-5 flex-1 flex ${p.image.fill ? 'min-h-0' : 'items-start'}`}>
           <img
             src={p.image.src}
             alt={p.image.alt}
             loading="lazy"
-            className={`w-full ${p.image.fill ? 'h-full object-cover object-left-top' : ''} transition-transform duration-300 ease-out motion-safe:group-hover:-translate-y-1 ${
+            className={`w-full ${p.image.fill ? 'h-full object-cover object-top' : ''} ${
               p.image.className ?? ''
             }`}
           />
+          {p.sticker && <DragSticker cardRef={cardRef} className={p.stickerClass ?? 'absolute -top-5 -right-3'}>{p.sticker}</DragSticker>}
         </div>
       )}
 
@@ -329,7 +371,7 @@ function ProjectPanel({ p, onClose }: { p: Project; onClose: () => void }) {
         <For>{p.madeFor}</For>
         <h3
           id={`${p.id}-title`}
-          className="mt-4 pr-12 font-display leading-[1.05] text-[32px] md:text-[40px]"
+          className="mt-4 pr-12 md:pr-0 font-display leading-[1.05] text-[32px] md:text-[40px]"
         >
           {p.title}
         </h3>
@@ -359,6 +401,7 @@ function InfoTile({
   title,
   children,
   href,
+  to,
   className = '',
 }: {
   bg: string;
@@ -367,14 +410,14 @@ function InfoTile({
   title: string;
   children: React.ReactNode;
   href?: string;
+  to?: string;
   className?: string;
 }) {
   const inner = (
     <>
-      {href && (
-        <HoverCta label="Opens in a new tab" icon={<ArrowUpRight className="w-3.5 h-3.5" />} />
-      )}
-      <h3 className="font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
+      {href && <HoverCta label="Opens in a new tab" icon={<ArrowUpRight className="w-3.5 h-3.5" />} />}
+      {to && <HoverCta label="See it on my Experience page" icon={<ArrowRight className="w-3.5 h-3.5" />} />}
+      <h3 className="pr-12 md:pr-0 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">{title}</h3>
       <div className={`mt-3 text-[16px] leading-snug ${dark ? 'text-white/70' : 'text-[var(--ink-soft)]'}`}>{children}</div>
     </>
   );
@@ -385,6 +428,10 @@ function InfoTile({
         <External href={href} className={`${cls} h-full`} style={{ background: bg }}>
           {inner}
         </External>
+      ) : to ? (
+        <Link to={to} className={`${cls} h-full`} style={{ background: bg }}>
+          {inner}
+        </Link>
       ) : (
         <div className={`${cls} h-full`} style={{ background: bg }}>
           {inner}
@@ -440,20 +487,20 @@ export function Work() {
     <LayoutGroup>
       <section
         aria-label="Things I've made"
-        className="grid grid-cols-2 md:grid-cols-3 grid-flow-row-dense md:auto-rows-[minmax(13vw,auto)] gap-2.5 p-2.5 md:gap-3 md:p-3 md:pl-0"
+        className="grid grid-cols-2 md:grid-cols-6 grid-flow-row-dense md:[grid-template-rows:1fr_1fr] md:auto-rows-[minmax(10vw,auto)] gap-3 p-3 md:gap-5 md:p-5 xl:pl-0"
       >
         {tile('swatchmaker')}
         {/* Experience: where hiring managers look first */}
         <Link
           to="/experience"
-          className="group relative overflow-hidden p-5 md:p-7 flex flex-col text-[var(--ink)] col-span-2 md:col-span-1 min-h-[220px]"
+          className="group relative overflow-hidden p-5 md:p-7 flex flex-col text-[var(--ink)] col-span-2 md:col-span-2 min-h-[220px]"
           style={{ background: C.green }}
         >
           <HoverCta label="See my experience" icon={<ArrowRight className="w-3.5 h-3.5" />} />
-          <span className="block font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
+          <span className="block pr-12 md:pr-0 font-display leading-[1.05] text-[clamp(22px,6.4vw,28px)] md:text-[clamp(22px,1.8vw,32px)]">
             Experience
           </span>
-          <span className="mt-3 block text-[16px] leading-snug text-[var(--ink-soft)]">Plus skills, talks and press.</span>
+          <span className="mt-3 block text-[16px] leading-snug text-[var(--ink-soft)]">13 years of product design, from agency to AI.</span>
           {/* A mini CV that flips through the roles, with their logos */}
           <RoleCycle />
         </Link>
@@ -466,16 +513,16 @@ export function Work() {
           madeFor="For anyone curious"
           title="My latest work"
           href="https://www.linkedin.com/in/rachaelgrocott/recent-activity/all/"
-          className="col-span-2 md:col-span-1"
+          className="col-span-2 md:col-span-2"
         >
           I post what I&rsquo;m working on as I go. LinkedIn is the place to see it.
         </InfoTile>
-        <InfoTile bg={C.pink} madeFor="For teams" title="Talks & workshops" className="col-span-1">
-          I&rsquo;ve spoken at loads of events, and I run sessions like <em>How to give and receive feedback</em>.
-        </InfoTile>
+
         {tile('triangirls')}
-        <InfoTile bg={C.green} madeFor="In the press" title="VICE & Samsung" className="col-span-1">
-          Interviewed by VICE. Featured in Samsung&rsquo;s Not a School.
+        {/* Talks, workshops and press in one card, linking to that part of the Experience page */}
+        <InfoTile bg={C.pink} madeFor="For teams" title="Talks, workshops & press" to="/experience#community" className="col-span-2 md:col-span-3">
+          I run sessions like <em>How to give and receive feedback</em>, I&rsquo;ve spoken at loads of events, and
+          I&rsquo;ve been interviewed by VICE and featured in Samsung&rsquo;s Not a School.
         </InfoTile>
       </section>
       <AnimatePresence>

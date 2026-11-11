@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { GraphProvider, createSpec, pipe, geom, scale, config, styles, style } from '@graphysdk/react';
+import { GraphProvider, createSpec, pipe, geom, scale, config, styles, style, annotation } from '@graphysdk/react';
 import { EditableGraphRenderer } from '@graphysdk/react/editable';
 
 /*
@@ -24,30 +24,50 @@ const data = {
 
 const ink = '#2B2340';
 
-const start = pipe(
-  createSpec({ x: 'week', y: 'downloads' }),
-  geom.bar(),
-  scale.x(),
-  scale.y(),
-  config({ content: { title: 'Try it: click a bar', showTitle: true, subtitle: 'Graphy React SDK, weekly npm downloads', showSubtitle: true } }),
-  styles({
+const house = styles({
     defaults: [
       style.graph({ fill: '#FFFDF9', textColor: ink, fontFamily: 'Silka, system-ui, sans-serif', cornerRadius: 0 }),
       style.heading({ fontFamily: 'Fraunces, Georgia, serif', fontWeight: 800, textColor: ink }),
       style.geom.bar({ fill: '#C3B3EE', stroke: ink, strokeWidth: 2, cornerRadius: 0 }),
-      style.gridLine({ stroke: '#E4DED6' }),
+      style.gridLine({ stroke: '#E4DED6', dashArray: [] }),
+    style.panelBorder({ strokeWidth: 0 }),
+    style.tickLabel({ fontFamily: 'Silka, system-ui, sans-serif', fontWeight: 500, textColor: 'rgba(43, 35, 64, 0.7)', textOutlineWidth: 0 }),
+    style.axisLabel({ fontFamily: 'Silka, system-ui, sans-serif', fontWeight: 500, textColor: '#2B2340' }),
+    style.annotation.differenceArrow({ stroke: ink, strokeWidth: 2 }),
     ],
-  })
-);
+  });
 
-export default function LiveEdit() {
+const base = (title: string) =>
+  pipe(
+    createSpec({ x: 'week', y: 'downloads' }),
+    geom.bar(),
+    scale.x(),
+    scale.y(),
+    config({ content: { title, showTitle: true, subtitle: 'Graphy React SDK, weekly npm downloads', showSubtitle: true } })
+  );
+
+const specs = {
+  edit: pipe(base('Try it: click a bar'), house),
+  annotate: pipe(
+    base('Try it: drag the arrow'),
+    annotation.differenceArrow({
+      start: { anchorValue: '2026-10-25' },
+      end: { anchorValue: '2026-11-01' },
+      label: 'relativeDifference',
+    }),
+    house
+  ),
+};
+
+export default function LiveEdit({ mode = 'edit' }: { mode?: 'edit' | 'annotate' }) {
+  const start = specs[mode];
   const [spec, setSpec] = useState(start);
   const [key, setKey] = useState(0);
   return (
     <div>
       <div className="h-[460px] border-[3px] border-[var(--ink)] bg-[var(--paper)]">
         <GraphProvider key={key} spec={spec} data={data} onSpecChange={setSpec}>
-          <EditableGraphRenderer mode="edit" />
+          <EditableGraphRenderer mode={mode} />
         </GraphProvider>
       </div>
       <button

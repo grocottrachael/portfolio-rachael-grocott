@@ -26,7 +26,9 @@ export type Block =
   | { type: 'quote'; text: string }
   | { type: 'stats'; items: { value: string; label: string }[] }
   | { type: 'liveCharts'; caption?: string }
+  | { type: 'claudeMock'; caption?: string }
   | { type: 'liveEdit'; caption?: string }
+  | { type: 'liveArrow'; caption?: string }
   | { type: 'shows'; items: { title: string; body: string }[] }
   | { type: 'decisions'; eyebrow: string; heading: string; items: { title: string; body: React.ReactNode }[] }
   | { type: 'gallery'; eyebrow?: string; heading?: string; body?: React.ReactNode; images: Img[] };
@@ -60,6 +62,8 @@ const sm = (name: string, alt: string): Img => ({ src: `/work/swatchmaker/${name
 
 const gSizes: Record<string, [number, number]> = {"annotate": [1560, 980], "theme-botanical": [1120, 760], "theme-chalkboard": [1120, 760], "theme-blueprint": [1120, 760], "theme-watercolor": [1120, 760], "theme-neo-brutalist": [1120, 760], "theme-comic": [1120, 760]};
 /* A Graphy image: every chart here is drawn with the real Graphy SDK, on the SDK's own public npm downloads */
+const crSizes: Record<string, [number, number]> = {"diary": [780, 1328], "type": [780, 986], "search": [780, 1328], "diary-tags": [780, 1328], "kitchen": [780, 1328], "progress-last": [780, 1328]};
+const cr = (name: string, alt: string): Img => ({ src: `/work/crumbs/${name}.webp`, alt, w: crSizes[name][0], h: crSizes[name][1] });
 const g = (name: string, alt: string): Img => ({ src: `/work/graphy/${name}.webp`, alt, w: gSizes[name][0], h: gSizes[name][1] });
 
 export const caseStudies: CaseStudy[] = [
@@ -71,26 +75,26 @@ export const caseStudies: CaseStudy[] = [
     madeFor: 'Currently working here',
     bg: C.accent,
     intro:
-      'Editable, AI-native charts that developers and their AI agents put into their own products. I’ve been at Graphy since 2021, through every pivot to get here. I design the SDK’s developer experience, and I own the design of graphy.dev.',
+      'Editable, AI-native charts that developers and their AI agents put into their own products. I joined Graphy in 2021 and I’ve helped steer it through every pivot since: bringing in user testing, starting small, and now an SDK. I design its developer experience and own the design of graphy.dev.',
     facts: [
       { label: 'Role', value: 'Senior Product Designer' },
       { label: 'At Graphy', value: 'Since April 2021' },
-      { label: 'I design', value: 'The SDK’s DX, and graphy.dev' },
+      { label: 'The team', value: 'Seven of us: two founders, three engineers, a marketer and me' },
       { label: 'I work in', value: 'Claude, on the real SDK' },
     ],
     link: { href: 'https://graphy.dev/', label: 'Visit graphy.dev' },
     tldr: {
       points: [
-        { label: 'The context', body: 'Nearly six years at Graphy, through every pivot. AI changed the landscape, and an SDK became the right fit: charts for developers and their AI agents.' },
-        { label: 'What I did', body: 'I design the SDK’s developer experience and own graphy.dev. Most proud of point and edit: click any part of a chart and change that thing.' },
-        { label: 'How I work', body: 'I design on the real SDK in Claude, and hand over pull requests or a spec with every edge case, pairing with engineers all the way.' },
-        { label: 'The result', body: 'The React SDK hit 9.8k npm downloads in one week, up 67% on the week before.' },
+        { label: 'The context', body: 'I joined a team building something big behind closed doors. I brought in user testing, we started small, and we followed what we learned all the way to an SDK for developers and their AI agents.' },
+        { label: 'What I did', body: 'Point and edit: click any part of a chart and change it right there. I prototyped it off my own back, and it won over a big customer who’d built everything around side panels.' },
+        { label: 'How I work', body: 'Close to customers, shipping fast and then improving. I design on the real SDK in Claude, and hand over pull requests or a spec with every edge case.' },
+        { label: 'The result', body: 'Point and edit became one of our strongest sales demos, and the React SDK hit 9.8k npm downloads in one week, up 67%.' },
       ],
       stats: [
         { value: '9.8k', label: 'npm downloads in one week' },
         { value: '+67%', label: 'on the week before' },
         { value: '58.8k', label: 'downloads, 16 Aug to 1 Nov' },
-        { value: '2021', label: 'at Graphy since' },
+        { value: '7', label: 'people on the whole team' },
       ],
     },
     blocks: [
@@ -101,13 +105,29 @@ export const caseStudies: CaseStudy[] = [
         body: (
           <>
             <p>
-              I’ve been at Graphy since 2021, and I’ve been through all sorts of pivots with them on the way to product-market fit. I designed our web app, then AI changed everything and an SDK became the right fit: charts that developers, and the AI agents they build, can drop into their own products.
+              When I joined Graphy in 2021, the team was building something big behind closed doors, without testing any of it with the people it was for. I&rsquo;d seen how much you learn from watching people use things, so I made the case for user testing and getting out into people&rsquo;s actual work, and we quickly started testing with real people, early and often.
             </p>
             <p>
-              That meant designing for a whole new audience on a new platform. The people choosing Graphy now read code and docs first, so the developer experience basically is the product, from the API and docs to the defaults and the editing their own users get for free.
+              What we learned was that the project was too big. So we started small instead, with a tool that made a single chart, really easy to use and full of little delights. That naturally grew into a full product, and while we searched for product-market fit, AI changed the landscape. An SDK became the right fit: charts that developers, and the AI agents they build, can drop into their own products.
+            </p>
+            <p>
+              We&rsquo;re a team of seven: two founders, three engineers, a marketer and me. So designing for developers meant owning the whole experience, from the API and the docs to the defaults and the editing their own users get for free.
             </p>
           </>
         ),
+      },
+      {
+        type: 'pivot',
+        before: {
+          label: 'When I joined',
+          title: 'Building behind closed doors',
+          body: 'One big project, built without showing it to the people it was for.',
+        },
+        after: {
+          label: 'What I changed',
+          title: 'Testing with real people, early and often',
+          body: 'User testing and time in people’s real work, so every pivot since has been led by what we learned, not by guesses.',
+        },
       },
       {
         type: 'chapter',
@@ -116,13 +136,23 @@ export const caseStudies: CaseStudy[] = [
         body: (
           <>
             <p>
-              Editing a chart used to mean digging through side panels, and everything was really hard to find. You had to know where a setting lived before you could change it.
+              Editing a chart used to mean digging through side panels, where everything was really hard to find. You had to know where a setting lived before you could change it.
             </p>
             <p>
-              Now you can click on any part of a chart, like a bar, an axis or the legend, and change that thing right where it is. Working with AI let us move fast enough to make a change that big.
+              Everything was on the table. One of our biggest customers, Gamma, had built their whole product around side panels, so a better panel was the safe answer, and we felt pretty trapped by it. Prompting was the other obvious one, but typing out what you want takes far too long for a quick change. We wanted it to feel fast, natural and easy, and a bit delightful too.
+            </p>
+            <p>
+              So I took inspiration from the design tools people already know, like Canva and Google Slides: you click the thing you want to change, and its controls appear right there. Nobody has to learn it.
             </p>
           </>
         ),
+      },
+      {
+        type: 'hmw',
+        items: [
+          'make changing a chart as quick as pointing at it?',
+          'let people edit without knowing where a setting lives?',
+        ],
       },
       {
         type: 'pivot',
@@ -134,7 +164,7 @@ export const caseStudies: CaseStudy[] = [
         after: {
           label: 'Point and edit',
           title: 'Click the thing, change the thing',
-          body: 'Click a bar, an axis or the legend and its controls open right there. Working with AI let us move fast enough to make it.',
+          body: 'Click a bar, an axis or the legend and its controls open right there, just like the design tools people already use.',
         },
       },
       {
@@ -144,49 +174,40 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         type: 'chapter',
+        label: 'Getting buy-in',
+        heading: 'A prototype instead of a debate',
+        body: (
+          <>
+            <p>
+              I was really passionate about it, so I built a working prototype off my own back rather than arguing for it. We decided to show it to Gamma to inspire them, and they loved it so much they&rsquo;re building it into their product.
+            </p>
+            <p>
+              The team love it because it&rsquo;s so intuitive, and it&rsquo;s become one of our strongest sales demos, landing with some very big names.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'chapter',
         label: 'Just shipped',
         heading: 'Annotating, made freeform',
         body: (
           <>
             <p>
               Annotations are how a chart tells its story: the arrow that says &ldquo;up 67% on last week&rdquo;, the
-              note pinned to a spike. I&rsquo;ve just redesigned annotating to be freeform, so they sit wherever the
-              story needs them.
+              note pinned to a spike. They worked, but they&rsquo;d come over from our old app and were looking dated.
+              As we moved more features into the SDK, the team agreed it was time for a refresh.
             </p>
-          </>
-        ),
-      },
-      {
-        type: 'figure',
-        images: [g('annotate', 'The same chart with a difference arrow from 25 Oct to 1 Nov, labelled +67.15%')],
-        caption: 'A difference arrow works out the change between two bars for you.',
-        frame: true,
-      },
-      {
-        type: 'chapter',
-        label: 'Going beyond a colour scheme',
-        heading: 'Themes',
-        body: (
-          <>
             <p>
-              A theme in Graphy isn’t just a palette. It decides the whole look, from the paper, type and colours to the actual shapes the bars are drawn in, like leaf blades in Botanical, chalk on a board or a blueprint’s hatching. The chart itself doesn’t name a theme, so the same chart can be drawn in any of them.
+              I&rsquo;ve just redesigned annotating to be freeform, so annotations sit wherever the story needs them.
             </p>
-            <p>I designed and built the themes myself as pull requests, and handed them to engineering ready to go.</p>
           </>
         ),
       },
       {
-        type: 'figure',
-        images: [
-          g('theme-botanical', 'The downloads chart in the Botanical theme: bars drawn as leaf blades on grained paper'),
-          g('theme-chalkboard', 'The same chart on a chalkboard, drawn in chalk'),
-          g('theme-blueprint', 'The same chart as a blueprint, with hatched bars on a blue drafting grid'),
-
-          g('theme-watercolor', 'The same chart in watercolour washes'),
-          g('theme-neo-brutalist', 'The same chart in Neo Brutalist: loud pink blocks with a hard black shadow'),
-          g('theme-comic', 'The same chart as a comic panel, with halftone dots and black outlines'),
-        ],
-        caption: 'One chart, six themes. Nothing changed but the theme.',
+        /* The real editor in annotate mode, in the same style as the editable chart above */
+        type: 'liveArrow',
+        caption: 'The real annotating, running right here. Click the arrow to change its label, colour or size, or drag its ends to other bars.',
       },
       {
         type: 'chapter',
@@ -202,6 +223,27 @@ export const caseStudies: CaseStudy[] = [
             <p>
               Figma could never cope with all the edge cases a chart has: long labels, empty data, a hundred categories, negative values. Now I design on real charts with real data, and honestly, I can make anything. And I’m always pairing with engineers along the way.
             </p>
+            <p>
+              Across the team I&rsquo;ve pushed us to stay close to customers and to ship fast, then improve. Getting something real in front of people beats perfecting it in private, which is the lesson from my very first weeks here.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'claudeMock',
+        caption: 'A mock-up of how I work: a Claude Code session changing the real chart with the Graphy SDK. The preview is live.',
+      },
+      {
+        type: 'chapter',
+        label: 'Results',
+        heading: 'Developers are picking it up',
+        body: (
+          <>
+            <p>
+              The React SDK has been downloaded nearly 59,000 times since mid-August, and the latest week was the
+              biggest yet at almost 9,800, up 67% on the week before.
+            </p>
+            <p>These charts are drawn live by the SDK itself, from npm&rsquo;s public numbers.</p>
           </>
         ),
       },
@@ -706,6 +748,231 @@ export const caseStudies: CaseStudy[] = [
             <p>
               <strong>What’s next:</strong> launching it on social, then testing with more crocheters beyond my
               family.
+            </p>
+          </>
+        ),
+      },
+    ],
+  },
+  {
+    id: 'crumbs',
+    v2: true,
+    teaser: 'A calorie diary that never makes you wait.',
+    title: 'Crumbs',
+    madeFor: 'For our household',
+    bg: C.green,
+    intro:
+      'I hate MyFitnessPal. Every time you add a food it plays a little animation that lasts about a second, which is fine once, and maddening when you’re logging a whole meal. So I built our own calorie diary: you snap your plate, a receipt or a label and Claude works it out, and everything in it is tuned to how we actually eat.',
+    facts: [
+      { label: 'My role', value: 'Design and build, solo' },
+      { label: 'Made for', value: 'Me and my other half' },
+      { label: 'Built with', value: 'Claude Code' },
+      { label: 'AI in the app', value: 'Claude, only when needed' },
+      { label: 'Food data', value: 'Open Food Facts UK' },
+    ],
+    tldr: {
+      points: [
+        { label: 'The problem', body: 'Every food tracker I tried made me wait on every add, didn’t know what we actually buy, and didn’t care about the things I care about.' },
+        { label: 'What I did', body: 'Designed and built our own: snap a plate and Claude works it out, nothing animates in your way, and it flags ultra-processed and high FODMAP food.' },
+        { label: 'What I learned', body: 'Using it every day shows you things no spec would. The logging sheet and the phone keyboard took four goes to get right, including putting it back how it was.' },
+        { label: 'The result', body: 'We log with it every day. It went from first version to on our phones in two days, and it’s had 49 updates since.' },
+      ],
+      stats: [
+        { value: '0', label: 'animations to wait for' },
+        { value: '2', label: 'days from first version to our phones' },
+        { value: '49', label: 'updates in seven weeks' },
+        { value: '1', label: 'tap to send a meal to my other half' },
+      ],
+    },
+    blocks: [
+      {
+        type: 'chapter',
+        label: 'The problem',
+        heading: 'Every add took a second I didn’t have',
+        body: (
+          <>
+            <p>
+              MyFitnessPal drives me up the wall. Every time you add
+              a food it plays an animation that lasts about a second, which doesn’t sound like much until you’re
+              logging a coffee, a crumpet and a yoghurt one after the other and sitting there waiting for it each
+              time.
+            </p>
+            <p>
+              It also doesn’t know anything about us. It doesn’t know which bread we buy, so every snap is a guess at
+              a generic version, and it doesn’t care about the things I care about, like how much ultra-processed food
+              I’m eating, or which foods are high FODMAP. And my other half hates tracking full stop, so getting him to
+              log anything was never going to happen.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'hmw',
+        items: [
+          'make logging three things as quick as logging one?',
+          'make a snapped plate accurate without weighing everything?',
+          'let someone who hates tracking still have a diary?',
+          'build it around how we eat, not how an app thinks we should?',
+        ],
+      },
+      {
+        type: 'chapter',
+        label: 'Software that works for you',
+        heading: 'Built for one house, on purpose',
+        body: (
+          <>
+            <p>
+              This is my favourite thing about building with AI: you can make software that works exactly how you
+              need it to, for an audience of two. I made the first version in a day, and it was on both our phones the
+              next, running on our own server with one shared passcode and everyone’s diary kept separate.
+            </p>
+            <p>
+              The whole app is built around getting food in quickly. You can snap it, type it like you’d say it
+              (“2 oreos and a babybel”), scan a barcode or search, and the things you have all the time sit right at
+              the top so they’re one tap away.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'figure',
+        images: [
+          cr('diary', 'The Crumbs diary: 1,061 of 1,900 kcal today, with protein, carbs and fat, and buttons to search, type or snap food'),
+          cr('type', 'The logging sheet: pick a meal, tap something you have again, or type something new and Work it out'),
+          cr('search', 'Search, with the foods you’ve had before at the top, each with a one-tap add button'),
+        ],
+        frame: true,
+        caption: 'The diary, the logging sheet and search. Nothing animates in your way, and your usuals are always one tap away.',
+      },
+      {
+        type: 'chapter',
+        label: 'Speed',
+        heading: 'Nothing waits',
+        body: (
+          <>
+            <p>
+              The rule I set myself was that the app should never make you wait for it. There are no animations
+              between you and the next food, and the screen updates the moment you tap rather than waiting for the
+              server to answer, so logging three things really is as quick as logging one.
+            </p>
+            <p>
+              It learns your habits as you go, so the foods you have most sit at the top, there’s a “same as
+              yesterday” for each meal, and you can build up a meal in a basket before adding it all at once, with the
+              things you usually have alongside it suggested first. In the evening it asks “forget anything?” and
+              lists the regulars that aren’t in yet, because the snack you forgot is usually the same snack.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'pivot',
+        before: {
+          label: 'First version',
+          title: 'Ask Claude about everything',
+          body: 'Every typed food went to Claude, so even the simple ones took a few seconds and cost a little each time.',
+        },
+        after: {
+          label: 'What I changed',
+          title: 'Only ask Claude when it’s needed',
+          body: 'Foods it already knows match instantly, packets come from Open Food Facts first, and Claude only steps in for photos and the genuinely new stuff.',
+        },
+      },
+      {
+        type: 'chapter',
+        label: 'Accuracy',
+        heading: 'It knows what’s in our fridge',
+        body: (
+          <>
+            <p>
+              The genius bit, if I say so myself, is the Kitchen. When we do the big shop I snap the receipt, and
+              Crumbs learns the exact products we buy, so when I snap my dinner later it knows it’s our bread and our
+              yoghurt, not a generic one. You can snap the fridge and the cupboards too, and then “What can I have?”
+              suggests meals from what’s actually in that fit what’s left of your day.
+            </p>
+            <p>
+              When you snap a plate, Claude only asks a follow-up when the answer changes the total, like whether there
+              was oil in the pan, rather than quizzing you about everything. And if you log something from a chain like
+              Greggs or Pret that isn’t in the food database, it looks up their official nutrition online instead of
+              guessing.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'figure',
+        images: [
+          cr('kitchen', 'The Kitchen tab: snap the fridge, add a big shop receipt, and saved meals and recipes'),
+          cr('diary-tags', 'Diary entries tagged UPF, with a running count of ultra-processed and high FODMAP food today'),
+          cr('progress-last', 'Progress: a week of bars under a 1,900 kcal target, averaging 1,590 a day, with a trend weight'),
+        ],
+        frame: true,
+        caption: 'The Kitchen knows what we buy, every food is quietly checked for ultra-processed and high FODMAP, and Progress shows the week.',
+      },
+      {
+        type: 'chapter',
+        label: 'Built for us',
+        heading: 'The things I care about, front and centre',
+        body: (
+          <>
+            <p>
+              Every food gets checked for whether it’s ultra-processed and whether it’s high FODMAP, and the diary
+              keeps a running count for the day against a limit I set. You can tap a tag to see why it was flagged,
+              and if it’s got one wrong you can overrule it, because a flag you can’t argue with stops being helpful
+              very quickly.
+            </p>
+            <p>
+              And for my other half, who would rather do literally anything than track, I can send a meal straight to
+              his diary in one tap when we’ve eaten the same thing. The fridge, the shopping and our saved meals are
+              shared, but our diaries are our own.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'quote',
+        text: 'Software that works exactly how you need it to, for an audience of two.',
+      },
+      {
+        type: 'chapter',
+        label: 'Iteration',
+        heading: 'Using it every day is the best testing there is',
+        body: (
+          <>
+            <p>
+              Because we use it every single day, every rough edge shows up fast. The logging sheet and the phone
+              keyboard took me four goes to get right: the text box kept disappearing behind the keyboard, then a tap
+              in it closed the sheet, and one of my “fixes” made it worse, so I put it back how it was and made it
+              taller instead. It’s not glamorous, but it’s the difference between an app you use and one you give up
+              on.
+            </p>
+            <p>
+              I learned to protect the data too. Losing someone’s diary is the worst thing this app could do, so it
+              refuses any save that would wipe your settings, keeps a daily backup, and lets you restore earlier
+              settings or download everything you’ve logged. And when Claude can’t answer, it says exactly why, rather
+              than a vague “something went wrong”.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'stats',
+        items: [
+          { value: '0', label: 'animations to wait for' },
+          { value: '2', label: 'days from first version to our phones' },
+          { value: '49', label: 'updates in seven weeks' },
+          { value: '1', label: 'tap to send a meal to my other half' },
+        ],
+      },
+      {
+        type: 'chapter',
+        label: 'What’s next',
+        heading: 'Room for a few more households',
+        body: (
+          <>
+            <p>
+              Crumbs can now invite other households, each completely private and running on their own Claude key, so
+              friends can have their own version without ever seeing ours. It’s still built for one house first, and
+              I’d like to keep it that way, because that’s exactly why it works.
             </p>
           </>
         ),
