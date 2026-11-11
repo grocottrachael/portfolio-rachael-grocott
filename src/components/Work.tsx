@@ -6,7 +6,6 @@ import RoleCycle from './RoleCycle';
 import { Link, navigate } from '../router';
 import { caseStudies } from '../content/caseStudies';
 import Peel from './Peel';
-import SwatchMakerScene from './SwatchMakerScene';
 
 const spring = { type: 'spring', stiffness: 380, damping: 38 } as const;
 
@@ -84,10 +83,10 @@ const projects: Project[] = [
     span: 'col-span-2 md:col-span-4 md:row-span-2',
     summary: 'See paint colours from every brand side by side.',
     image: {
-      src: '/swatchmaker-tile.webp?v=2',
-      alt: 'SwatchMaker showing a Living Quarters wallpaper next to three paint colours',
-      /* The app rebuilt in code at the old screenshot's 4:3 shape, in a white frame */
-      scene: <SwatchMakerScene />,
+      src: '/work/swatchmaker/card.webp',
+      alt: 'SwatchMaker showing a Living Quarters wallpaper next to three paint colours: Lick Green 03, Dulux Bracken Salts 5 and Valspar Ode to Joy',
+      /* A sharp, high-resolution picture of the app at 4:3, with its own white frame */
+      className: 'aspect-[4/3]',
     },
     story: (
       <>
