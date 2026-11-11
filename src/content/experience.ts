@@ -8,6 +8,8 @@ export type Role = {
   body: string;
   introduced?: string[];
   current?: boolean;
+  /* a case study about this role */
+  study?: string;
 };
 
 export const roles: Role[] = [
@@ -18,6 +20,7 @@ export const roles: Role[] = [
     highlight: 'Took the design from web app to SDK',
     body: 'Leading design strategy in a high-growth startup, partnering with engineers and PMs to define and measure success, like adoption and retention. I drive iterative cycles, using performance data to change direction and make sure we’re solving the right problems.',
     current: true,
+    study: 'graphy',
   },
   {
     company: 'Trint',
@@ -26,6 +29,7 @@ export const roles: Role[] = [
     highlight: 'Led a native app redesign',
     body: 'Ran the redesign with a Google design sprint, grounding choices in user research and business analytics, and built a habit of measuring every shipped feature against user sentiment and conversion.',
     introduced: ['Design system', 'Design principles', 'Critiques', 'Shape Up'],
+    study: 'trint',
   },
   {
     company: 'Geckoboard',
@@ -34,6 +38,7 @@ export const roles: Role[] = [
     highlight: 'Introduced the design system',
     body: 'Worked in a product trio, sharing accountability for outcomes. Defined and tracked success measures, and used the evidence to decide when to iterate, change direction or move on.',
     introduced: ['Design system', 'Component library (front end)', 'Design crits', 'Design pairing'],
+    study: 'geckoboard',
   },
   {
     company: 'We Make Waves',

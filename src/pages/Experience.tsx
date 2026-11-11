@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Link } from '../router';
 import { C } from '../components/Shapes';
 import { beyond, coreSkills, education, interests, roles, softSkills } from '../content/experience';
@@ -73,6 +73,15 @@ export function Experience() {
                     <p className="mt-2 text-[15px] text-[var(--ink-soft)]">
                       <span className="font-bold text-[var(--ink)]">Introduced:</span> {r.introduced.join(' · ')}
                     </p>
+                  )}
+                  {r.study && (
+                    /* A quiet text link, not a button: the page already has its own calls to action */
+                    <Link
+                      to={`/work/${r.study}`}
+                      className="group mt-3 inline-flex items-center gap-1.5 text-[16px] font-bold underline decoration-2 underline-offset-4 decoration-[var(--ink)]/30 hover:decoration-[var(--ink)]"
+                    >
+                      Read the case study <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                    </Link>
                   )}
                 </li>
               ))}
