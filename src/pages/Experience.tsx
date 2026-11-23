@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight, Download } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download } from 'lucide-react';
 import { Link } from '../router';
 import { C } from '../components/Shapes';
 import { MailMark, LinkedinMark } from '../components/Marks';
