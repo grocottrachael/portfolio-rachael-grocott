@@ -96,8 +96,11 @@ function Home() {
           <p className="mt-5 text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
             I&rsquo;ve spent 13 years designing everything from a trading platform used by the world&rsquo;s major banks
             to an AI SDK. I work closely with CEOs and product leads on what to build and why, and I&rsquo;ve introduced
-            design systems, principles and crits. I design in working code on the real product, with AI doing the
-            building and me setting the bar. Engineers get a pull request, not a mockup.
+            design systems, principles and crits.
+          </p>
+          <p className="mt-5 text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
+            I design in working code on the real product, with AI doing the building and me setting the bar.
+            Engineers get a pull request, not a mockup.
           </p>
         </div>
 
