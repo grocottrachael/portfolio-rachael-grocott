@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ArrowUpRight, Download } from 'lucide-react';
 import { Link } from '../router';
 import { C } from '../components/Shapes';
 import CompanyLogo from '../components/CompanyLogo';
@@ -40,6 +40,9 @@ export function Experience() {
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
+              <a href="/rachael-grocott-cv.pdf" download="Rachael Grocott CV.pdf" className="chunky">
+                Download CV <Download className="w-4 h-4" aria-hidden />
+              </a>
               <a href="mailto:rachaelgrocott@gmail.com" className="chunky">
                 Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
               </a>

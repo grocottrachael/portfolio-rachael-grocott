@@ -96,12 +96,12 @@ export const caseStudies: CaseStudy[] = [
         { label: 'The context', body: 'I joined a team building something big behind closed doors. I brought in user testing, we started small, and we followed what we learned all the way to an SDK for developers and their AI agents.' },
         { label: 'What I did', body: 'Point and edit: click any part of a chart and change it right there. I prototyped it off my own back, and it won over a big customer who’d built everything around side panels.' },
         { label: 'How I work', body: 'Close to customers, shipping fast and then improving. I design on the real SDK in Claude, and hand over pull requests or a spec with every edge case.' },
-        { label: 'The result', body: 'Point and edit became one of our strongest sales demos, and the React SDK hit 9.8k npm downloads in one week, up 67%.' },
+        { label: 'The result', body: 'Point and edit became one of our strongest sales demos, and one of our biggest customers is building it into their own product.' },
       ],
       stats: [
-        { value: '9.8k', label: 'npm downloads in one week' },
-        { value: '+67%', label: 'on the week before' },
-        { value: '58.8k', label: 'downloads, 16 Aug to 1 Nov' },
+        { value: '5+', label: 'years at Graphy, through every pivot' },
+        { value: '5', label: 'rounds to land the default theme' },
+        { value: '16', label: 'published chart themes' },
         { value: '7', label: 'people on the whole team' },
       ],
     },
@@ -347,23 +347,25 @@ export const caseStudies: CaseStudy[] = [
         caption: 'A mock-up of how I work: a Claude Code session changing the real chart with the Graphy SDK. The preview is live.',
       },
       {
+        /* Live charts, as an example of designing on the real SDK */
+        type: 'liveCharts',
+        caption:
+          'Two more live charts, drawn right here by the Graphy SDK and styled to this site, from the React SDK’s public weekly downloads on npm.',
+      },
+      {
         type: 'chapter',
         label: 'Results',
-        heading: 'Developers are picking it up',
+        heading: 'Point and edit sells the product',
         body: (
           <>
             <p>
-              The React SDK has been downloaded nearly 59,000 times since mid-August, and the latest week was the
-              biggest yet at almost 9,800, up 67% on the week before.
+              Point and edit has become one of our strongest sales demos, landing with some very big names. One of our biggest customers loved it so much they&rsquo;re building it into their own product.
             </p>
-            <p>These charts are drawn live by the SDK itself, from npm&rsquo;s public numbers.</p>
+            <p>
+              And Brick is now the default every chart starts from, alongside the 16 themes I&rsquo;ve designed and published.
+            </p>
           </>
         ),
-      },
-      {
-        type: 'liveCharts',
-        caption:
-          'These two are live: drawn right here by the Graphy SDK, styled to this site. The React SDK’s public weekly downloads from npm, weeks starting 16 Aug to 1 Nov 2026.',
       },
     ],
   },
