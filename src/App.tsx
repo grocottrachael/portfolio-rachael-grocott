@@ -91,11 +91,12 @@ function Home() {
         <div>
           <p className="text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
             I&rsquo;m a Senior Product Designer at Graphy. I make <Pill bg={C.accent}>complex things simple</Pill>,
-            then polish them till they&rsquo;re <Pill bg={C.yellow}>genuinely beautiful</Pill>.
+            ship them fast, then polish them till they&rsquo;re <Pill bg={C.yellow}>genuinely beautiful</Pill>.
           </p>
           <p className="mt-5 text-[17px] md:text-[clamp(15px,1.05vw,18px)] leading-relaxed text-[var(--ink-soft)]">
-            Part designer, part engineer. I prototype and ship in code with AI, from the Graphy SDK to my own apps. I
-            founded Triangirls, I speak at events, and I love rallying a team around a good idea.
+            I&rsquo;ve spent 13 years designing everything from a trading platform used by the world&rsquo;s major banks
+            to an AI SDK. I work closely with CEOs and product leads on what to build and why, I&rsquo;ve introduced
+            design systems, principles and crits, and I prototype in code with AI.
           </p>
         </div>
 
