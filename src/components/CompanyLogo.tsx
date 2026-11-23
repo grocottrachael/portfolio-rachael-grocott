@@ -15,7 +15,7 @@ export default function CompanyLogo({ company, className = 'w-[52px] h-[52px]' }
           alt=""
           className={
             company === 'Graphy'
-              ? 'w-full h-full object-contain p-2'
+              ? 'w-full h-full object-contain p-[17%]' /* padding scales with the tile, so the mark stays a good size when small */
               : company === 'UVD'
                 ? /* A wide wordmark, so it gets a little padding to sit in the square */
                   'w-full h-full object-contain p-[12%]'
