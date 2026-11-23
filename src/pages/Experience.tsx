@@ -1,6 +1,9 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight, Download } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download } from 'lucide-react';
 import { Link } from '../router';
 import { C } from '../components/Shapes';
+import { MailMark, LinkedinMark } from '../components/Marks';
+
+const icon = 'text-[var(--ink)] opacity-80 hover:opacity-100 transition-[opacity,transform] hover:-translate-y-0.5 [&_svg]:w-6 [&_svg]:h-6';
 import CompanyLogo from '../components/CompanyLogo';
 import { beyond, coreSkills, education, interests, roles, softSkills } from '../content/experience';
 
@@ -39,16 +42,19 @@ export function Experience() {
                 Thirteen years designing complex products, from trading platforms for banks to an SDK for AI agents.
               </p>
             </div>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               <a href="/rachael-grocott-cv.pdf" download="Rachael Grocott CV.pdf" className="chunky">
                 Download CV <Download className="w-4 h-4" aria-hidden />
               </a>
-              <a href="mailto:rachaelgrocott@gmail.com" className="chunky">
-                Say hiya <ArrowUpRight className="w-4 h-4" aria-hidden />
-              </a>
-              <a href="https://www.linkedin.com/in/rachaelgrocott/" target="_blank" rel="noopener noreferrer" className="chunky">
-                LinkedIn <ArrowUpRight className="w-4 h-4" aria-hidden />
-              </a>
+              {/* Email and LinkedIn as quiet icons, like the home page, so the CV is the one button */}
+              <div className="flex items-center gap-5 ml-2">
+                <a href="mailto:rachaelgrocott@gmail.com" aria-label="Email me" className={icon}>
+                  <MailMark bg={C.green} />
+                </a>
+                <a href="https://www.linkedin.com/in/rachaelgrocott/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className={icon}>
+                  <LinkedinMark />
+                </a>
+              </div>
             </div>
           </div>
         </div>
