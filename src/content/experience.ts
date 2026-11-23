@@ -41,7 +41,7 @@ export const roles: Role[] = [
     study: 'geckoboard',
   },
   {
-    company: 'We Make Waves',
+    company: 'UVD',
     what: 'Product design and build agency',
     dates: 'Jul 2013 – Aug 2018',
     highlight: 'A trading platform for major banks',
