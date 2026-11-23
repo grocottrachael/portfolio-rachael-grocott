@@ -68,7 +68,7 @@ const smSizes: Record<string, [number, number]> = {"chips": [1700, 1015], "phone
 /* A SwatchMaker image */
 const sm = (name: string, alt: string): Img => ({ src: `/work/swatchmaker/${name}.webp`, alt, w: smSizes[name][0], h: smSizes[name][1] });
 
-const gSizes: Record<string, [number, number]> = {"default-brick": [1224, 790], "default-terracotta": [1224, 790], "default-round1": [1224, 608], "default-final": [1224, 608], "default-board-charts": [985, 520], "default-board-library": [670, 445], "annotate": [1560, 980], "theme-botanical": [1120, 760], "theme-chalkboard": [1120, 760], "theme-blueprint": [1120, 760], "theme-watercolor": [1120, 760], "theme-neo-brutalist": [1120, 760], "theme-comic": [1120, 760]};
+const gSizes: Record<string, [number, number]> = {"default-brick": [1224, 790], "default-terracotta": [1224, 790], "default-round1": [1224, 608], "default-final": [1224, 608], "default-round2": [1224, 608], "default-round4": [1224, 608], "default-board-charts": [985, 520], "default-board-library": [670, 445], "annotate": [1560, 980], "theme-botanical": [1120, 760], "theme-chalkboard": [1120, 760], "theme-blueprint": [1120, 760], "theme-watercolor": [1120, 760], "theme-neo-brutalist": [1120, 760], "theme-comic": [1120, 760]};
 /* A Graphy image: every chart here is drawn with the real Graphy SDK, on the SDK's own public npm downloads */
 const crSizes: Record<string, [number, number]> = {"diary": [780, 1328], "type": [780, 986], "search": [780, 1328], "diary-tags": [780, 1328], "kitchen": [780, 1328], "progress-last": [780, 1328]};
 const cr = (name: string, alt: string): Img => ({ src: `/work/crumbs/${name}.webp`, alt, w: crSizes[name][0], h: crSizes[name][1] });
@@ -234,8 +234,13 @@ export const caseStudies: CaseStudy[] = [
       },
       {
         type: 'figure',
-        images: [g('default-round1', 'Round one: ink-black bars on white, with Friday in bright blue'), g('default-final', 'The final round: Brick bars on warm cream')],
-        caption: 'Round one (left) against the final round (right), same chart, same data. Round one is reconstructed from my notes, by recolouring the final chart.',
+        images: [
+          g('default-round1', 'Round one: ink-black bars on white, with Friday in bright blue'),
+          g('default-round2', 'Round two: primary blue bars on a cool grey surface'),
+          g('default-round4', 'Round four: stone bars, with Monday red, Thursday amber and Friday green'),
+          g('default-final', 'The final round: Brick bars on warm cream'),
+        ],
+        caption: 'Rounds one, two and four, then the final round, all on the same chart and data. The earlier rounds are reconstructed from my notes by recolouring the final chart. Round three is further down.',
       },
       {
         type: 'cards',
