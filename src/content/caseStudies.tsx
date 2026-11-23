@@ -224,7 +224,10 @@ export const caseStudies: CaseStudy[] = [
         body: (
           <>
             <p>
-              Every chart drawn with the SDK starts from the default theme, so it&rsquo;s the first thing developers and their users see. The brief was warm, inviting, friendly and mature. And quiet on purpose: the SDK is there to be themed, so the default is the starting point, not the personality.
+              Every chart drawn with the SDK starts from the default theme, so it&rsquo;s the first thing developers and their users see. The brief was to stand out from chart libraries like Highcharts and Recharts, which all look much the same: grids, hard edges and boxes.
+            </p>
+            <p>
+              I set the direction: warm, inviting, friendly and mature. And quiet on purpose, because the SDK is there to be themed, so the default is the starting point, not the personality.
             </p>
             <p>
               It took five rounds. Each one used the same chart and the same data, so the only thing that changed was the colour and the surface.
