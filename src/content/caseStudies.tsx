@@ -68,7 +68,7 @@ const smSizes: Record<string, [number, number]> = {"chips": [1700, 1015], "phone
 /* A SwatchMaker image */
 const sm = (name: string, alt: string): Img => ({ src: `/work/swatchmaker/${name}.webp`, alt, w: smSizes[name][0], h: smSizes[name][1] });
 
-const gSizes: Record<string, [number, number]> = {"annotate": [1560, 980], "theme-botanical": [1120, 760], "theme-chalkboard": [1120, 760], "theme-blueprint": [1120, 760], "theme-watercolor": [1120, 760], "theme-neo-brutalist": [1120, 760], "theme-comic": [1120, 760]};
+const gSizes: Record<string, [number, number]> = {"default-brick": [1224, 790], "default-terracotta": [1224, 790], "default-round1": [1224, 608], "default-final": [1224, 608], "default-board-charts": [985, 520], "default-board-library": [670, 445], "annotate": [1560, 980], "theme-botanical": [1120, 760], "theme-chalkboard": [1120, 760], "theme-blueprint": [1120, 760], "theme-watercolor": [1120, 760], "theme-neo-brutalist": [1120, 760], "theme-comic": [1120, 760]};
 /* A Graphy image: every chart here is drawn with the real Graphy SDK, on the SDK's own public npm downloads */
 const crSizes: Record<string, [number, number]> = {"diary": [780, 1328], "type": [780, 986], "search": [780, 1328], "diary-tags": [780, 1328], "kitchen": [780, 1328], "progress-last": [780, 1328]};
 const cr = (name: string, alt: string): Img => ({ src: `/work/crumbs/${name}.webp`, alt, w: crSizes[name][0], h: crSizes[name][1] });
@@ -216,6 +216,91 @@ export const caseStudies: CaseStudy[] = [
         /* The real editor in annotate mode, in the same style as the editable chart above */
         type: 'liveArrow',
         caption: 'The real annotating, running right here. Click the arrow to change its label, colour or size, or drag its ends to other bars.',
+      },
+      {
+        type: 'chapter',
+        label: 'The default',
+        heading: 'Setting the look every developer gets',
+        body: (
+          <>
+            <p>
+              Every chart drawn with the SDK starts from the default theme, so it&rsquo;s the first thing developers and their users see. The brief was warm, inviting, friendly and mature. And quiet on purpose: the SDK is there to be themed, so the default is the starting point, not the personality.
+            </p>
+            <p>
+              It took five rounds. Each one used the same chart and the same data, so the only thing that changed was the colour and the surface.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'figure',
+        images: [g('default-round1', 'Round one: ink-black bars on white, with Friday in bright blue'), g('default-final', 'The final round: Brick bars on warm cream')],
+        caption: 'Round one (left) against the final round (right), same chart, same data. Round one is reconstructed from my notes, by recolouring the final chart.',
+      },
+      {
+        type: 'cards',
+        numbered: true,
+        items: [
+          { title: 'Ink black', body: <>Ink-black bars on white, with a blue highlight. &ldquo;Far too strong&rdquo;: it read as clinical, not friendly.</> },
+          { title: 'Cool grey', body: <>A cool grey surface with primary blue bars. &ldquo;School like&rdquo;, &ldquo;like a rainy day&rdquo;: the warmth was missing.</> },
+          { title: 'Heritage terracotta', body: 'Warm terracotta and amber. Warm at last, but made from instinct, and replaced once references came in.' },
+          { title: 'Signal colours', body: <>Stone bars, with red, amber and green as signals. &ldquo;I don&rsquo;t understand the use of colour&rdquo;: if colours need explaining, they don&rsquo;t mean anything.</> },
+          { title: 'Brick', body: 'One lead colour on warm cream, with translucent bars and rounded shoulders. This one shipped.', tag: 'Shipped' },
+        ],
+      },
+      {
+        type: 'pivot',
+        before: { label: 'Rounds one to four', title: 'Made from instinct', body: 'Too cold, too cold again, warm but guessed, then too much meaning in the colours.' },
+        after: { label: 'Round five', title: 'Made from references', body: 'The round that worked started from a set of references, and every colour comes from one choice.' },
+      },
+      {
+        type: 'figure',
+        images: [g('default-brick', 'Brick: the final default, a bar chart of actual against forecast in brick red on cream'), g('default-terracotta', 'The terracotta round it replaced, the same chart in a more orange terracotta')],
+        caption: 'Brick (left), now the live default on graphy.dev/charts, against the terracotta round it replaced. The forecast is the lead colour, a shade lighter.',
+      },
+      {
+        type: 'text',
+        heading: 'One colour decision, everything derived',
+        body: (
+          <p>
+            The rest of the palette comes from that one choice. A forecast is the lead colour a shade lighter, segments that touch step through tones of one family, and distinct things get distinct colours. Nothing is random. Alongside the default, I&rsquo;ve designed 16 published themes, from Blueprint and Botanical to Typewriter and Watercolor.
+          </p>
+        ),
+      },
+      {
+        type: 'figure',
+        images: [g('default-board-charts', 'From the proposal board: a stacked bar chart, a donut, a line chart and a scatter plot, all in Brick')],
+        caption: 'From the proposal board: every chart type in the default, drawn by the real renderer.',
+      },
+      {
+        type: 'chapter',
+        label: 'Taste into standards',
+        heading: 'Rules, not “make it nicer”',
+        body: (
+          <>
+            <p>
+              I don&rsquo;t want to give the same feedback twice. So every correction I make gets written down as a principle, and the principles become design specs, engineering handover docs and house rules for the website. The team can work to the standard without me in the room.
+            </p>
+            <p>
+              I&rsquo;ve turned my design rules into skills for Claude, so it can theme charts to my standard without needing a fresh brief each time.
+            </p>
+          </>
+        ),
+      },
+      {
+        type: 'cards',
+        numbered: true,
+        items: [
+          { title: 'Colour has to mean something', body: 'Every colour comes from one choice: a forecast is the lead colour in a lighter shade, and segments that touch step through tones of one family. Nothing is random.' },
+          { title: 'Drawn beats distorted', body: 'If a theme has texture, draw it into the marks. Don’t run filters over a finished chart.' },
+          { title: 'Never invent marks', body: 'A theme restyles the chart. It never adds shapes the data didn’t ask for.' },
+          { title: 'No default without references', body: 'Every round I made from instinct was binned. The one that survived started from a reference set.' },
+        ],
+      },
+      {
+        type: 'figure',
+        images: [g('default-board-library', 'The colour library and the design tokens for engineers, from the default theme’s proposal')],
+        caption: 'The colour library and tokens from the proposal: one decision, everything derived, written down for engineers.',
       },
       {
         type: 'chapter',
