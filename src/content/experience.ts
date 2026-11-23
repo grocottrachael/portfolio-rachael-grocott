@@ -35,7 +35,7 @@ export const roles: Role[] = [
     company: 'Geckoboard',
     what: 'TV dashboards for real-time KPIs',
     dates: 'Aug 2018 – Dec 2020',
-    highlight: 'Introduced the design system',
+    highlight: 'Modernised the product and made dashboards easier to read',
     body: 'Worked in a product trio, sharing accountability for outcomes. Defined and tracked success measures, and used the evidence to decide when to iterate, change direction or move on.',
     introduced: ['Design system', 'Component library (front end)', 'Design crits', 'Design pairing'],
     study: 'geckoboard',
