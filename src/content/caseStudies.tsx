@@ -264,13 +264,13 @@ export const caseStudies: CaseStudy[] = [
           { title: 'Ink black', body: <>Ink-black bars on white, with a blue highlight. &ldquo;Far too strong&rdquo;: it read as clinical, not friendly.</> },
           { title: 'Cool grey', body: <>A cool grey surface with primary blue bars. &ldquo;School like&rdquo;, &ldquo;like a rainy day&rdquo;: the warmth was missing.</> },
           { title: 'Heritage terracotta', body: 'Warm terracotta and amber. Warm at last, but made from instinct, and replaced once references came in.' },
-          { title: 'Signal colours', body: <>Stone bars, with red, amber and green as signals. &ldquo;I don&rsquo;t understand the use of colour&rdquo;: if colours need explaining, they don&rsquo;t mean anything.</> },
+          { title: 'Signal colours', body: <>Stone bars, with a saturated red, amber and green on bars that weren&rsquo;t signalling anything. &ldquo;I don&rsquo;t understand the use of colour&rdquo;: too loud, and if colours need explaining, they don&rsquo;t mean anything.</> },
           { title: 'Brick', body: 'One lead colour on warm cream, with translucent bars and rounded shoulders. This one shipped.', tag: 'Shipped' },
         ],
       },
       {
         type: 'pivot',
-        before: { label: 'Rounds one to four', title: 'Made from instinct', body: 'Too cold, too cold again, warm but guessed, then too much meaning in the colours.' },
+        before: { label: 'Rounds one to four', title: 'Made from instinct', body: 'Too cold, too cold again, warm but guessed, then colours that were too loud and didn’t mean anything.' },
         after: { label: 'Round five', title: 'Made from references', body: 'The round that worked started from a set of references, and every colour comes from one choice.' },
       },
       {
