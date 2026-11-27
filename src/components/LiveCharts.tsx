@@ -62,7 +62,7 @@ function Chart({ kind }: { kind: 'weekly' | 'total' }) {
   }, [kind]);
   return (
     <div className="h-[440px] border-[3px] border-[var(--ink)] shadow-[0_4px_0_var(--ink)]">
-      <GraphProvider spec={spec} data={data}>
+      <GraphProvider spec={spec} data={data} telemetry={false}>
         <GraphRenderer />
       </GraphProvider>
     </div>
@@ -110,7 +110,7 @@ const arrowSpec = pipe(
 export function LiveArrow() {
   return (
     <div className="h-[460px] border-[3px] border-[var(--ink)] bg-[var(--paper)]">
-      <GraphProvider spec={arrowSpec} data={toData(weekly, 'Downloads')}>
+      <GraphProvider spec={arrowSpec} data={toData(weekly, 'Downloads')} telemetry={false}>
         <GraphRenderer />
       </GraphProvider>
     </div>

@@ -66,7 +66,7 @@ export default function LiveEdit({ mode = 'edit' }: { mode?: 'edit' | 'annotate'
   return (
     <div>
       <div className="h-[460px] border-[3px] border-[var(--ink)] bg-[var(--paper)]">
-        <GraphProvider key={key} spec={spec} data={data} onSpecChange={setSpec}>
+        <GraphProvider key={key} spec={spec} data={data} onSpecChange={setSpec} telemetry={false}>
           <EditableGraphRenderer mode={mode} />
         </GraphProvider>
       </div>
